@@ -63,7 +63,7 @@ export default function Header() {
                         className={classNames(
                           item.current
                             ? "bg-yellow-1 text-black"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            : "text-gray-300 hover:bg-gray-1 hover:text-white",
                           "px-3 py-2 rounded-md text-sm font-medium"
                         )}
                         aria-current={item.current ? "page" : undefined}
@@ -82,12 +82,7 @@ export default function Header() {
                       // onClick={() => signIn("linkedin")}
                       href="/login"
                     >
-                      <img
-                        src="/images/linkedin.png"
-                        alt="Github"
-                        width="28px"
-                      />
-                      Sign in with LinkedIn
+                      Sign in
                     </a>
                   )}
 
@@ -157,7 +152,7 @@ export default function Header() {
                                     <a
                                       className={classNames(
                                         active ? "bg-gray-100" : "",
-                                        "block px-4 py-2 text-sm text-gray-700"
+                                        "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
                                       )}
                                       onClick={() => signOut()}
                                     >

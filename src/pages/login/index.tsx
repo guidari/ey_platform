@@ -1,21 +1,136 @@
+import styles from "./login.module.scss"
+import { signIn, signOut, useSession } from "next-auth/react"
+
 export default function Page() {
+  const { data: session, status } = useSession()
+
   return (
-    <div className="grid grid-cols-2 gap-2 place-items-center">
-      <section className="m-20 bg-red-500">
+    <div className="grid md:grid-cols-2 gap-2 place-items-center bg-gray-3 sm:grid grid-cols-1 max-w-7xl m-auto ">
+      <section className="">
         <img
-          className="h-28"
+          className="h-24"
           src="/images/ey-white-logo.png"
           alt="EY Logo branco com traço amarelo em cima"
         />
-        <h1 className="text-5xl font-bold mt-5">Make you first step with us</h1>
+        <h1 className="text-5xl font-bold mt-5">
+          Make you first <br></br>step with us!
+        </h1>
         <img
-          className="mt-20 h-50"
+          className={styles.stepImg}
           src="/images/step.svg"
-          alt="EY Logo branco com traço amarelo em cima"
+          alt="Imagem de um homem subindo uma escada de gráficos"
           width="400"
         />
       </section>
-      <section className="m-20 bg-red-500">forms</section>
+      {/* Login forms */}
+      <section className="">
+        <div className="flex flex-col justify-center sm:py-12 mt-5">
+          <div className="p-5 xs:p-0 mx-auto md:w-full md:max-w-md">
+            <div className="bg-gray-1 shadow w-full rounded-lg px-10 py-5">
+              <div className="py-7">
+                <input
+                  placeholder="E-mail"
+                  type="text"
+                  className="rounded-lg  bg-gray-3 px-4 py-3 mt-1 mb-5 text-sm w-full focus:outline-none"
+                />
+
+                <input
+                  placeholder="Password"
+                  type="text"
+                  className="rounded-lg  bg-gray-3 px-4 py-3 mt-1 mb-1 text-sm w-full focus:outline-none"
+                />
+                <a className="text-sm cursor-pointer hover:opacity-80">
+                  I forgot my password
+                </a>
+                <button
+                  type="button"
+                  className="mt-5 transition duration-200 bg-yellow-1 text-black w-full py-2.5 rounded-lg text-sm font-semibold text-center inline-block hover:opacity-80"
+                >
+                  <span className="inline-block mr-2">Login</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="w-4 h-4 inline-block"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                </button>
+              </div>
+              {/* Don't have an account? */}
+              <p className="text-center mb-5">
+                Don't have an account?{" "}
+                <a className="text-yellow-1 cursor-pointer hover:opacity-80">
+                  Register
+                </a>
+              </p>
+              <hr />
+              {/* Login with github and LinkedIn */}
+              <p className="text-sm text-center my-5 ">Or login with</p>
+
+              <div className="grid grid-cols-2 gap-4 place-items-center">
+                <button
+                  type="button"
+                  className="transition duration-200 bg-gray-3 text-white py-2.5 rounded-lg text-sm font-semibold flex place-items-center gap-4 pl-5 pr-10 hover:opacity-80"
+                >
+                  <img src="/images/github-white.svg" alt="" className="h-5" />
+                  <a
+                    className="inline-block mr-2"
+                    onClick={() => signIn("github")}
+                  >
+                    Github
+                  </a>
+                </button>
+                <button
+                  type="button"
+                  className="transition duration-200 bg-gray-3 text-white py-2.5 rounded-lg text-sm font-semibold flex place-items-center gap-4 pl-5 pr-10 hover:opacity-80"
+                >
+                  <img src="/images/linkedin.png" alt="" className="h-5" />
+                  <a
+                    className="inline-block mr-2"
+                    onClick={() => signIn("linkedin")}
+                  >
+                    LinkedIn
+                  </a>
+                </button>
+              </div>
+            </div>
+
+            {/* Back to home */}
+            <div className="py-5">
+              <div className="grid grid-cols-2 gap-1">
+                <div className="text-center sm:text-left whitespace-nowrap">
+                  <button className="transition duration-200 mx-5 px-5 py-4 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-yellow-1 focus:outline-none focus:bg-yellow-1 hover:text-black">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      className="w-4 h-4 inline-block align-text-top"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                      />
+                    </svg>
+                    <a href="/" className="inline-block ml-1">
+                      Back to home
+                    </a>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }

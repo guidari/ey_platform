@@ -1,0 +1,8 @@
+.stepImg {
+  margin-top: 3rem;
+}
+@media (max-width: 767px) {
+  .stepImg {
+    display: none;
+  }
+}

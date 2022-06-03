@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         yellow: {
           1: "#FFE600", // ey yellow
+          2: "#F2C94C", // ey yellow
         },
         gray: {
           1: "#47475A", // ey light-black

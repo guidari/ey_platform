@@ -1,12 +1,14 @@
-import Layout from '../components/layout'
+import Layout from "../components/layout"
 
-export default function Page () {
+export default function Page() {
   return (
     <Layout>
-      <h1>NextAuth.js Example</h1>
-      <p>
-        This is an example site to demonstrate how to use <a href={`https://next-auth.js.org`}>NextAuth.js</a> for authentication.
-      </p>
+      <div className="bg-gray-1 p-10">
+        <h1>
+          Aqui será a Home, onde iremos adicinar elementos que façam sentido
+          para usuários logados ou não
+        </h1>
+      </div>
     </Layout>
   )
 }
