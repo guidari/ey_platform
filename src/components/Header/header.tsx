@@ -13,8 +13,8 @@ interface INavigation {
 
 const navigation: INavigation[] = [
   { name: "Home", href: "/", current: true },
-  { name: "Jobs", href: "/server", current: false },
-  { name: "Training", href: "#", current: false },
+  { name: "Jobs", href: "/jobs", current: false },
+  { name: "Training", href: "/training", current: false },
 ]
 
 function classNames(...classes: string[]) {
@@ -124,7 +124,7 @@ export default function Header() {
                                 <Menu.Item>
                                   {({ active }) => (
                                     <a
-                                      href="#"
+                                      href="profile"
                                       className={classNames(
                                         active ? "bg-gray-100" : "",
                                         "block px-4 py-2 text-sm text-gray-700"
