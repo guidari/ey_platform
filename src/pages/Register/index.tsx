@@ -16,7 +16,7 @@ export default function Page() {
           Make you first <br></br>step with us!
         </h1>
         <img
-          className={styles.stepImg}
+          className="mt-10 maxmd:hidden"
           src="/images/step-tree.svg"
           alt="Imagem de um homem subindo uma escada de gráficos"
           width="400"

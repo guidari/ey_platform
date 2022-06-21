@@ -16,7 +16,7 @@ export default function Page() {
           Make you first <br></br>step with us!
         </h1>
         <img
-          className={styles.stepImg}
+          className="mt-10 maxmd:hidden"
           src="/images/step.svg"
           alt="Imagem de um homem subindo uma escada de gráficos"
           width="400"
@@ -66,7 +66,10 @@ export default function Page() {
               {/* Don't have an account? */}
               <p className="text-center mb-5">
                 Don't have an account?{" "}
-                <a className="text-yellow-1 cursor-pointer hover:opacity-80">
+                <a
+                  href="register"
+                  className="text-yellow-1 cursor-pointer hover:opacity-80"
+                >
                   Register
                 </a>
               </p>
