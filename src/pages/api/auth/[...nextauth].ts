@@ -18,8 +18,8 @@ export default NextAuth({
       clientSecret: process.env.GITHUB_SECRET,
     }),
     LinkedInProvider({
-      clientId: process.env.LINKEDIN_ID,
-      clientSecret: process.env.LINKEDIN_SECRET,
+      clientId: process.env.LINKEDIN_ID ?? "",
+      clientSecret: process.env.LINKEDIN_SECRET ?? "",
     }),
   ],
 })

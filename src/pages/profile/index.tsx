@@ -35,7 +35,7 @@ export default function Page() {
         <div className="grid gap-4 grid-cols-2 maxlg:grid-cols-1 mx-auto max-w-screen-xl">
           <section className="flex gap-4">
             <img
-              src={session.user?.image}
+              src={session.user?.image ?? ""}
               alt="User profile picture"
               width="170px"
               className="w-170 rounded-md"
