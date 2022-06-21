@@ -14,6 +14,7 @@ module.exports = {
           1: "#47475A", // ey light-black
           2: "#2E2E38", // ey mid-black
           3: "#1A1A28", // ey heavy-black
+          4: "#C1BCCC", // ey light-gray for text
         },
       },
       screens: {
