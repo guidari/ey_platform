@@ -1,8 +1,6 @@
 import Layout from "../../components/layout"
 import { useSession } from "next-auth/react"
 import AccessDenied from "../../components/access-denied"
-import { app, db } from "../../../config/firebase"
-import { doc, getDoc } from "firebase/firestore"
 
 import {
   LocationMarkerIcon,
