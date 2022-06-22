@@ -11,7 +11,7 @@ import {
   query,
   where,
 } from "firebase/firestore"
-import { app, db, getUser } from "../config/firebase"
+import { app, db, getUserByEmail } from "../config/firebase"
 
 export default function Page() {
   const { data: session } = useSession()
@@ -20,7 +20,7 @@ export default function Page() {
     if (session) {
       // const email = session.user?.email
       const email = "guidari@gmail.com"
-      await getUser(email!).then((resolve) => {
+      await getUserByEmail(email!).then((resolve) => {
         console.log("Resolve", resolve)
       })
     }

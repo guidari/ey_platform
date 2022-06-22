@@ -29,16 +29,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
-export const getUser = async (email: string) => {
-  // const unsub = onSnapshot(doc(db, "Users", "QcHoUk3PkIWkH2kO54FD"), (doc) => {
-  //   console.log("Current data: ", doc.data())
-  // })
-
+export const getUserByEmail = async (email: string) => {
   const usersRef = collection(db, "Users")
 
   let user
 
-  // const q = query(usersRef, where('email', 'in', ['USA', 'Japan']));
   const q = query(usersRef, where("email", "==", email))
   const querySnapshot = await getDocs(q)
   querySnapshot.forEach((doc) => {
