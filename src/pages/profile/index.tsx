@@ -1,5 +1,5 @@
 import Layout from "../../components/layout"
-import { useSession } from "next-auth/react"
+import { getSession, GetSessionParams, useSession } from "next-auth/react"
 import AccessDenied from "../../components/access-denied"
 
 import {
@@ -11,10 +11,29 @@ import {
   VideoCameraIcon,
 } from "@heroicons/react/outline"
 
-export default function Page() {
-  const { data: session, status } = useSession()
-  const loading = status === "loading"
-  if (typeof window !== "undefined" && loading) return null
+import { db } from "../../config/firebase"
+import { query, where, collection, getDocs } from "firebase/firestore"
+import { useEffect, useState } from "react"
+
+export default function Page(props: { session: any }) {
+  const { data: session } = useSession()
+  console.log("props", props.session.user.email)
+
+  const [users, setUsers] = useState<any[]>([])
+  const usersRef = collection(db, "users")
+
+  var userEmail = props.session.user.email
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const q = query(usersRef, where("email", "==", userEmail))
+      const data = await getDocs(q)
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    }
+    getUsers()
+  }, [userEmail])
+
+  console.log("users", users)
 
   // If no session exists, display access denied message
   if (!session) {
@@ -28,18 +47,33 @@ export default function Page() {
   // If session exists, display content
   return (
     <Layout>
+      {/* {users.map((user) => {
+        return <h1 key={user.email}>Name: {user.email ?? ""}</h1>
+      })} */}
       {/* Header user info */}
       <div className="bg-gray-1 p-5">
         <div className="grid gap-4 grid-cols-2 maxlg:grid-cols-1 mx-auto max-w-screen-xl">
           <section className="flex gap-4">
-            <img
-              src={session.user?.image ?? ""}
-              alt="User profile picture"
-              width="170px"
-              className="w-170 rounded-md"
-            />
+            {users.map((user) => {
+              return (
+                <img
+                  key={user.email}
+                  src={user.image ?? ""}
+                  alt="User profile picture"
+                  width="170px"
+                  className="w-170 rounded-md"
+                />
+              )
+            })}
+
             <div>
-              <h1 className="text-xl font-semibold">{session.user?.name}</h1>
+              {users.map((user) => {
+                return (
+                  <h1 className="text-xl font-semibold" key={user.email}>
+                    {user.name ?? ""}
+                  </h1>
+                )
+              })}
               <p>Application Developer</p>
 
               <div className="relative inset-y-6 bottom-0 h-16 maxmd:static maxmd:mt-5">
@@ -49,7 +83,9 @@ export default function Page() {
                 </p>
                 <p className="flex py-2">
                   <InboxIcon className="h-5 w-5 mr-3 text-yellow-1" />
-                  {session.user?.email}
+                  {users.map((user) => {
+                    return <span key={user.email}>{user.email ?? ""}</span>
+                  })}
                 </p>
                 <p className="flex">
                   <PhoneIcon className="h-5 w-5 mr-3 text-yellow-1" /> +82 2
@@ -95,7 +131,6 @@ export default function Page() {
         </div>
       </div>
       {/* Close - Header user info */}
-
       <div className="grid grid-cols-2 max-w-screen-xl maxxl:grid-cols-1 place-items-left maxxl:place-items-center m-auto pt-5">
         {/* ABOUT */}
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
@@ -259,4 +294,14 @@ export default function Page() {
       </div>
     </Layout>
   )
+}
+
+export async function getServerSideProps(
+  context: GetSessionParams | undefined
+) {
+  return {
+    props: {
+      session: await getSession(context),
+    },
+  }
 }
