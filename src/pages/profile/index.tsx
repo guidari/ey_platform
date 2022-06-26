@@ -61,7 +61,10 @@ export default function Page(props: { sessionProps: any }) {
     const data = await getDocs(q)
     setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
   }
-  getUsers()
+
+  useEffect(() => {
+    getUsers()
+  }, [])
 
   const getUserSkill = () => {
     users.map((user) => {
