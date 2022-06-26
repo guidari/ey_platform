@@ -51,9 +51,7 @@ export default function Page(props: { sessionProps: any }) {
     })
   }
 
-  useEffect(() => {
-    getUsers()
-  }, [userDocumentChange])
+  useEffect(() => {}, [userDocumentChange])
 
   const getUsers = async () => {
     const q = query(
@@ -63,6 +61,7 @@ export default function Page(props: { sessionProps: any }) {
     const data = await getDocs(q)
     setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
   }
+  getUsers()
 
   const getUserSkill = () => {
     users.map((user) => {
