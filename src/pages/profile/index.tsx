@@ -28,7 +28,7 @@ import {
 } from "firebase/firestore"
 import { useEffect, useState } from "react"
 
-export default function Page(props: { session: any }) {
+export default function Page(props: { sessionProps: any }) {
   const { data: session } = useSession()
 
   const [openModal, setOpenModal] = useState(false)
@@ -56,7 +56,10 @@ export default function Page(props: { session: any }) {
   }, [userDocumentChange])
 
   const getUsers = async () => {
-    const q = query(usersRef, where("email", "==", props.session.user.email))
+    const q = query(
+      usersRef,
+      where("email", "==", props.sessionProps.user.email)
+    )
     const data = await getDocs(q)
     setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
   }
@@ -368,7 +371,7 @@ export async function getServerSideProps(
 ) {
   return {
     props: {
-      session: await getSession(context),
+      sessionProps: await getSession(context),
     },
   }
 }
