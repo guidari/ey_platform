@@ -33,10 +33,11 @@ export default function Page(props: { session: any }) {
 
   const [openModal, setOpenModal] = useState(false)
   const [openModalAbout, setOpenModalAbout] = useState(false)
+
   const [users, setUsers] = useState<any[]>([])
+  const [skill, setSkill] = useState<string>()
 
   const usersRef = collection(db, "users")
-  var userIdSession: string
 
   // This fuction is watching hte document in case there is a change
   const userDocumentChange = () => {
@@ -84,7 +85,7 @@ export default function Page(props: { session: any }) {
     })
 
     updateDoc(doc(db, `users/${userId}`), {
-      skills: arrayUnion(skill.value),
+      skills: arrayUnion(skill),
     })
     console.log("data added")
   }
@@ -318,7 +319,8 @@ export default function Page(props: { session: any }) {
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
           <h1 className="text-xl font-semibold">Skills</h1>
           <input
-            id="skill"
+            id="skillInput"
+            onChange={(event) => setSkill(event.target.value)}
             onKeyPress={(e) => {
               if (e.key === "Enter") {
                 createUserSkill()
