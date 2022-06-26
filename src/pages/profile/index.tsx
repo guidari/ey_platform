@@ -51,13 +51,13 @@ export default function Page(props: { session: any }) {
     })
   }
 
-  var userEmail = props.session.user.email
-
   useEffect(() => {
     getUsers()
   }, [userDocumentChange])
 
   const getUsers = async () => {
+    let userEmail = props.session.user.email
+
     const q = query(usersRef, where("email", "==", userEmail))
     const data = await getDocs(q)
     setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
