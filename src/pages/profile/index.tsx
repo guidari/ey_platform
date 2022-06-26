@@ -1,6 +1,7 @@
 import Layout from "../../components/layout"
 import { getSession, GetSessionParams, useSession } from "next-auth/react"
 import AccessDenied from "../../components/access-denied"
+import Skill from "../../components/Skill/skill"
 
 import {
   LocationMarkerIcon,
@@ -11,29 +12,86 @@ import {
   VideoCameraIcon,
 } from "@heroicons/react/outline"
 
+import Modal from "../../components/Modal/modal"
+import ModalAbout from "../../components/Modal/modalAbout"
+
 import { db } from "../../config/firebase"
-import { query, where, collection, getDocs } from "firebase/firestore"
+import {
+  query,
+  where,
+  collection,
+  getDocs,
+  updateDoc,
+  doc,
+  arrayUnion,
+  onSnapshot,
+} from "firebase/firestore"
 import { useEffect, useState } from "react"
 
 export default function Page(props: { session: any }) {
   const { data: session } = useSession()
-  console.log("props", props.session.user.email)
 
+  const [openModal, setOpenModal] = useState(false)
+  const [openModalAbout, setOpenModalAbout] = useState(false)
   const [users, setUsers] = useState<any[]>([])
+
   const usersRef = collection(db, "users")
+  var userIdSession: string
+
+  // This fuction is watching hte document in case there is a change
+  const userDocumentChange = () => {
+    let userId
+    users.map((user) => {
+      userId = user.id
+    })
+
+    onSnapshot(doc(db, `users/${userId}`), (doc) => {
+      console.log("Current data: ", doc.data())
+    })
+  }
 
   var userEmail = props.session.user.email
 
   useEffect(() => {
-    const getUsers = async () => {
-      const q = query(usersRef, where("email", "==", userEmail))
-      const data = await getDocs(q)
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    }
     getUsers()
-  }, [userEmail])
+  }, [userDocumentChange])
 
-  console.log("users", users)
+  const getUsers = async () => {
+    const q = query(usersRef, where("email", "==", userEmail))
+    const data = await getDocs(q)
+    setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  }
+
+  const getUserSkill = () => {
+    users.map((user) => {
+      let skillSection = ""
+      user.skills.forEach((skill: any) => {
+        // skillSection += <Skill skill={skill as string} />
+        skillSection += `<span class="flex gap-2 bg-gray-3 py-1 px-4 rounded-md cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="w-4 text-yellow-1"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+        ${skill}
+      </span>`
+      })
+      document.querySelector("#skillSection")!.innerHTML = skillSection
+    })
+  }
+  getUserSkill()
+
+  const createUserSkill = () => {
+    let userId
+    users.map((user) => {
+      userId = user.id
+    })
+
+    updateDoc(doc(db, `users/${userId}`), {
+      skills: arrayUnion(skill.value),
+    })
+    console.log("data added")
+  }
+
+  const deleteUserSkill = () => {
+    console.log("clicked")
+  }
 
   // If no session exists, display access denied message
   if (!session) {
@@ -57,7 +115,7 @@ export default function Page(props: { session: any }) {
             {users.map((user) => {
               return (
                 <img
-                  key={user.email}
+                  key={user.id}
                   src={user.image ?? ""}
                   alt="User profile picture"
                   width="170px"
@@ -69,7 +127,7 @@ export default function Page(props: { session: any }) {
             <div>
               {users.map((user) => {
                 return (
-                  <h1 className="text-xl font-semibold" key={user.email}>
+                  <h1 className="text-xl font-semibold" key={user.id}>
                     {user.name ?? ""}
                   </h1>
                 )
@@ -84,7 +142,7 @@ export default function Page(props: { session: any }) {
                 <p className="flex py-2">
                   <InboxIcon className="h-5 w-5 mr-3 text-yellow-1" />
                   {users.map((user) => {
-                    return <span key={user.email}>{user.email ?? ""}</span>
+                    return <span key={user.id}>{user.email ?? ""}</span>
                   })}
                 </p>
                 <p className="flex">
@@ -98,32 +156,34 @@ export default function Page(props: { session: any }) {
           <section className="max-w-2xl">
             <div className="flex justify-between">
               <h1 className="text-xl font-semibold">Social Medias</h1>
-              <PencilIcon className="w-5 mr-3 text-yellow-1 cursor-pointer" />
+              <PencilIcon
+                className="w-5 mr-3 text-yellow-1 cursor-pointer"
+                onClick={() => {
+                  setOpenModal(true)
+                }}
+              />
             </div>
-
+            {openModal && <Modal closeModal={setOpenModal} />}
             <div className="grid grid-cols-4 maxsm:grid-cols-2">
               <span>
                 <button className="bg-gray-3 hover:opacity-90 text-white font-semibold py-2 px-6 rounded-md inline-flex items-center mt-4">
-                  <img className="mr-4" src="/images/github-white.svg" alt="" />
+                  <img
+                    className="mr-4"
+                    src="/images/github-white.svg"
+                    alt="Github Social Media"
+                  />
                   <span>Github</span>
                 </button>
               </span>
               <span>
                 <button className="bg-gray-3 hover:opacity-90 text-white font-semibold py-2 px-6 rounded-md inline-flex items-center mt-4">
-                  <img className="mr-4" src="/images/github-white.svg" alt="" />
-                  <span>Github</span>
-                </button>
-              </span>
-              <span>
-                <button className="bg-gray-3 hover:opacity-90 text-white font-semibold py-2 px-6 rounded-md inline-flex items-center mt-4">
-                  <img className="mr-4" src="/images/github-white.svg" alt="" />
-                  <span>Github</span>
-                </button>
-              </span>
-              <span>
-                <button className="bg-gray-3 hover:opacity-90 text-white font-semibold py-2 px-6 rounded-md inline-flex items-center mt-4">
-                  <img className="mr-4" src="/images/github-white.svg" alt="" />
-                  <span>Github</span>
+                  <img
+                    className="mr-4"
+                    src="/images/linkedin.png"
+                    alt="LinkedIn Social Media"
+                    width="20px"
+                  />
+                  <span>LinkedIn</span>
                 </button>
               </span>
             </div>
@@ -134,16 +194,26 @@ export default function Page(props: { session: any }) {
       <div className="grid grid-cols-2 max-w-screen-xl maxxl:grid-cols-1 place-items-left maxxl:place-items-center m-auto pt-5">
         {/* ABOUT */}
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-          <h1 className="text-xl font-semibold">About</h1>
-          <p className="mt-5">
-            Enthusiast of the best technologies for web & mobile development.
-            Passionate for education and changing people's lives through
-            programming. More than 200k people already went through one of my
-            trainings. “Nothing in this world can take the place of persistence.
-            Talent won’t; nothing is more common than unsuccessful men with
-            talent. Genius won’t; unrewarded genius is practically a cliché.
-            Education won’t; the world is full of educated fools. Persistence
-            and determination alone are all-powerful.”
+          <div className="flex justify-between">
+            <h1 className="text-xl font-semibold">About</h1>
+            <PencilIcon
+              className="w-5 mr-3 text-yellow-1 cursor-pointer"
+              onClick={() => {
+                setOpenModalAbout(true)
+              }}
+            />
+          </div>
+          {openModalAbout && (
+            <ModalAbout
+              closeModal={setOpenModalAbout}
+              aboutText={document.getElementById("aboutText")?.innerText}
+              user={users}
+            />
+          )}
+          <p id="aboutText" className="mt-5">
+            {users.map((user) => {
+              return <span key={user.id}>{user.about ?? ""}</span>
+            })}
           </p>
         </section>
 
@@ -248,28 +318,25 @@ export default function Page(props: { session: any }) {
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
           <h1 className="text-xl font-semibold">Skills</h1>
           <input
+            id="skill"
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                createUserSkill()
+              }
+            }}
             placeholder="Skill"
             type="text"
             className="rounded-lg  bg-gray-3 px-4 py-3  my-5 text-sm w-60 focus:outline-none"
           />
-          <div className="grid grid-cols-4 maxsm:grid-cols-3 grid-flow-row gap-4">
-            <span className="flex gap-2 bg-gray-3 py-1 px-4 rounded-md cursor-pointer">
-              <XIcon className="w-4 text-yellow-1" />
-              React.js
-            </span>
 
-            <span className="flex gap-2 bg-gray-3 py-1 px-4 rounded-md cursor-pointer">
+          <div
+            id="skillSection"
+            className="grid grid-cols-4 maxsm:grid-cols-3 grid-flow-row gap-4"
+          >
+            {/* <span className="flex gap-2 bg-gray-3 py-1 px-4 rounded-md cursor-pointer">
               <XIcon className="w-4 text-yellow-1" />
               React.js
-            </span>
-            <span className="flex gap-2 bg-gray-3 py-1 px-4 rounded-md cursor-pointer">
-              <XIcon className="w-4 text-yellow-1" />
-              React.js
-            </span>
-            <span className="flex gap-2 bg-gray-3 py-1 px-4 rounded-md cursor-pointer">
-              <XIcon className="w-4 text-yellow-1" />
-              React.js
-            </span>
+            </span> */}
           </div>
         </section>
 
