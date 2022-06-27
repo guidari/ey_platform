@@ -2,8 +2,18 @@
 import { Fragment, useRef, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 
-export default function Modal({ closeModal }) {
+export default function Modal({
+  closeModal,
+  saveChanges,
+  children,
+  titleEdit,
+}) {
   const cancelButtonRef = useRef(null)
+
+  const handlerSave = () => {
+    closeModal(false)
+    saveChanges()
+  }
 
   return (
     <Transition.Root show={true} as={Fragment}>
@@ -44,29 +54,23 @@ export default function Modal({ closeModal }) {
                         as="h3"
                         className="text-lg leading-6 font-medium text-white"
                       >
-                        Edit profile
+                        Edit {titleEdit}
                       </Dialog.Title>
-                      <div className="mt-2">
-                        <p className="text-sm text-white">
-                          Are you sure you want to deactivate your account? All
-                          of your data will be permanently removed. This action
-                          cannot be undone.
-                        </p>
-                      </div>
+                      <div className="mt-5">{children}</div>
                     </div>
                   </div>
                 </div>
                 <div className="bg-gray-2 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                   <button
                     type="button"
-                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => closeModal(false)}
+                    className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-yellow-1 text-base font-medium text-gray-3 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-2  sm:ml-3 sm:w-auto sm:text-sm"
+                    onClick={handlerSave}
                   >
                     Save
                   </button>
                   <button
                     type="button"
-                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-1 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => closeModal(false)}
                     ref={cancelButtonRef}
                   >

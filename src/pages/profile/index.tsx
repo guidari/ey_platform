@@ -1,19 +1,16 @@
 import Layout from "../../components/layout"
 import { getSession, GetSessionParams, useSession } from "next-auth/react"
 import AccessDenied from "../../components/access-denied"
-import Skill from "../../components/Skill/skill"
 
 import {
   LocationMarkerIcon,
   PhoneIcon,
   InboxIcon,
   PencilIcon,
-  XIcon,
-  VideoCameraIcon,
 } from "@heroicons/react/outline"
 
-import Modal from "../../components/Modal/modal"
 import ModalAbout from "../../components/Modal/modalAbout"
+import ModalSocial from "../../components/Modal/modalSocial"
 
 import { db } from "../../config/firebase"
 import {
@@ -31,7 +28,7 @@ import { useEffect, useState } from "react"
 export default function Page(props: { sessionProps: any }) {
   const { data: session } = useSession()
 
-  const [openModal, setOpenModal] = useState(false)
+  const [openModalSocial, setOpenModalSocial] = useState(false)
   const [openModalAbout, setOpenModalAbout] = useState(false)
 
   const [users, setUsers] = useState<any[]>([])
@@ -51,12 +48,11 @@ export default function Page(props: { sessionProps: any }) {
     })
   }
 
-  useEffect(() => {}, [userDocumentChange])
-
   const getUsers = async () => {
     const q = query(
       usersRef,
       where("email", "==", props.sessionProps.user.email)
+      // where("email", "==", "gui@gmail.com")
     )
     const data = await getDocs(q)
     setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
@@ -64,19 +60,24 @@ export default function Page(props: { sessionProps: any }) {
 
   useEffect(() => {
     getUsers()
-  }, [])
+  }, [userDocumentChange])
 
   const getUserSkill = () => {
     users.map((user) => {
       let skillSection = ""
-      user.skills.forEach((skill: any) => {
-        // skillSection += <Skill skill={skill as string} />
-        skillSection += `<span class="flex gap-2 bg-gray-3 py-1 px-4 rounded-md cursor-pointer">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="w-4 text-yellow-1"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
-        ${skill}
-      </span>`
-      })
-      document.querySelector("#skillSection")!.innerHTML = skillSection
+
+      if (user.skills === undefined) {
+        return
+      } else {
+        user.skills.forEach((skill: any) => {
+          // skillSection += <Skill skill={skill as string} />
+          skillSection += `<span class="flex gap-2 bg-gray-3 py-1 px-4 rounded-md cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="w-4 text-yellow-1"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+            ${skill}
+          </span>`
+        })
+        document.querySelector("#skillSection")!.innerHTML = skillSection
+      }
     })
   }
   getUserSkill()
@@ -120,7 +121,9 @@ export default function Page(props: { sessionProps: any }) {
               return (
                 <img
                   key={user.id}
-                  src={user.image ?? ""}
+                  src={
+                    user.image == "" ? `/images/userGeneric.png` : user.image
+                  }
                   alt="User profile picture"
                   width="170px"
                   className="w-170 rounded-md"
@@ -131,27 +134,49 @@ export default function Page(props: { sessionProps: any }) {
             <div>
               {users.map((user) => {
                 return (
-                  <h1 className="text-xl font-semibold" key={user.id}>
-                    {user.name ?? ""}
+                  <h1 id="name" className="text-xl font-semibold" key={user.id}>
+                    {user.name ?? session.user?.name}
                   </h1>
                 )
               })}
-              <p>Application Developer</p>
+              {users.map((user) => {
+                return (
+                  <span id="headline" key={user.id}>
+                    {user.location ?? "Headline"}
+                  </span>
+                )
+              })}
 
               <div className="relative inset-y-6 bottom-0 h-16 maxmd:static maxmd:mt-5">
                 <p className="flex">
                   <LocationMarkerIcon className="h-5 w-5 mr-3 text-yellow-1" />
-                  Vancouver, Canada
+                  {users.map((user) => {
+                    return (
+                      <span id="location" key={user.id}>
+                        {user.location ?? "Location"}
+                      </span>
+                    )
+                  })}
                 </p>
                 <p className="flex py-2">
                   <InboxIcon className="h-5 w-5 mr-3 text-yellow-1" />
                   {users.map((user) => {
-                    return <span key={user.id}>{user.email ?? ""}</span>
+                    return (
+                      <span id="email" key={user.id}>
+                        {user.email ?? session.user?.email}
+                      </span>
+                    )
                   })}
                 </p>
                 <p className="flex">
-                  <PhoneIcon className="h-5 w-5 mr-3 text-yellow-1" /> +82 2
-                  97237-4690
+                  <PhoneIcon className="h-5 w-5 mr-3 text-yellow-1" />
+                  {users.map((user) => {
+                    return (
+                      <span id="phone" key={user.id}>
+                        {user.phone ?? "Phone Number"}
+                      </span>
+                    )
+                  })}
                 </p>
               </div>
             </div>
@@ -163,34 +188,66 @@ export default function Page(props: { sessionProps: any }) {
               <PencilIcon
                 className="w-5 mr-3 text-yellow-1 cursor-pointer"
                 onClick={() => {
-                  setOpenModal(true)
+                  setOpenModalSocial(true)
                 }}
               />
             </div>
-            {openModal && <Modal closeModal={setOpenModal} />}
-            <div className="grid grid-cols-4 maxsm:grid-cols-2">
-              <span>
-                <button className="bg-gray-3 hover:opacity-90 text-white font-semibold py-2 px-6 rounded-md inline-flex items-center mt-4">
-                  <img
-                    className="mr-4"
-                    src="/images/github-white.svg"
-                    alt="Github Social Media"
-                  />
-                  <span>Github</span>
-                </button>
-              </span>
-              <span>
-                <button className="bg-gray-3 hover:opacity-90 text-white font-semibold py-2 px-6 rounded-md inline-flex items-center mt-4">
-                  <img
-                    className="mr-4"
-                    src="/images/linkedin.png"
-                    alt="LinkedIn Social Media"
-                    width="20px"
-                  />
-                  <span>LinkedIn</span>
-                </button>
-              </span>
-            </div>
+            {openModalSocial && (
+              <ModalSocial
+                closeModal={setOpenModalSocial}
+                user={users}
+                titleEdit={"Social Information"}
+                name={document.querySelector("#name")?.innerHTML ?? ""}
+                headline={document.querySelector("#headline")?.innerHTML ?? ""}
+                location={document.querySelector("#location")?.innerHTML ?? ""}
+                email={document.querySelector("#email")?.innerHTML ?? ""}
+                phone={document.querySelector("#phone")?.innerHTML ?? ""}
+                github={
+                  document.querySelector("#github")?.getAttribute("href") ?? ""
+                }
+                linkedin={
+                  document.querySelector("#linkedin")?.getAttribute("href") ??
+                  ""
+                }
+              />
+            )}
+            {users.map((user) => {
+              const disableLink = (event: { preventDefault: () => void }) => {
+                event.preventDefault()
+              }
+              return (
+                <div
+                  key={user.id}
+                  className="grid grid-cols-4 maxsm:grid-cols-2"
+                >
+                  <a href={user.github ?? disableLink} target="_blank">
+                    <span>
+                      <button className="bg-gray-3 hover:opacity-90 text-white font-semibold py-2 px-6 rounded-md inline-flex items-center mt-4">
+                        <img
+                          className="mr-4"
+                          src="/images/github-white.svg"
+                          alt="Github Social Media"
+                        />
+                        <span>Github</span>
+                      </button>
+                    </span>
+                  </a>
+                  <a href={user.linkedin ?? ""} target="_blank">
+                    <span>
+                      <button className="bg-gray-3 hover:opacity-90 text-white font-semibold py-2 px-6 rounded-md inline-flex items-center mt-4">
+                        <img
+                          className="mr-4"
+                          src="/images/linkedin.png"
+                          alt="LinkedIn Social Media"
+                          width="20px"
+                        />
+                        <span>LinkedIn</span>
+                      </button>
+                    </span>
+                  </a>
+                </div>
+              )
+            })}
           </section>
         </div>
       </div>
@@ -212,6 +269,7 @@ export default function Page(props: { sessionProps: any }) {
               closeModal={setOpenModalAbout}
               aboutText={document.getElementById("aboutText")?.innerText}
               user={users}
+              titleEdit={"About"}
             />
           )}
           <p id="aboutText" className="mt-5">

@@ -14,11 +14,6 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": [
-    "types/**/*.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "src/components/Modal/modal.jsx"
-  ],
+  "include": ["types/**/*.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
