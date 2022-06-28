@@ -11,6 +11,7 @@ import {
 
 import ModalAbout from "../../components/Modal/modalAbout"
 import ModalSocial from "../../components/Modal/modalSocial"
+import ModalLanguage from "../../components/Modal/modalLanguage"
 
 import { db } from "../../config/firebase"
 import {
@@ -30,6 +31,7 @@ export default function Page(props: { sessionProps: any }) {
 
   const [openModalSocial, setOpenModalSocial] = useState(false)
   const [openModalAbout, setOpenModalAbout] = useState(false)
+  const [openModalLanguage, setOpenModalLanguage] = useState(false)
 
   const [users, setUsers] = useState<any[]>([])
   const [skill, setSkill] = useState<string>()
@@ -45,6 +47,7 @@ export default function Page(props: { sessionProps: any }) {
 
     onSnapshot(doc(db, `users/${userId}`), (doc) => {
       console.log("Current data: ", doc.data())
+      getUsers()
     })
   }
 
@@ -56,11 +59,32 @@ export default function Page(props: { sessionProps: any }) {
     )
     const data = await getDocs(q)
     setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    console.log("users", users)
   }
 
   useEffect(() => {
     getUsers()
-  }, [userDocumentChange])
+  }, [])
+
+  const getUserLanguages = () => {
+    users.map((user) => {
+      let languagesSelection = ""
+
+      if (user.languages === undefined) {
+        return
+      } else {
+        user.languages.forEach((language: any) => {
+          languagesSelection += `<div class="py-2">
+              <p>${language.language}</p>
+              <p class="text-gray-4">${language.profiency}</p>
+            </div>`
+        })
+        document.querySelector("#languagesSelection")!.innerHTML =
+          languagesSelection
+      }
+    })
+  }
+  getUserLanguages()
 
   const getUserSkill = () => {
     users.map((user) => {
@@ -110,9 +134,6 @@ export default function Page(props: { sessionProps: any }) {
   // If session exists, display content
   return (
     <Layout>
-      {/* {users.map((user) => {
-        return <h1 key={user.email}>Name: {user.email ?? ""}</h1>
-      })} */}
       {/* Header user info */}
       <div className="bg-gray-1 p-5">
         <div className="grid gap-4 grid-cols-2 maxlg:grid-cols-1 mx-auto max-w-screen-xl">
@@ -197,6 +218,7 @@ export default function Page(props: { sessionProps: any }) {
                 closeModal={setOpenModalSocial}
                 user={users}
                 titleEdit={"Social Information"}
+                listenToDocumentChange={userDocumentChange}
                 name={document.querySelector("#name")?.innerHTML ?? ""}
                 headline={document.querySelector("#headline")?.innerHTML ?? ""}
                 location={document.querySelector("#location")?.innerHTML ?? ""}
@@ -220,7 +242,11 @@ export default function Page(props: { sessionProps: any }) {
                   key={user.id}
                   className="grid grid-cols-4 maxsm:grid-cols-2"
                 >
-                  <a href={user.github ?? disableLink} target="_blank">
+                  <a
+                    id="github"
+                    href={user.github ?? disableLink}
+                    target="_blank"
+                  >
                     <span>
                       <button className="bg-gray-3 hover:opacity-90 text-white font-semibold py-2 px-6 rounded-md inline-flex items-center mt-4">
                         <img
@@ -232,7 +258,7 @@ export default function Page(props: { sessionProps: any }) {
                       </button>
                     </span>
                   </a>
-                  <a href={user.linkedin ?? ""} target="_blank">
+                  <a id="linkedin" href={user.linkedin ?? ""} target="_blank">
                     <span>
                       <button className="bg-gray-3 hover:opacity-90 text-white font-semibold py-2 px-6 rounded-md inline-flex items-center mt-4">
                         <img
@@ -270,11 +296,16 @@ export default function Page(props: { sessionProps: any }) {
               aboutText={document.getElementById("aboutText")?.innerText}
               user={users}
               titleEdit={"About"}
+              listenToDocumentChange={userDocumentChange}
             />
           )}
           <p id="aboutText" className="mt-5">
             {users.map((user) => {
-              return <span key={user.id}>{user.about ?? ""}</span>
+              return (
+                <span key={user.id}>
+                  {user.about ?? "Tell us about yourself"}
+                </span>
+              )
             })}
           </p>
         </section>
@@ -319,22 +350,28 @@ export default function Page(props: { sessionProps: any }) {
 
         {/* LANGUAGES */}
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-          <h1 className="text-xl font-semibold mb-3">Languages</h1>
+          <div className="flex justify-between">
+            <h1 className="text-xl font-semibold mb-3">Languages</h1>
+            <PencilIcon
+              className="w-5 mr-3 text-yellow-1 cursor-pointer"
+              onClick={() => {
+                setOpenModalLanguage(true)
+              }}
+            />
+            {openModalLanguage && (
+              <ModalLanguage
+                closeModal={setOpenModalLanguage}
+                user={users}
+                titleEdit={"Languages"}
+                listenToDocumentChange={userDocumentChange}
+              />
+            )}
+          </div>
 
-          <div className="divide-y divide-gray-4">
+          <div id="languagesSelection" className="divide-y divide-gray-4">
             <div className="py-2">
-              <p>English</p>
-              <p className="text-gray-4">Native or bilingual profiency</p>
-            </div>
-
-            <div className="py-2">
-              <p>Spanish</p>
-              <p className="text-gray-4">Professional working proficiency</p>
-            </div>
-
-            <div className="py-2">
-              <p>Potuguese</p>
-              <p className="text-gray-4">Native or bilingual profiency</p>
+              <p>Language</p>
+              <p className="text-gray-4">Your profiency level</p>
             </div>
           </div>
         </section>

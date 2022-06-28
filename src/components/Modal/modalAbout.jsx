@@ -8,6 +8,7 @@ export default function ModalSocial({
   aboutText,
   user,
   titleEdit,
+  listenToDocumentChange,
 }) {
   const createUserSkill = () => {
     let userId
@@ -19,6 +20,7 @@ export default function ModalSocial({
       about: about.value,
     })
     closeModal(false)
+    listenToDocumentChange()
     console.log("About updated")
   }
 
@@ -27,9 +29,10 @@ export default function ModalSocial({
       closeModal={closeModal}
       saveChanges={createUserSkill}
       titleEdit={titleEdit}
+      listenToDocumentChange={listenToDocumentChange}
     >
       <textarea
-        className="text-black outline-none rounded-md p-2"
+        className="text-white outline-none rounded-md p-3 bg-gray-1 "
         name="about"
         id="about"
         cols="55"

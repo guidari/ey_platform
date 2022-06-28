@@ -7,6 +7,7 @@ export default function ModalSocial({
   closeModal,
   user,
   titleEdit,
+  listenToDocumentChange,
   name,
   headline,
   location,
@@ -31,6 +32,7 @@ export default function ModalSocial({
       linkedin: linkedinTyped.value,
     })
     closeModal(false)
+    listenToDocumentChange()
     console.log("Social Information updated")
   }
 
@@ -39,6 +41,7 @@ export default function ModalSocial({
       closeModal={closeModal}
       saveChanges={updateSocialInformation}
       titleEdit={titleEdit}
+      listenToDocumentChange={listenToDocumentChange}
     >
       <p>Name:</p>
       <input
