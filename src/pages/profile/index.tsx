@@ -27,7 +27,7 @@ import {
 import { useEffect, useState } from "react"
 
 export default function Page(props: { sessionProps: any }) {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
 
   const [openModalSocial, setOpenModalSocial] = useState(false)
   const [openModalAbout, setOpenModalAbout] = useState(false)
@@ -121,6 +121,10 @@ export default function Page(props: { sessionProps: any }) {
   const deleteUserSkill = () => {
     console.log("clicked")
   }
+
+  // Avoid to render the wrong session
+  const loading = status === "loading"
+  if (typeof window !== "undefined" && loading) return null
 
   // If no session exists, display access denied message
   if (!session) {
