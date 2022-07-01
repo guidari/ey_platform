@@ -1,6 +1,7 @@
 import Layout from "../../components/layout"
 import { getSession, GetSessionParams, useSession } from "next-auth/react"
 import AccessDenied from "../../components/access-denied"
+import YouTube from "react-youtube"
 
 import {
   LocationMarkerIcon,
