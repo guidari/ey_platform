@@ -4,18 +4,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react"
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline"
 import { signIn, signOut, useSession } from "next-auth/react"
 import router from "next/router"
-
-interface INavigation {
-  name: string
-  href: string
-  current: Boolean
-}
-
-const navigation: INavigation[] = [
-  { name: "Home", href: "/", current: true },
-  { name: "Jobs", href: "/jobs", current: false },
-  { name: "Training", href: "/training", current: false },
-]
+import { NavLink } from "./NavLink"
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
@@ -23,6 +12,8 @@ function classNames(...classes: string[]) {
 
 export default function Header() {
   const { data: session, status } = useSession()
+  const loading = status === "loading"
+  if (typeof window !== "undefined" && loading) return null
 
   return (
     <Disclosure as="nav" className="bg-gray-3">
@@ -56,21 +47,9 @@ export default function Header() {
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current
-                            ? "bg-yellow-1 text-black"
-                            : "text-gray-300 hover:bg-gray-1 hover:text-white",
-                          "px-3 py-2 rounded-md text-sm font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        {item.name}
-                      </a>
-                    ))}
+                    <NavLink title="Home" href="/" />
+                    <NavLink title="Jobs" href="/jobs" />
+                    <NavLink title="Training" href="/training" />
                   </div>
                 </div>
               </div>
@@ -159,26 +138,6 @@ export default function Header() {
               </div>
             </div>
           </div>
-
-          <Disclosure.Panel className="sm:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1">
-              {navigation.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? "bg-yellow-1 text-black"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                    "block px-3 py-2 rounded-md text-base font-medium"
-                  )}
-                  aria-current={item.current ? "page" : undefined}
-                >
-                  {item.name}
-                </a>
-              ))}
-            </div>
-          </Disclosure.Panel>
         </>
       )}
     </Disclosure>
