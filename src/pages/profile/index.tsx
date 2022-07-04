@@ -26,6 +26,25 @@ import {
   onSnapshot,
 } from "firebase/firestore"
 import { useEffect, useState } from "react"
+import { useQuery } from "react-query"
+import { HeaderProfile } from "./HeaderProfile"
+
+type IUser = [
+  {
+    id?: string
+    name?: string
+    email?: string
+    about?: string
+    github?: string
+    linkedin?: string
+    headline?: string
+    image?: string
+    languages?: []
+    skills?: []
+    location?: string
+    phone?: string
+  }
+]
 
 export default function Page(props: { sessionProps: any }) {
   const { data: session, status } = useSession()
@@ -63,8 +82,24 @@ export default function Page(props: { sessionProps: any }) {
     console.log("users", users)
   }
 
+  const { data, isLoading, error } = useQuery("users", async () => {
+    const q = query(
+      usersRef,
+      where("email", "==", props.sessionProps.user.email)
+      // where("email", "==", "gui@gmail.com")
+    )
+    const data = await getDocs(q)
+    const user = data.docs.map((user) => ({
+      ...user.data(),
+      id: user.id,
+    }))
+
+    return user
+  })
+
   useEffect(() => {
     getUsers()
+    console.log("chamou")
   }, [])
 
   const getUserLanguages = () => {
@@ -139,23 +174,45 @@ export default function Page(props: { sessionProps: any }) {
   // If session exists, display content
   return (
     <Layout>
+      {isLoading ? (
+        <h1>Loading</h1>
+      ) : error ? (
+        <h1>Loading</h1>
+      ) : (
+        <HeaderProfile
+          userData={data}
+          session={session}
+          listenToDocumentChange={userDocumentChange}
+        />
+      )}
+
       {/* Header user info */}
-      <div className="bg-gray-1 p-5">
+      {/* <div className="bg-gray-1 p-5">
         <div className="grid gap-4 grid-cols-2 maxlg:grid-cols-1 mx-auto max-w-screen-xl">
           <section className="flex gap-4">
-            {users.map((user) => {
-              return (
-                <img
-                  key={user.id}
-                  src={
-                    user.image == "" ? `/images/userGeneric.png` : user.image
-                  }
-                  alt="User profile picture"
-                  width="170px"
-                  className="w-170 rounded-md"
-                />
-              )
-            })}
+            {isLoading ? (
+              <h1>Loading</h1>
+            ) : error ? (
+              <h1>Falha ao obter dados do usuário</h1>
+            ) : (
+              <>
+                {data?.map((user) => {
+                  return (
+                    <img
+                      key={user.id}
+                      src={
+                        user.image == ""
+                          ? `/images/userGeneric.png`
+                          : user.image
+                      }
+                      alt="User profile picture"
+                      width="170px"
+                      className="w-170 rounded-md"
+                    />
+                  )
+                })}
+              </>
+            )}
 
             <div>
               {users.map((user) => {
@@ -281,7 +338,7 @@ export default function Page(props: { sessionProps: any }) {
             })}
           </section>
         </div>
-      </div>
+      </div> */}
       {/* Close - Header user info */}
       <div className="grid grid-cols-2 max-w-screen-xl maxxl:grid-cols-1 place-items-left maxxl:place-items-center m-auto pt-5">
         {/* ABOUT */}
