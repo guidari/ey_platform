@@ -6,7 +6,7 @@ import {
   CurrencyDollarIcon,
 } from "@heroicons/react/outline"
 import { useState } from "react"
-import ModalSocial from "../../components/Modal/modalSocial"
+import ModalSocial from "../Modal/modalSocial"
 
 // type IUser = {
 //   id: string
@@ -39,11 +39,7 @@ import ModalSocial from "../../components/Modal/modalSocial"
 //   // userDocumentChange: any
 // }
 
-export default function HeaderProfile({
-  userData,
-  session,
-  listenToDocumentChange,
-}) {
+export default function Header({ userData, session, listenToDocumentChange }) {
   // listenToDocumentChange: any
   const [openModalSocial, setOpenModalSocial] = useState(false)
 

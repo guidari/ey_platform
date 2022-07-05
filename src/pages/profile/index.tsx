@@ -27,7 +27,8 @@ import {
 } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
-import HeaderProfile from "./HeaderProfile"
+import Header from "../../components/Profile/Header"
+import About from "../../components/Profile/About"
 
 type IUser = [
   {
@@ -49,7 +50,6 @@ type IUser = [
 export default function Page(props: { sessionProps: any }) {
   const { data: session, status } = useSession()
 
-  const [openModalAbout, setOpenModalAbout] = useState(false)
   const [openModalLanguage, setOpenModalLanguage] = useState(false)
 
   const [users, setUsers] = useState<any[]>([])
@@ -164,7 +164,7 @@ export default function Page(props: { sessionProps: any }) {
       ) : error ? (
         <h1>Loading</h1>
       ) : (
-        <HeaderProfile
+        <Header
           userData={data}
           session={session}
           listenToDocumentChange={refetch}
@@ -174,7 +174,7 @@ export default function Page(props: { sessionProps: any }) {
       <div className="grid grid-cols-2 max-w-screen-xl maxxl:grid-cols-1 place-items-left maxxl:place-items-center m-auto pt-5">
         {/* ABOUT */}
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-          <div className="flex justify-between">
+          {/* <div className="flex justify-between">
             <h1 className="text-xl font-semibold">About</h1>
             <PencilIcon
               className="w-5 mr-3 text-yellow-1 cursor-pointer"
@@ -200,7 +200,15 @@ export default function Page(props: { sessionProps: any }) {
                 </span>
               )
             })}
-          </p>
+          </p> */}
+
+          {isLoading ? (
+            <h1>Loading</h1>
+          ) : error ? (
+            <h1>Loading</h1>
+          ) : (
+            <About userData={data} listenToDocumentChange={refetch} />
+          )}
         </section>
 
         {/* EXPERIENCE */}
