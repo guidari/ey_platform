@@ -3,6 +3,7 @@ import {
   LocationMarkerIcon,
   PencilIcon,
   PhoneIcon,
+  CurrencyDollarIcon,
 } from "@heroicons/react/outline"
 import { useState } from "react"
 import ModalSocial from "../../components/Modal/modalSocial"
@@ -182,6 +183,27 @@ export default function HeaderProfile({
               </div>
             )
           })}
+          <div>
+            <h1 className="mt-4 text-xl font-semibold">EYCoin</h1>
+            <div className="flex place-items-center">
+              <span>
+                <CurrencyDollarIcon className="h-5 w-5 mr-2 mt-3 text-yellow-1" />
+              </span>
+              <p className="mt-2 text-yellow-1 text-xl font-semibold">
+                {userData.map((user) => {
+                  return (
+                    <h1
+                      id="name"
+                      className="text-xl font-semibold"
+                      key={user.id}
+                    >
+                      {user.eycoin}
+                    </h1>
+                  )
+                })}
+              </p>
+            </div>
+          </div>
         </section>
       </div>
     </div>
