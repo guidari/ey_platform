@@ -3,8 +3,29 @@ import { useSession } from "next-auth/react"
 import { db } from "../config/firebase"
 import { query, where, collection, getDocs } from "firebase/firestore"
 import { createUser } from "../services/user.service"
-import { ICourses, ICourse } from "./training/interfaceCourses"
 import GrayBox from "../components/GrayBox/grayBox"
+
+interface ICourses {
+  aggregations: Array<any>
+  boosted_language: string
+  count: number
+  next: string
+  previous: string
+  results: Array<any>
+  search_tracking_id: string
+}
+
+interface ICourse {
+  curriculum_items: Array<any>
+  curriculum_lectures: Array<any>
+  headline: string
+  id: number
+  image_125_H: string
+  image_240x135: string
+  image_480x270: string
+  title: string
+  visible_instructors: Array<any>
+}
 
 export default function Page() {
   const { data: session, status } = useSession()
