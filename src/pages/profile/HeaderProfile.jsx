@@ -5,46 +5,40 @@ import {
   PhoneIcon,
 } from "@heroicons/react/outline"
 import { useState } from "react"
-import ModalSocial from "../../components/Modal/modalAbout"
+import ModalSocial from "../../components/Modal/modalSocial"
 
-type IUser = [
-  {
-    id: string
-    name: string
-    email: string
-    about: string
-    github: string
-    linkedin: string
-    headline: string
-    image: string
-    languages: []
-    skills: []
-    location: string
-    phone: string
-  }
-]
+// type IUser = {
+//   id: string
+//   name: string
+//   email: string
+//   about: string
+//   github: string
+//   linkedin: string
+//   headline: string
+//   image: string
+//   languages: []
+//   skills: []
+//   location: string
+//   phone: string
+// }
 
-type ISession = {
-  user: {
-    name: string
-    email: string
-    image: string
-  }
-  expires: any
-  foo: any
-}
+// type ISession = {
+//   user: {
+//     name: string
+//     email: string
+//     image: string
+//   }
+//   expires: any
+//   foo: any
+// }
 
-interface HeaderProps {
-  userData: IUser
-  session: any
-  userDocumentChange: void
-}
+// interface HeaderProps {
+//   userData: any
+//   session: any
+//   // userDocumentChange: any
+// }
 
-export function HeaderProfile({
-  userData,
-  session,
-  userDocumentChange,
-}: HeaderProps) {
+export function HeaderProfile({ userData, session, listenToDocumentChange }) {
   // listenToDocumentChange: any
   const [openModalSocial, setOpenModalSocial] = useState(false)
 
@@ -77,7 +71,7 @@ export function HeaderProfile({
             {userData.map((user) => {
               return (
                 <span id="headline" key={user.id}>
-                  {user.location ?? "Headline"}
+                  {user.headline ?? "Headline"}
                 </span>
               )
             })}
@@ -132,7 +126,7 @@ export function HeaderProfile({
               closeModal={setOpenModalSocial}
               user={userData}
               titleEdit={"Social Information"}
-              listenToDocumentChange={userDocumentChange}
+              listenToDocumentChange={listenToDocumentChange}
               name={document.querySelector("#name")?.innerHTML ?? ""}
               headline={document.querySelector("#headline")?.innerHTML ?? ""}
               location={document.querySelector("#location")?.innerHTML ?? ""}
@@ -147,7 +141,7 @@ export function HeaderProfile({
             />
           )}
           {userData.map((user) => {
-            const disableLink = (event: { preventDefault: () => void }) => {
+            const disableLink = (event) => {
               event.preventDefault()
             }
             return (

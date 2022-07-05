@@ -31,18 +31,18 @@ import { HeaderProfile } from "./HeaderProfile"
 
 type IUser = [
   {
-    id?: string
-    name?: string
-    email?: string
-    about?: string
-    github?: string
-    linkedin?: string
-    headline?: string
-    image?: string
-    languages?: []
-    skills?: []
-    location?: string
-    phone?: string
+    id: string
+    name: string
+    email: string
+    about: string
+    github: string
+    linkedin: string
+    headline: string
+    image: string
+    languages: []
+    skills: []
+    location: string
+    phone: string
   }
 ]
 
@@ -66,9 +66,10 @@ export default function Page(props: { sessionProps: any }) {
     })
 
     onSnapshot(doc(db, `users/${userId}`), (doc) => {
-      console.log("Current data: ", doc.data())
+      console.log("userDocumentChange: ", doc.data())
       getUsers()
     })
+    refetch()
   }
 
   const getUsers = async () => {
@@ -79,10 +80,9 @@ export default function Page(props: { sessionProps: any }) {
     )
     const data = await getDocs(q)
     setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    console.log("users", users)
   }
 
-  const { data, isLoading, error } = useQuery("users", async () => {
+  const { data, isLoading, error, refetch } = useQuery("users", async () => {
     const q = query(
       usersRef,
       where("email", "==", props.sessionProps.user.email)
@@ -99,7 +99,6 @@ export default function Page(props: { sessionProps: any }) {
 
   useEffect(() => {
     getUsers()
-    console.log("chamou")
   }, [])
 
   const getUserLanguages = () => {
