@@ -1,4 +1,4 @@
-interface ICourses {
+export default interface ICourses {
   aggregations: Array<any>
   boosted_language: string
   count: number
@@ -8,7 +8,7 @@ interface ICourses {
   search_tracking_id: string
 }
 
-interface ICourse {
+export default interface ICourse {
   curriculum_items: Array<any>
   curriculum_lectures: Array<any>
   headline: string
@@ -19,5 +19,3 @@ interface ICourse {
   title: string
   visible_instructors: Array<any>
 }
-
-export type { ICourses, ICourse }

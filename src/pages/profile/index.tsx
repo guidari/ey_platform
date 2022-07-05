@@ -27,7 +27,7 @@ import {
 } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
-import { HeaderProfile } from "./HeaderProfile"
+import HeaderProfile from "./HeaderProfile"
 
 type IUser = [
   {

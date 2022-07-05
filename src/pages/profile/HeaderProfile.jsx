@@ -38,7 +38,11 @@ import ModalSocial from "../../components/Modal/modalSocial"
 //   // userDocumentChange: any
 // }
 
-export function HeaderProfile({ userData, session, listenToDocumentChange }) {
+export default function HeaderProfile({
+  userData,
+  session,
+  listenToDocumentChange,
+}) {
   // listenToDocumentChange: any
   const [openModalSocial, setOpenModalSocial] = useState(false)
 
