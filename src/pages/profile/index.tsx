@@ -1,17 +1,9 @@
 import Layout from "../../components/layout"
 import { getSession, GetSessionParams, useSession } from "next-auth/react"
 import AccessDenied from "../../components/access-denied"
-import YouTube from "react-youtube"
 
-import {
-  LocationMarkerIcon,
-  PhoneIcon,
-  InboxIcon,
-  PencilIcon,
-} from "@heroicons/react/outline"
+import { PencilIcon } from "@heroicons/react/outline"
 
-import ModalAbout from "../../components/Modal/modalAbout"
-import ModalSocial from "../../components/Modal/modalSocial"
 import ModalLanguage from "../../components/Modal/modalLanguage"
 
 import { db } from "../../config/firebase"
@@ -23,7 +15,6 @@ import {
   updateDoc,
   doc,
   arrayUnion,
-  onSnapshot,
 } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
@@ -174,34 +165,6 @@ export default function Page(props: { sessionProps: any }) {
       <div className="grid grid-cols-2 max-w-screen-xl maxxl:grid-cols-1 place-items-left maxxl:place-items-center m-auto pt-5">
         {/* ABOUT */}
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-          {/* <div className="flex justify-between">
-            <h1 className="text-xl font-semibold">About</h1>
-            <PencilIcon
-              className="w-5 mr-3 text-yellow-1 cursor-pointer"
-              onClick={() => {
-                setOpenModalAbout(true)
-              }}
-            />
-          </div>
-          {openModalAbout && (
-            <ModalAbout
-              closeModal={setOpenModalAbout}
-              aboutText={document.getElementById("aboutText")?.innerText}
-              user={users}
-              titleEdit={"About"}
-              listenToDocumentChange={refetch}
-            />
-          )}
-          <p id="aboutText" className="mt-5">
-            {users.map((user) => {
-              return (
-                <span key={user.id}>
-                  {user.about ?? "Tell us about yourself"}
-                </span>
-              )
-            })}
-          </p> */}
-
           {isLoading ? (
             <h1>Loading</h1>
           ) : error ? (
