@@ -49,7 +49,6 @@ type IUser = [
 export default function Page(props: { sessionProps: any }) {
   const { data: session, status } = useSession()
 
-  const [openModalSocial, setOpenModalSocial] = useState(false)
   const [openModalAbout, setOpenModalAbout] = useState(false)
   const [openModalLanguage, setOpenModalLanguage] = useState(false)
 
@@ -57,20 +56,6 @@ export default function Page(props: { sessionProps: any }) {
   const [skill, setSkill] = useState<string>()
 
   const usersRef = collection(db, "users")
-
-  // This fuction is watching hte document in case there is a change
-  const userDocumentChange = () => {
-    let userId
-    users.map((user) => {
-      userId = user.id
-    })
-
-    onSnapshot(doc(db, `users/${userId}`), (doc) => {
-      console.log("userDocumentChange: ", doc.data())
-      getUsers()
-    })
-    refetch()
-  }
 
   const getUsers = async () => {
     const q = query(
@@ -173,6 +158,7 @@ export default function Page(props: { sessionProps: any }) {
   // If session exists, display content
   return (
     <Layout>
+      {/* Header user info */}
       {isLoading ? (
         <h1>Loading</h1>
       ) : error ? (
@@ -181,163 +167,9 @@ export default function Page(props: { sessionProps: any }) {
         <HeaderProfile
           userData={data}
           session={session}
-          listenToDocumentChange={userDocumentChange}
+          listenToDocumentChange={refetch}
         />
       )}
-
-      {/* Header user info */}
-      {/* <div className="bg-gray-1 p-5">
-        <div className="grid gap-4 grid-cols-2 maxlg:grid-cols-1 mx-auto max-w-screen-xl">
-          <section className="flex gap-4">
-            {isLoading ? (
-              <h1>Loading</h1>
-            ) : error ? (
-              <h1>Falha ao obter dados do usuário</h1>
-            ) : (
-              <>
-                {data?.map((user) => {
-                  return (
-                    <img
-                      key={user.id}
-                      src={
-                        user.image == ""
-                          ? `/images/userGeneric.png`
-                          : user.image
-                      }
-                      alt="User profile picture"
-                      width="170px"
-                      className="w-170 rounded-md"
-                    />
-                  )
-                })}
-              </>
-            )}
-
-            <div>
-              {users.map((user) => {
-                return (
-                  <h1 id="name" className="text-xl font-semibold" key={user.id}>
-                    {user.name ?? session.user?.name}
-                  </h1>
-                )
-              })}
-              {users.map((user) => {
-                return (
-                  <span id="headline" key={user.id}>
-                    {user.location ?? "Headline"}
-                  </span>
-                )
-              })}
-
-              <div className="relative inset-y-6 bottom-0 h-16 maxmd:static maxmd:mt-5">
-                <p className="flex">
-                  <LocationMarkerIcon className="h-5 w-5 mr-3 text-yellow-1" />
-                  {users.map((user) => {
-                    return (
-                      <span id="location" key={user.id}>
-                        {user.location ?? "Location"}
-                      </span>
-                    )
-                  })}
-                </p>
-                <p className="flex py-2">
-                  <InboxIcon className="h-5 w-5 mr-3 text-yellow-1" />
-                  {users.map((user) => {
-                    return (
-                      <span id="email" key={user.id}>
-                        {user.email ?? session.user?.email}
-                      </span>
-                    )
-                  })}
-                </p>
-                <p className="flex">
-                  <PhoneIcon className="h-5 w-5 mr-3 text-yellow-1" />
-                  {users.map((user) => {
-                    return (
-                      <span id="phone" key={user.id}>
-                        {user.phone ?? "Phone Number"}
-                      </span>
-                    )
-                  })}
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section className="max-w-2xl">
-            <div className="flex justify-between">
-              <h1 className="text-xl font-semibold">Social Medias</h1>
-              <PencilIcon
-                className="w-5 mr-3 text-yellow-1 cursor-pointer"
-                onClick={() => {
-                  setOpenModalSocial(true)
-                }}
-              />
-            </div>
-            {openModalSocial && (
-              <ModalSocial
-                closeModal={setOpenModalSocial}
-                user={users}
-                titleEdit={"Social Information"}
-                listenToDocumentChange={userDocumentChange}
-                name={document.querySelector("#name")?.innerHTML ?? ""}
-                headline={document.querySelector("#headline")?.innerHTML ?? ""}
-                location={document.querySelector("#location")?.innerHTML ?? ""}
-                email={document.querySelector("#email")?.innerHTML ?? ""}
-                phone={document.querySelector("#phone")?.innerHTML ?? ""}
-                github={
-                  document.querySelector("#github")?.getAttribute("href") ?? ""
-                }
-                linkedin={
-                  document.querySelector("#linkedin")?.getAttribute("href") ??
-                  ""
-                }
-              />
-            )}
-            {users.map((user) => {
-              const disableLink = (event: { preventDefault: () => void }) => {
-                event.preventDefault()
-              }
-              return (
-                <div
-                  key={user.id}
-                  className="grid grid-cols-4 maxsm:grid-cols-2"
-                >
-                  <a
-                    id="github"
-                    href={user.github ?? disableLink}
-                    target="_blank"
-                  >
-                    <span>
-                      <button className="bg-gray-3 hover:opacity-90 text-white font-semibold py-2 px-6 rounded-md inline-flex items-center mt-4">
-                        <img
-                          className="mr-4"
-                          src="/images/github-white.svg"
-                          alt="Github Social Media"
-                        />
-                        <span>Github</span>
-                      </button>
-                    </span>
-                  </a>
-                  <a id="linkedin" href={user.linkedin ?? ""} target="_blank">
-                    <span>
-                      <button className="bg-gray-3 hover:opacity-90 text-white font-semibold py-2 px-6 rounded-md inline-flex items-center mt-4">
-                        <img
-                          className="mr-4"
-                          src="/images/linkedin.png"
-                          alt="LinkedIn Social Media"
-                          width="20px"
-                        />
-                        <span>LinkedIn</span>
-                      </button>
-                    </span>
-                  </a>
-                </div>
-              )
-            })}
-          </section>
-        </div>
-      </div> */}
       {/* Close - Header user info */}
       <div className="grid grid-cols-2 max-w-screen-xl maxxl:grid-cols-1 place-items-left maxxl:place-items-center m-auto pt-5">
         {/* ABOUT */}
@@ -357,7 +189,7 @@ export default function Page(props: { sessionProps: any }) {
               aboutText={document.getElementById("aboutText")?.innerText}
               user={users}
               titleEdit={"About"}
-              listenToDocumentChange={userDocumentChange}
+              listenToDocumentChange={refetch}
             />
           )}
           <p id="aboutText" className="mt-5">
@@ -424,7 +256,7 @@ export default function Page(props: { sessionProps: any }) {
                 closeModal={setOpenModalLanguage}
                 user={users}
                 titleEdit={"Languages"}
-                listenToDocumentChange={userDocumentChange}
+                listenToDocumentChange={refetch}
               />
             )}
           </div>
