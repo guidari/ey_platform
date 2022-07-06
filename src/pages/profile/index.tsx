@@ -17,6 +17,7 @@ import { useQuery } from "react-query"
 import Header from "../../components/Profile/Header"
 import About from "../../components/Profile/About"
 import Languages from "../../components/Profile/Languages"
+import Skills from "../../components/Profile/Skills"
 import Spinner from "../../components/Spinner"
 
 type IUser = [
@@ -39,20 +40,7 @@ type IUser = [
 export default function Page(props: { sessionProps: any }) {
   const { data: session, status } = useSession()
 
-  const [users, setUsers] = useState<any[]>([])
-  const [skill, setSkill] = useState<string>()
-
   const usersRef = collection(db, "users")
-
-  const getUsers = async () => {
-    const q = query(
-      usersRef,
-      where("email", "==", props.sessionProps.user.email)
-      // where("email", "==", "gui@gmail.com")
-    )
-    const data = await getDocs(q)
-    setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  }
 
   const { data, isLoading, error, refetch } = useQuery("users", async () => {
     const q = query(
@@ -68,46 +56,6 @@ export default function Page(props: { sessionProps: any }) {
 
     return user
   })
-
-  useEffect(() => {
-    getUsers()
-  }, [])
-
-  const getUserSkill = () => {
-    users.map((user) => {
-      let skillSection = ""
-
-      if (user.skills === undefined) {
-        return
-      } else {
-        user.skills.forEach((skill: any) => {
-          // skillSection += <Skill skill={skill as string} />
-          skillSection += `<span class="flex gap-2 bg-gray-3 py-1 px-4 rounded-md cursor-pointer">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="w-4 text-yellow-1"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
-            ${skill}
-          </span>`
-        })
-        document.querySelector("#skillSection")!.innerHTML = skillSection
-      }
-    })
-  }
-  getUserSkill()
-
-  const createUserSkill = () => {
-    let userId
-    users.map((user) => {
-      userId = user.id
-    })
-
-    updateDoc(doc(db, `users/${userId}`), {
-      skills: arrayUnion(skill),
-    })
-    console.log("data added")
-  }
-
-  const deleteUserSkill = () => {
-    console.log("clicked")
-  }
 
   // Avoid to render the wrong session
   const loading = status === "loading"
@@ -238,29 +186,13 @@ export default function Page(props: { sessionProps: any }) {
 
         {/* SKILLS */}
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-          <h1 className="text-xl font-semibold">Skills</h1>
-          <input
-            id="skillInput"
-            onChange={(event) => setSkill(event.target.value)}
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                createUserSkill()
-              }
-            }}
-            placeholder="Skill"
-            type="text"
-            className="rounded-lg  bg-gray-3 px-4 py-3  my-5 text-sm w-60 focus:outline-none"
-          />
-
-          <div
-            id="skillSection"
-            className="grid grid-cols-4 maxsm:grid-cols-3 grid-flow-row gap-4"
-          >
-            {/* <span className="flex gap-2 bg-gray-3 py-1 px-4 rounded-md cursor-pointer">
-              <XIcon className="w-4 text-yellow-1" />
-              React.js
-            </span> */}
-          </div>
+          {isLoading ? (
+            <Spinner />
+          ) : error ? (
+            <h1>Error</h1>
+          ) : (
+            <Skills userData={data} listenToDocumentChange={refetch} />
+          )}
         </section>
 
         {/* VIDEO INTRODUCTION */}

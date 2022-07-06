@@ -43,5 +43,6 @@ export const createUser = async (
     image: image,
     languages: languages,
     eycoin: 0,
+    skills: [],
   })
 }

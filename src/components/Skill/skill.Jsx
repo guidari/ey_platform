@@ -1,6 +1,6 @@
 import { XIcon } from "@heroicons/react/outline"
 
-export default function Skill({ skill }: { skill: string }) {
+export default function Skill({ skill }) {
   console.log("skill component", skill)
   return (
     <span
