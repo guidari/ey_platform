@@ -33,12 +33,12 @@ export default function Page() {
 
   let courses: ICourses
 
-  fetch("http://localhost:3333/getData")
-    .then((response) => response.json())
-    .then((data) => {
-      courses = data
-      mountCoursesSection()
-    })
+  // fetch("http://localhost:3333/getData")
+  //   .then((response) => response.json())
+  //   .then((data) => {
+  //     courses = data
+  //     mountCoursesSection()
+  //   })
 
   const mountCoursesSection = () => {
     console.log("courses", courses.results)
