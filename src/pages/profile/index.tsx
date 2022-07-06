@@ -17,6 +17,7 @@ import { useQuery } from "react-query"
 import Header from "../../components/Profile/Header"
 import About from "../../components/Profile/About"
 import Languages from "../../components/Profile/Languages"
+import Spinner from "../../components/Spinner"
 
 type IUser = [
   {
@@ -126,9 +127,9 @@ export default function Page(props: { sessionProps: any }) {
     <Layout>
       {/* Header user info */}
       {isLoading ? (
-        <h1>Loading</h1>
+        <Spinner />
       ) : error ? (
-        <h1>Loading</h1>
+        <h1>Error</h1>
       ) : (
         <Header
           userData={data}
@@ -141,9 +142,9 @@ export default function Page(props: { sessionProps: any }) {
         {/* ABOUT */}
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
           {isLoading ? (
-            <h1>Loading</h1>
+            <Spinner />
           ) : error ? (
-            <h1>Loading</h1>
+            <h1>Error</h1>
           ) : (
             <About userData={data} listenToDocumentChange={refetch} />
           )}
@@ -190,9 +191,9 @@ export default function Page(props: { sessionProps: any }) {
         {/* LANGUAGES */}
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
           {isLoading ? (
-            <h1>Loading</h1>
+            <Spinner />
           ) : error ? (
-            <h1>Loading</h1>
+            <h1>Error</h1>
           ) : (
             <Languages userData={data} listenToDocumentChange={refetch} />
           )}
