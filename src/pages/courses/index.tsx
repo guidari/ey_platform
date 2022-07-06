@@ -68,14 +68,16 @@ export default function Page() {
     <Layout>
       <div className="flex flex-col gap-5 max-w-screen-xl maxxl:inline m-auto pt-5">
         <GrayBox title="My Progress" size="full">
-          <div className="grid grid-cols-4 maxxl:grid-cols-2 maxmd:grid-cols-1 gap-5 justify-between px-5 py-2">
+          <div className="grid grid-cols-4 maxxl:grid-cols-2 maxmd:grid-cols-1 gap-5 justify-between px-5 maxmd:px-0 py-2">
             <div className="flex gap-2">
               <div>
                 <DesktopComputerIcon className="w-12 bg-gray-3 p-3 rounded-full text-yellow-1" />
               </div>
               <div>
                 <h1 className="text-2xl font-semibold">11</h1>
-                <h2 className="text-xl font-semibold">Completed courses</h2>
+                <h2 className="text-xl maxmd:text-md font-semibold">
+                  Completed courses
+                </h2>
               </div>
             </div>
 
