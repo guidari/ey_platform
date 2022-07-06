@@ -10,6 +10,18 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
 }
 
+interface INavigation {
+  name: string
+  href: string
+  current: Boolean
+}
+
+const navigation: INavigation[] = [
+  { name: "Home", href: "/", current: true },
+  { name: "Jobs", href: "/jobs", current: false },
+  { name: "Training", href: "/training", current: false },
+]
+
 export default function Header() {
   const { data: session, status } = useSession()
   const loading = status === "loading"
@@ -138,6 +150,14 @@ export default function Header() {
               </div>
             </div>
           </div>
+
+          <Disclosure.Panel className="sm:hidden">
+            <div className="px-2 pt-2 pb-3 space-y-1 grid grid-cols-1">
+              <NavLink title="Home" href="/" />
+              <NavLink title="Jobs" href="/jobs" />
+              <NavLink title="Courses" href="/courses" />
+            </div>
+          </Disclosure.Panel>
         </>
       )}
     </Disclosure>
