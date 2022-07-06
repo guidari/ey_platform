@@ -49,7 +49,7 @@ export default function Header() {
                   <div className="flex space-x-4">
                     <NavLink title="Home" href="/" />
                     <NavLink title="Jobs" href="/jobs" />
-                    <NavLink title="Training" href="/training" />
+                    <NavLink title="Courses" href="/courses" />
                   </div>
                 </div>
               </div>
