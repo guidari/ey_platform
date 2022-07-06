@@ -32,9 +32,16 @@ export const createUser = async (
   name: string,
   image: string
 ) => {
+  const languages = [
+    { language: "Language1", profiency: "Profiency" },
+    { language: "Language2", profiency: "Profiency" },
+    { language: "Language3", profiency: "Profiency" },
+  ]
   setDoc(doc(usersRef), {
     name: name,
     email: email,
     image: image,
+    languages: languages,
+    eycoin: 0,
   })
 }

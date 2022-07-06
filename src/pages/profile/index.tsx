@@ -2,10 +2,6 @@ import Layout from "../../components/layout"
 import { getSession, GetSessionParams, useSession } from "next-auth/react"
 import AccessDenied from "../../components/access-denied"
 
-import { PencilIcon } from "@heroicons/react/outline"
-
-import ModalLanguage from "../../components/Modal/modalLanguage"
-
 import { db } from "../../config/firebase"
 import {
   query,
@@ -20,6 +16,7 @@ import { useEffect, useState } from "react"
 import { useQuery } from "react-query"
 import Header from "../../components/Profile/Header"
 import About from "../../components/Profile/About"
+import Languages from "../../components/Profile/Languages"
 
 type IUser = [
   {
@@ -41,8 +38,6 @@ type IUser = [
 export default function Page(props: { sessionProps: any }) {
   const { data: session, status } = useSession()
 
-  const [openModalLanguage, setOpenModalLanguage] = useState(false)
-
   const [users, setUsers] = useState<any[]>([])
   const [skill, setSkill] = useState<string>()
 
@@ -62,7 +57,7 @@ export default function Page(props: { sessionProps: any }) {
     const q = query(
       usersRef,
       where("email", "==", props.sessionProps.user.email)
-      // where("email", "==", "gui@gmail.com")
+      // where("email", "==", "joao@gmail.com")
     )
     const data = await getDocs(q)
     const user = data.docs.map((user) => ({
@@ -76,26 +71,6 @@ export default function Page(props: { sessionProps: any }) {
   useEffect(() => {
     getUsers()
   }, [])
-
-  const getUserLanguages = () => {
-    users.map((user) => {
-      let languagesSelection = ""
-
-      if (user.languages === undefined) {
-        return
-      } else {
-        user.languages.forEach((language: any) => {
-          languagesSelection += `<div class="py-2">
-              <p>${language.language}</p>
-              <p class="text-gray-4">${language.profiency}</p>
-            </div>`
-        })
-        document.querySelector("#languagesSelection")!.innerHTML =
-          languagesSelection
-      }
-    })
-  }
-  getUserLanguages()
 
   const getUserSkill = () => {
     users.map((user) => {
@@ -214,30 +189,13 @@ export default function Page(props: { sessionProps: any }) {
 
         {/* LANGUAGES */}
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-          <div className="flex justify-between">
-            <h1 className="text-xl font-semibold mb-3">Languages</h1>
-            <PencilIcon
-              className="w-5 mr-3 text-yellow-1 cursor-pointer"
-              onClick={() => {
-                setOpenModalLanguage(true)
-              }}
-            />
-            {openModalLanguage && (
-              <ModalLanguage
-                closeModal={setOpenModalLanguage}
-                user={users}
-                titleEdit={"Languages"}
-                listenToDocumentChange={refetch}
-              />
-            )}
-          </div>
-
-          <div id="languagesSelection" className="divide-y divide-gray-4">
-            <div className="py-2">
-              <p>Language</p>
-              <p className="text-gray-4">Your profiency level</p>
-            </div>
-          </div>
+          {isLoading ? (
+            <h1>Loading</h1>
+          ) : error ? (
+            <h1>Loading</h1>
+          ) : (
+            <Languages userData={data} listenToDocumentChange={refetch} />
+          )}
         </section>
 
         {/* EDUCATION */}
