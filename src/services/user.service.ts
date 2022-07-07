@@ -37,11 +37,14 @@ export const createUser = async (
     { language: "Language2", profiency: "Profiency" },
     { language: "Language3", profiency: "Profiency" },
   ]
+
+  const progress = [{ courses: 0 }, { hours: 0 }, { challenges: 0 }]
   setDoc(doc(usersRef), {
     name: name,
     email: email,
     image: image,
     languages: languages,
+    progress: progress,
     eycoin: 0,
     skills: [],
   })
