@@ -4,7 +4,12 @@ import AccessDenied from "../../components/access-denied"
 import { useEffect, useState } from "react"
 import GrayBox from "../../components/GrayBox/grayBox"
 
+import CourseBox from "../../components/Courses/CourseBox"
+import ButtonTopics from "../../components/Courses/ButtonTopics"
+
 import { DesktopComputerIcon } from "@heroicons/react/outline"
+import { useQuery } from "react-query"
+import Spinner from "../../components/Spinner"
 interface ICourses {
   aggregations: Array<any>
   boosted_language: string
@@ -19,6 +24,7 @@ interface ICourse {
   curriculum_items: Array<any>
   curriculum_lectures: Array<any>
   headline: string
+  url: string
   id: number
   image_125_H: string
   image_240x135: string
@@ -29,30 +35,57 @@ interface ICourse {
 
 export default function Page() {
   const { data: session, status } = useSession()
-  const loading = status === "loading"
-  if (typeof window !== "undefined" && loading) return null
+  // const loading = status === "loading"
+  // if (typeof window !== "undefined" && loading) return null
 
-  let courses: ICourses
+  // let courses: ICourses
 
-  // fetch("http://localhost:3333/getData")
+  // Recommended for you
+  const { data, isLoading, error, refetch } = useQuery("users", async () => {
+    const response = await fetch("http://localhost:3333/courses")
+    const data: ICourses = await response.json()
+
+    const courses = data.results.map((course: ICourse) => {
+      return {
+        id: course.id,
+        title: course.title,
+        curriculum_items: course.curriculum_items,
+        curriculum_lectures: course.curriculum_lectures,
+        headline: course.headline,
+        url: course.url,
+        image_125_H: course.image_125_H,
+        image_240x135: course.image_240x135,
+        image_480x270: course.image_480x270,
+        visible_instructors: course.visible_instructors,
+      }
+    })
+
+    return courses
+  })
+
+  // fetch("http://localhost:3333/search", {
+  //   method: "GET",
+  //   headers: { name: "java" },
+  // })
   //   .then((response) => response.json())
   //   .then((data) => {
   //     courses = data
-  //     mountCoursesSection()
+  //     console.log("data", data)
+  //     // mountCoursesSection()
   //   })
 
-  const mountCoursesSection = () => {
-    console.log("courses", courses.results)
-    // let coursesList = ""
+  // const mountCoursesSection = () => {
+  //   console.log("courses", courses.results)
+  // let coursesList = ""
 
-    // courses.results.forEach((course: ICourse) => {
-    //   coursesList += `
-    //     ${course.title} <br>
-    //   `
+  // courses.results.forEach((course: ICourse) => {
+  //   coursesList += `
+  //     ${course.title} <br>
+  //   `
 
-    //   document.querySelector("#coursesList")!.innerHTML = coursesList
-    // })
-  }
+  //   document.querySelector("#coursesList")!.innerHTML = coursesList
+  // })
+  // }
 
   // If no session exists, display access denied message
   if (!session) {
@@ -75,7 +108,7 @@ export default function Page() {
               </div>
               <div>
                 <h1 className="text-2xl font-semibold">11</h1>
-                <h2 className="text-xl maxmd:text-md font-semibold">
+                <h2 className="text-lg maxmd:text-md font-semibold">
                   Completed courses
                 </h2>
               </div>
@@ -87,7 +120,7 @@ export default function Page() {
               </div>
               <div>
                 <h1 className="text-2xl font-semibold">11</h1>
-                <h2 className="text-xl font-semibold">Completed courses</h2>
+                <h2 className="text-lg font-semibold">Completed courses</h2>
               </div>
             </div>
 
@@ -97,7 +130,9 @@ export default function Page() {
               </div>
               <div>
                 <h1 className="text-2xl font-semibold">11</h1>
-                <h2 className="text-xl font-semibold">Completed courses</h2>
+                <h2 className="text-lg font-semibold">
+                  Hours Completed this year
+                </h2>
               </div>
             </div>
 
@@ -107,7 +142,7 @@ export default function Page() {
               </div>
               <div>
                 <h1 className="text-2xl font-semibold">11</h1>
-                <h2 className="text-xl font-semibold">Completed courses</h2>
+                <h2 className="text-lg font-semibold">Completed Challenges</h2>
               </div>
             </div>
           </div>
@@ -116,88 +151,45 @@ export default function Page() {
           Recommended for you
         </h1>
         <div className="grid grid-cols-4 max2xl:w-5/6 m-auto maxxl:grid-cols-2 maxmd:grid-cols-1 gap-5 justify-between">
-          <div className="bg-gray-1 rounded-md max-w-md">
-            <img
-              src="/images/reactCourse.jpg"
-              alt="Course"
-              className="rounded-tl-md rounded-tr-md"
-            />
-            <div className="p-3">
-              <h1 className="font-semibold">
-                React - The Complete Guide (incl Hooks, React Router, Redux)
-              </h1>
-              <p className="text-gray-3 font-semibold text-sm">
-                Academind by Maximilian Schwarzmüller
-              </p>
-            </div>
-          </div>
+          {/* <CourseBox
+            title="React - The Complete Guide (incl Hooks, React Router, Redux)"
+            professor="Academind by Maximilian Schwarzmüller"
+          />
+          <CourseBox
+            title="React - The Complete Guide (incl Hooks, React Router, Redux)"
+            professor="Academind by Maximilian Schwarzmüller"
+          />
+          <CourseBox
+            title="React - The Complete Guide (incl Hooks, React Router, Redux)"
+            professor="Academind by Maximilian Schwarzmüller"
+          />
+          <CourseBox
+            title="React - The Complete Guide (incl Hooks, React Router, Redux)"
+            professor="Academind by Maximilian Schwarzmüller"
+          /> */}
 
-          <div className="bg-gray-1 rounded-md max-w-md">
-            <img
-              src="/images/reactCourse.jpg"
-              alt="Course"
-              className="rounded-tl-md rounded-tr-md"
-            />
-            <div className="p-3">
-              <h1 className="font-semibold">
-                React - The Complete Guide (incl Hooks, React Router, Redux)
-              </h1>
-              <p className="text-gray-3 font-semibold text-sm">
-                Academind by Maximilian Schwarzmüller
-              </p>
-            </div>
-          </div>
+          {isLoading ? (
+            <Spinner />
+          ) : error ? (
+            <h1>Error</h1>
+          ) : (
+            <>
+              <CourseBox coursesData={data} refetch={refetch} />
+              {/* {data?.results} */}
+            </>
+          )}
 
-          <div className="bg-gray-1 rounded-md max-w-md">
-            <img
-              src="/images/reactCourse.jpg"
-              alt="Course"
-              className="rounded-tl-md rounded-tr-md"
-            />
-            <div className="p-3">
-              <h1 className="font-semibold">
-                React - The Complete Guide (incl Hooks, React Router, Redux)
-              </h1>
-              <p className="text-gray-3 font-semibold text-sm">
-                Academind by Maximilian Schwarzmüller
-              </p>
-            </div>
-          </div>
-
-          <div className="bg-gray-1 rounded-md max-w-md">
-            <img
-              src="/images/reactCourse.jpg"
-              alt="Course"
-              className="rounded-tl-md rounded-tr-md"
-            />
-            <div className="p-3">
-              <h1 className="font-semibold">
-                React - The Complete Guide (incl Hooks, React Router, Redux)
-              </h1>
-              <p className="text-gray-3 font-semibold text-sm">
-                Academind by Maximilian Schwarzmüller
-              </p>
-            </div>
-          </div>
+          {/* {courses.results.map((course) => {})} */}
         </div>
 
         <h1 className="text-xl font-semibold my-5 w-full max2xl:w-5/6 mx-auto">
           Topics recommended for you
         </h1>
-
         <div className="grid grid-cols-4 w-full max2xl:w-5/6 m-auto maxlg:grid-cols-2 gap-5 justify-between">
-          <button className="bg-gray-1 px-5 py-3 w-full rounded-md">
-            Javascript
-          </button>
-          <button className="bg-gray-1 px-5 py-3 w-full rounded-md">
-            Javascript
-          </button>
-          <button className="bg-gray-1 px-5 py-3 w-full rounded-md">
-            Javascript
-          </button>
-          <button className="bg-gray-1 px-5 py-3 w-full rounded-md">
-            Javascript
-          </button>
+          <ButtonTopics title="Javascript" />
+          <ButtonTopics title="Java" />
+          <ButtonTopics title="React" />
+          <ButtonTopics title="Node" />
         </div>
       </div>
     </Layout>
