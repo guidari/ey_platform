@@ -42,7 +42,17 @@ type IUser = [
 export default function Page(props: { sessionProps: any }) {
   const { data: session, status } = useSession()
 
+  if (!props.sessionProps) {
+    return (
+      <Layout>
+        <AccessDenied />
+      </Layout>
+    )
+  }
+
   const usersRef = collection(db, "users")
+
+  console.log("props.sessionProps.user.email", props.sessionProps.user.email)
 
   const { data, isLoading, error, refetch } = useQuery("users", async () => {
     const q = query(
@@ -62,15 +72,8 @@ export default function Page(props: { sessionProps: any }) {
 
   // Avoid to render the wrong session
   const loading = status === "loading"
-  if (typeof window !== "undefined" && loading) return null
-
-  // If no session exists, display access denied message
-  if (!props.sessionProps) {
-    return (
-      <Layout>
-        <AccessDenied />
-      </Layout>
-    )
+  if (typeof window !== "undefined" && loading) {
+    return null
   }
 
   // If session exists, display content
