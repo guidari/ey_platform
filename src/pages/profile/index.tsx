@@ -45,9 +45,6 @@ export default function Page(props: { sessionProps: any }) {
   const usersRef = collection(db, "users")
 
   const { data, isLoading, error, refetch } = useQuery("users", async () => {
-    if (props.sessionProps.user === null || undefined)
-      return console.log("nulll")
-
     const q = query(
       usersRef,
       // where("email", "==", props.sessionProps.user.email)
