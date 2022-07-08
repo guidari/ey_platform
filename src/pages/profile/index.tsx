@@ -37,7 +37,7 @@ type IUser = [
   }
 ]
 
-export default function Page() {
+export default function Page(props: { sessionProps: any }) {
   const { data: session, status } = useSession()
 
   const usersRef = collection(db, "users")
@@ -45,7 +45,7 @@ export default function Page() {
   const { data, isLoading, error, refetch } = useQuery("users", async () => {
     const q = query(
       usersRef,
-      where("email", "==", session?.user?.email)
+      where("email", "==", props.sessionProps.user.email)
       // where("email", "==", "joao@gmail.com")
     )
     const data = await getDocs(q)
@@ -99,7 +99,7 @@ export default function Page() {
         </section>
 
         {/* EXPERIENCE */}
-        {/* <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+        <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
           <h1 className="text-xl font-semibold">Experience</h1>
           <div className="flex gap-5 mt-5">
             <img
@@ -134,7 +134,7 @@ export default function Page() {
           </div>
           <p className="mt-3">Dec 2020 - Present | 1 yr 7 mos</p>
           <p className="mt-3">lorem ipsum dolor sit amet, consectetur adip</p>
-        </section> */}
+        </section>
 
         {/* LANGUAGES */}
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
@@ -148,7 +148,7 @@ export default function Page() {
         </section>
 
         {/* EDUCATION */}
-        {/* <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+        <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
           <h1 className="text-xl font-semibold">Education</h1>
 
           <div className="flex gap-5 mt-5">
@@ -182,7 +182,7 @@ export default function Page() {
             </div>
           </div>
           <p className="mt-3">Feb 2019 - Dec 2022</p>
-        </section> */}
+        </section>
 
         {/* SKILLS */}
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
@@ -218,10 +218,12 @@ export default function Page() {
   )
 }
 
-export async function getServerSideProps(context: GetSessionParams) {
+export async function getServerSideProps(
+  context: GetSessionParams | undefined
+) {
   return {
     props: {
-      session: await getSession(context),
+      sessionProps: await getSession(context),
     },
   }
 }
