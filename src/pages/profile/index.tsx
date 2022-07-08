@@ -47,8 +47,8 @@ export default function Page(props: { sessionProps: any }) {
   const { data, isLoading, error, refetch } = useQuery("users", async () => {
     const q = query(
       usersRef,
-      // where("email", "==", props.sessionProps.user.email)
-      where("email", "==", "guilhermedatilio@gmail.com")
+      where("email", "==", props.sessionProps.user.email)
+      // where("email", "==", userEmail)
       // where("email", "==", "joao@gmail.com")
     )
     const data = await getDocs(q)
@@ -65,7 +65,7 @@ export default function Page(props: { sessionProps: any }) {
   if (typeof window !== "undefined" && loading) return null
 
   // If no session exists, display access denied message
-  if (!session) {
+  if (!props.sessionProps) {
     return (
       <Layout>
         <AccessDenied />
@@ -84,7 +84,7 @@ export default function Page(props: { sessionProps: any }) {
       ) : (
         <Header
           userData={data}
-          session={session}
+          session={props.sessionProps}
           listenToDocumentChange={refetch}
         />
       )}
