@@ -12,13 +12,14 @@ import {
   doc,
   arrayUnion,
 } from "firebase/firestore"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useQuery } from "react-query"
 import Header from "../../components/Profile/Header"
 import About from "../../components/Profile/About"
 import Languages from "../../components/Profile/Languages"
 import Skills from "../../components/Profile/Skills"
 import Spinner from "../../components/Spinner"
+import { UserContext } from "../../contexts/UserContext"
 
 type IUser = [
   {
@@ -40,6 +41,10 @@ type IUser = [
 export default function Page(props: { sessionProps: any }) {
   const { data: session, status } = useSession()
 
+  const userData = useContext(UserContext)
+
+  console.log("userData", userData)
+
   const usersRef = collection(db, "users")
 
   const { data, isLoading, error, refetch } = useQuery("users", async () => {
@@ -56,6 +61,8 @@ export default function Page(props: { sessionProps: any }) {
 
     return user
   })
+
+  // console.log(data)
 
   // Avoid to render the wrong session
   const loading = status === "loading"
@@ -80,7 +87,7 @@ export default function Page(props: { sessionProps: any }) {
         <h1>Error</h1>
       ) : (
         <Header
-          userData={data}
+          userData={userData}
           session={session}
           listenToDocumentChange={refetch}
         />
@@ -94,7 +101,7 @@ export default function Page(props: { sessionProps: any }) {
           ) : error ? (
             <h1>Error</h1>
           ) : (
-            <About userData={data} listenToDocumentChange={refetch} />
+            <About userData={userData} listenToDocumentChange={refetch} />
           )}
         </section>
 
@@ -143,7 +150,7 @@ export default function Page(props: { sessionProps: any }) {
           ) : error ? (
             <h1>Error</h1>
           ) : (
-            <Languages userData={data} listenToDocumentChange={refetch} />
+            <Languages userData={userData} listenToDocumentChange={refetch} />
           )}
         </section>
 
@@ -191,7 +198,7 @@ export default function Page(props: { sessionProps: any }) {
           ) : error ? (
             <h1>Error</h1>
           ) : (
-            <Skills userData={data} listenToDocumentChange={refetch} />
+            <Skills userData={userData} listenToDocumentChange={refetch} />
           )}
         </section>
 
