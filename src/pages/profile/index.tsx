@@ -18,6 +18,8 @@ import Header from "../../components/Profile/Header"
 import About from "../../components/Profile/About"
 import Languages from "../../components/Profile/Languages"
 import Skills from "../../components/Profile/Skills"
+import Experience from "../../components/Profile/Experience"
+import Education from "../../components/Profile/Education"
 import Spinner from "../../components/Spinner"
 
 type IUser = [
@@ -43,9 +45,13 @@ export default function Page(props: { sessionProps: any }) {
   const usersRef = collection(db, "users")
 
   const { data, isLoading, error, refetch } = useQuery("users", async () => {
+    if (props.sessionProps.user === null || undefined)
+      return console.log("nulll")
+
     const q = query(
       usersRef,
-      where("email", "==", props.sessionProps.user.email)
+      // where("email", "==", props.sessionProps.user.email)
+      where("email", "==", "guilhermedatilio@gmail.com")
       // where("email", "==", "joao@gmail.com")
     )
     const data = await getDocs(q)
@@ -100,40 +106,7 @@ export default function Page(props: { sessionProps: any }) {
 
         {/* EXPERIENCE */}
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-          <h1 className="text-xl font-semibold">Experience</h1>
-          <div className="flex gap-5 mt-5">
-            <img
-              src="/images/ibm.png"
-              alt="Company image"
-              width="50px"
-              className="max-h-12"
-            />
-            <div>
-              <p className="font-medium">IBM</p>
-              <p className="font-medium relative inset-y-1 bottom-0">
-                Application Developer
-              </p>
-            </div>
-          </div>
-          <p className="mt-3">Dec 2020 - Present | 1 yr 7 mos</p>
-          <p className="mt-3">lorem ipsum dolor sit amet, consectetur adip</p>
-
-          <div className="flex gap-5 mt-5">
-            <img
-              src="/images/ibm.png"
-              alt="Company image"
-              width="50px"
-              className="max-h-12"
-            />
-            <div>
-              <p className="font-medium">IBM</p>
-              <p className="font-medium relative inset-y-1 bottom-0">
-                Application Developer
-              </p>
-            </div>
-          </div>
-          <p className="mt-3">Dec 2020 - Present | 1 yr 7 mos</p>
-          <p className="mt-3">lorem ipsum dolor sit amet, consectetur adip</p>
+          <Experience />
         </section>
 
         {/* LANGUAGES */}
@@ -149,39 +122,7 @@ export default function Page(props: { sessionProps: any }) {
 
         {/* EDUCATION */}
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-          <h1 className="text-xl font-semibold">Education</h1>
-
-          <div className="flex gap-5 mt-5">
-            <img
-              src="/images/fiap.png"
-              alt="Company image"
-              width="50px"
-              className="max-h-12"
-            />
-            <div>
-              <p className="font-medium ">FIAP</p>
-              <p className="font-medium relative inset-y-1 bottom-0">
-                Bachelor's degree in Information Systems
-              </p>
-            </div>
-          </div>
-          <p className="mt-3">Feb 2019 - Dec 2022</p>
-
-          <div className="flex gap-5 mt-5">
-            <img
-              src="/images/fiap.png"
-              alt="Company image"
-              width="50px"
-              className="max-h-12"
-            />
-            <div>
-              <p className="font-medium ">FIAP</p>
-              <p className="font-medium relative inset-y-1 bottom-0">
-                Bachelor's degree in Information Systems
-              </p>
-            </div>
-          </div>
-          <p className="mt-3">Feb 2019 - Dec 2022</p>
+          <Education />
         </section>
 
         {/* SKILLS */}
