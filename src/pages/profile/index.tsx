@@ -18,6 +18,8 @@ import Header from "../../components/Profile/Header"
 import About from "../../components/Profile/About"
 import Languages from "../../components/Profile/Languages"
 import Skills from "../../components/Profile/Skills"
+import Experience from "../../components/Profile/Experience"
+import Education from "../../components/Profile/Education"
 import Spinner from "../../components/Spinner"
 import { UserContext } from "../../contexts/UserContext"
 
@@ -47,10 +49,13 @@ export default function Page(props: { sessionProps: any }) {
 
   const usersRef = collection(db, "users")
 
+  console.log("props.sessionProps.user.email", props.sessionProps.user.email)
+
   const { data, isLoading, error, refetch } = useQuery("users", async () => {
     const q = query(
       usersRef,
       where("email", "==", props.sessionProps.user.email)
+      // where("email", "==", userEmail)
       // where("email", "==", "joao@gmail.com")
     )
     const data = await getDocs(q)
@@ -66,15 +71,8 @@ export default function Page(props: { sessionProps: any }) {
 
   // Avoid to render the wrong session
   const loading = status === "loading"
-  if (typeof window !== "undefined" && loading) return null
-
-  // If no session exists, display access denied message
-  if (!session) {
-    return (
-      <Layout>
-        <AccessDenied />
-      </Layout>
-    )
+  if (typeof window !== "undefined" && loading) {
+    return null
   }
 
   // If session exists, display content
@@ -87,8 +85,8 @@ export default function Page(props: { sessionProps: any }) {
         <h1>Error</h1>
       ) : (
         <Header
-          userData={userData}
-          session={session}
+          userData={data}
+          session={props.sessionProps}
           listenToDocumentChange={refetch}
         />
       )}
@@ -107,40 +105,7 @@ export default function Page(props: { sessionProps: any }) {
 
         {/* EXPERIENCE */}
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-          <h1 className="text-xl font-semibold">Experience</h1>
-          <div className="flex gap-5 mt-5">
-            <img
-              src="/images/ibm.png"
-              alt="Company image"
-              width="50px"
-              className="max-h-12"
-            />
-            <div>
-              <p className="font-medium">IBM</p>
-              <p className="font-medium relative inset-y-1 bottom-0">
-                Application Developer
-              </p>
-            </div>
-          </div>
-          <p className="mt-3">Dec 2020 - Present | 1 yr 7 mos</p>
-          <p className="mt-3">lorem ipsum dolor sit amet, consectetur adip</p>
-
-          <div className="flex gap-5 mt-5">
-            <img
-              src="/images/ibm.png"
-              alt="Company image"
-              width="50px"
-              className="max-h-12"
-            />
-            <div>
-              <p className="font-medium">IBM</p>
-              <p className="font-medium relative inset-y-1 bottom-0">
-                Application Developer
-              </p>
-            </div>
-          </div>
-          <p className="mt-3">Dec 2020 - Present | 1 yr 7 mos</p>
-          <p className="mt-3">lorem ipsum dolor sit amet, consectetur adip</p>
+          <Experience />
         </section>
 
         {/* LANGUAGES */}
@@ -156,39 +121,7 @@ export default function Page(props: { sessionProps: any }) {
 
         {/* EDUCATION */}
         <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-          <h1 className="text-xl font-semibold">Education</h1>
-
-          <div className="flex gap-5 mt-5">
-            <img
-              src="/images/fiap.png"
-              alt="Company image"
-              width="50px"
-              className="max-h-12"
-            />
-            <div>
-              <p className="font-medium ">FIAP</p>
-              <p className="font-medium relative inset-y-1 bottom-0">
-                Bachelor's degree in Information Systems
-              </p>
-            </div>
-          </div>
-          <p className="mt-3">Feb 2019 - Dec 2022</p>
-
-          <div className="flex gap-5 mt-5">
-            <img
-              src="/images/fiap.png"
-              alt="Company image"
-              width="50px"
-              className="max-h-12"
-            />
-            <div>
-              <p className="font-medium ">FIAP</p>
-              <p className="font-medium relative inset-y-1 bottom-0">
-                Bachelor's degree in Information Systems
-              </p>
-            </div>
-          </div>
-          <p className="mt-3">Feb 2019 - Dec 2022</p>
+          <Education />
         </section>
 
         {/* SKILLS */}
