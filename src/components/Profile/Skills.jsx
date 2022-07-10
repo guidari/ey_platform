@@ -5,22 +5,20 @@ export default function Skills({ userData, listenToDocumentChange }) {
   const [skill, setSkill] = useState()
 
   const getUserSkill = () => {
-    userData.map((user) => {
-      let skillSection = ""
+    let skillSection = ""
 
-      if (user.skills === undefined) {
-        return
-      } else {
-        user.skills.forEach((skill) => {
-          // skillSection += <Skill skill={skill} />
-          skillSection += `<button class="btn-skill flex gap-2 bg-gray-3 py-1 px-4 rounded-md cursor-pointer">
+    if (userData.skills === undefined) {
+      return
+    } else {
+      userData.skills.forEach((skill) => {
+        // skillSection += <Skill skill={skill} />
+        skillSection += `<button class="btn-skill flex gap-2 bg-gray-3 py-1 px-4 rounded-md cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="w-4 mt-1 text-yellow-1"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
             ${skill}
           </button>`
-        })
-        document.querySelector("#skillSection").innerHTML = skillSection
-      }
-    })
+      })
+      document.querySelector("#skillSection").innerHTML = skillSection
+    }
   }
 
   useEffect(() => {
@@ -28,10 +26,7 @@ export default function Skills({ userData, listenToDocumentChange }) {
   })
 
   const createUserSkill = () => {
-    let userId
-    userData.map((user) => {
-      userId = user.id
-    })
+    const userId = userData.id
 
     updateDoc(doc(db, `users/${userId}`), {
       skills: arrayUnion(skill),

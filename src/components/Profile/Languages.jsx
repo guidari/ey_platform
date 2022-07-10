@@ -6,22 +6,20 @@ export default function Languages({ userData, listenToDocumentChange }) {
   const [openModalLanguage, setOpenModalLanguage] = useState(false)
 
   const getUserLanguages = () => {
-    userData.map((user) => {
-      let languagesSelection = ""
+    let languagesSelection = ""
 
-      if (user.languages === undefined) {
-        return
-      } else {
-        user.languages.forEach((language) => {
-          languagesSelection += `<div class="py-2">
+    if (userData.languages === undefined) {
+      return
+    } else {
+      userData.languages.forEach((language) => {
+        languagesSelection += `<div class="py-2">
               <p>${language.language}</p>
               <p class="text-gray-4">${language.profiency}</p>
             </div>`
-        })
-        document.querySelector("#languagesSelection").innerHTML =
-          languagesSelection
-      }
-    })
+      })
+      document.querySelector("#languagesSelection").innerHTML =
+        languagesSelection
+    }
   }
   useEffect(() => {
     getUserLanguages()

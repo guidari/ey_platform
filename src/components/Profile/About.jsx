@@ -26,11 +26,7 @@ export default function About({ userData, listenToDocumentChange }) {
         />
       )}
       <p id="aboutText" className="mt-5">
-        {userData.map((user) => {
-          return (
-            <span key={user.id}>{user.about ?? "Tell us about yourself"}</span>
-          )
-        })}
+        <span>{userData.about ?? "Tell us about yourself"}</span>
       </p>
     </>
   )

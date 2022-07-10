@@ -11,10 +11,7 @@ export default function ModalSocial({
   listenToDocumentChange,
 }) {
   const createUserSkill = () => {
-    let userId
-    user.map((user) => {
-      userId = user.id
-    })
+    const userId = user.id
 
     updateDoc(doc(db, `users/${userId}`), {
       about: about.value,
