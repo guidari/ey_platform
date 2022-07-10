@@ -2,10 +2,8 @@
 import { Fragment, useEffect, useState } from "react"
 import { Disclosure, Menu, Transition } from "@headlessui/react"
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline"
-// import { signIn, signOut, useSession } from "next-auth/react"
-// import router from "next/router"
 import { NavLink } from "./NavLink"
-import { onAuthStateChanged, signOut } from "firebase/auth"
+import { signOut } from "firebase/auth"
 import { auth, db } from "../../config/firebase"
 import router from "next/router"
 import { collection, getDocs, query, where } from "firebase/firestore"
@@ -16,17 +14,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
 }
 
-interface INavigation {
-  name: string
-  href: string
-  current: Boolean
-}
-
 export default function Header() {
-  // const { data: session, status } = useSession()
-  // const loading = status === "loading"
-  // if (typeof window !== "undefined" && loading) return null
-
   const [user, loading, error] = useAuthState(auth)
   const [userData, setUserData] = useState<any>([])
 
@@ -39,10 +27,7 @@ export default function Header() {
       const data = doc.docs[0].data()
 
       setUserData(data)
-    } catch (err) {
-      console.error(err)
-      alert("An error occured while fetching user data")
-    }
+    } catch (err) {}
   }
 
   useEffect((): any => {

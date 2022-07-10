@@ -1,19 +1,9 @@
 import Layout from "../../components/layout"
-import { getSession, GetSessionParams, useSession } from "next-auth/react"
 import AccessDenied from "../../components/access-denied"
 
 import { auth, db } from "../../config/firebase"
-import {
-  query,
-  where,
-  collection,
-  getDocs,
-  updateDoc,
-  doc,
-  arrayUnion,
-} from "firebase/firestore"
+import { query, where, collection, getDocs } from "firebase/firestore"
 import { useEffect, useState } from "react"
-import { useQuery } from "react-query"
 import Header from "../../components/Profile/Header"
 import About from "../../components/Profile/About"
 import Languages from "../../components/Profile/Languages"
@@ -54,8 +44,7 @@ export default function Page() {
 
       setUserData(data)
     } catch (err) {
-      console.error(err)
-      alert("An error occured while fetching user data")
+      console.log("User not authenticated")
     }
   }
 
