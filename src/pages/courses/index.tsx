@@ -34,16 +34,6 @@ interface ICourse {
 }
 
 export default function Page() {
-  const { data: session, status } = useSession()
-  // const loading = status === "loading"
-  // if (typeof window !== "undefined" && loading) return null
-  if (!session) {
-    return (
-      <Layout>
-        <AccessDenied />
-      </Layout>
-    )
-  }
   // let courses: ICourses
 
   // Recommended for you
