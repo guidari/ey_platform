@@ -18,9 +18,7 @@ export default function ModalSocial({
 }) {
   const updateSocialInformation = () => {
     let userId
-    user.map((user) => {
-      userId = user.id
-    })
+    userId = user.id
 
     updateDoc(doc(db, `users/${userId}`), {
       name: nameTyped.value,

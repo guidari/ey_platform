@@ -1,89 +1,46 @@
 import Layout from "../components/layout"
-import { useSession } from "next-auth/react"
-import { db } from "../config/firebase"
+import { auth, db } from "../config/firebase"
+import { useAuthState } from "react-firebase-hooks/auth"
+
 import { query, where, collection, getDocs } from "firebase/firestore"
-import { createUser } from "../services/user.service"
 import GrayBox from "../components/GrayBox/grayBox"
+import { useEffect, useState } from "react"
 
-interface ICourses {
-  aggregations: Array<any>
-  boosted_language: string
-  count: number
-  next: string
-  previous: string
-  results: Array<any>
-  search_tracking_id: string
-}
-
-interface ICourse {
-  curriculum_items: Array<any>
-  curriculum_lectures: Array<any>
-  headline: string
-  id: number
-  image_125_H: string
-  image_240x135: string
-  image_480x270: string
-  title: string
-  visible_instructors: Array<any>
-}
+import router from "next/router"
 
 export default function Page() {
-  const { data: session, status } = useSession()
-  const loading = status === "loading"
-  if (typeof window !== "undefined" && loading) return null
+  const [user, loading, error] = useAuthState(auth)
+  const [userData, setUserData] = useState<any>([])
 
-  const usersRef = collection(db, "users")
-
-  if (session) {
-    var userEmail: string
-    var userName: string
-    var userImage: string
-
-    const getUsers = async () => {
-      userEmail = session.user?.email as string
-      userName = session.user?.name as string
-      userImage = session.user?.image as string
-
-      const q = query(usersRef, where("email", "==", userEmail))
-      const data = await getDocs(q)
-      if (data.docs.map((doc) => ({ ...doc.data(), id: doc.id })).length == 0) {
-        return createUser(userEmail, userName, userImage)
-      } else {
-        return console.log("user already exists")
-      }
+  const fetchUserName = async () => {
+    try {
+      const q = query(collection(db, "users"), where("id", "==", user?.uid))
+      const doc = await getDocs(q)
+      const data = doc.docs[0].data()
+      setUserData(data)
+    } catch (err) {
+      console.error(err)
+      alert("An error occured while fetching user data")
     }
-    getUsers()
   }
 
-  let courses: ICourses
+  useEffect((): any => {
+    if (loading) return
+    if (!user) return router.push("/")
+    fetchUserName()
+  }, [user, loading])
 
-  // fetch("http://localhost:3333/getData")
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     courses = data
-  //     mountCoursesSection()
-  //   })
-
-  const mountCoursesSection = () => {
-    console.log("courses", courses.results)
-    // let coursesList = ""
-
-    // courses.results.forEach((course: ICourse) => {
-    //   coursesList += `
-    //     ${course.title} <br>
-    //   `
-
-    //   document.querySelector("#coursesList")!.innerHTML = coursesList
-    // })
-  }
+  console.log("userData", userData)
 
   return (
     <Layout>
-      <div className="w-4/6 maxxl:w-5/6 m-auto">
-        <h1 className="text-xl font-semibold mt-5">
-          Welcome back {session?.user?.name}!
-        </h1>
-      </div>
+      {user && (
+        <div className="w-4/6 maxxl:w-5/6 m-auto">
+          <h1 className="text-xl font-semibold mt-5">
+            Welcome back {userData.name}!
+          </h1>
+        </div>
+      )}
 
       <div className="flex gap-5 w-4/6 maxxl:w-5/6 maxlg:inline m-auto pt-5">
         <div id="column1" className="flex justify-center w-full">

@@ -43,70 +43,47 @@ export default function Header({ userData, session, listenToDocumentChange }) {
   // listenToDocumentChange: any
   const [openModalSocial, setOpenModalSocial] = useState(false)
 
-  console.log("userData", userData)
+  console.log("userData Profile Header", userData)
 
   return (
     <div className="bg-gray-1 p-5">
       <div className="grid gap-4 grid-cols-2 maxlg:grid-cols-1 mx-auto max-w-screen-xl">
         <section className="flex gap-4">
-          {userData.map((user) => {
-            return (
-              <img
-                key={user.id}
-                src={user.image == "" ? `/images/userGeneric.png` : user.image}
-                alt="User profile picture"
-                width="170px"
-                className="w-170 rounded-md"
-              />
-            )
-          })}
+          <img
+            src={
+              userData.image == "" ? `/images/userGeneric.png` : userData.image
+            }
+            alt="User profile picture"
+            width="170px"
+            className="w-170 rounded-md"
+          />
 
           <div>
-            {userData.map((user) => {
-              return (
-                <h1 id="name" className="text-xl font-semibold" key={user.id}>
-                  {user.name ?? session.user?.name}
-                </h1>
-              )
-            })}
-            {userData.map((user) => {
-              return (
-                <span id="headline" key={user.id}>
-                  {user.headline ?? "Headline"}
-                </span>
-              )
-            })}
+            <h1 id="name" className="text-xl font-semibold">
+              {userData.name}
+            </h1>
+
+            <span id="headline">{userData.headline ?? "Headline"}</span>
 
             <div className="relative inset-y-6 bottom-0 h-16 maxmd:static maxmd:mt-5">
               <p className="flex">
                 <LocationMarkerIcon className="h-5 w-5 mr-3 text-yellow-1" />
-                {userData.map((user) => {
-                  return (
-                    <span id="location" key={user.id}>
-                      {user.location ?? "Location"}
-                    </span>
-                  )
-                })}
+
+                <span id="location">
+                  {userData.location == "" ? "Location" : userData.location}
+                </span>
               </p>
               <p className="flex py-2">
                 <InboxIcon className="h-5 w-5 mr-3 text-yellow-1" />
-                {userData.map((user) => {
-                  return (
-                    <span id="email" key={user.id}>
-                      {user.email ?? session.user?.email}
-                    </span>
-                  )
-                })}
+
+                <span id="email">{userData.email}</span>
               </p>
               <p className="flex">
                 <PhoneIcon className="h-5 w-5 mr-3 text-yellow-1" />
-                {userData.map((user) => {
-                  return (
-                    <span id="phone" key={user.id}>
-                      {user.phone ?? "Phone Number"}
-                    </span>
-                  )
-                })}
+
+                <span id="phone">
+                  {userData.phone == "" ? "Phone Number" : userData.phone}
+                </span>
               </p>
             </div>
           </div>
@@ -141,44 +118,35 @@ export default function Header({ userData, session, listenToDocumentChange }) {
               }
             />
           )}
-          {userData.map((user) => {
-            const disableLink = (event) => {
-              event.preventDefault()
-            }
-            return (
-              <div key={user.id} className="grid grid-cols-4 maxsm:grid-cols-2">
-                <a
-                  id="github"
-                  href={user.github ?? disableLink}
-                  target="_blank"
-                >
-                  <span>
-                    <button className="bg-gray-3 hover:opacity-90 text-white font-semibold py-2 px-6 rounded-md inline-flex items-center mt-4">
-                      <img
-                        className="mr-4"
-                        src="/images/github-white.svg"
-                        alt="Github Social Media"
-                      />
-                      <span>Github</span>
-                    </button>
-                  </span>
-                </a>
-                <a id="linkedin" href={user.linkedin ?? ""} target="_blank">
-                  <span>
-                    <button className="bg-gray-3 hover:opacity-90 text-white font-semibold py-2 px-6 rounded-md inline-flex items-center mt-4">
-                      <img
-                        className="mr-4"
-                        src="/images/linkedin.png"
-                        alt="LinkedIn Social Media"
-                        width="20px"
-                      />
-                      <span>LinkedIn</span>
-                    </button>
-                  </span>
-                </a>
-              </div>
-            )
-          })}
+
+          <div className="grid grid-cols-4 maxsm:grid-cols-2">
+            <a id="github" href={userData.github ?? ""} target="_blank">
+              <span>
+                <button className="bg-gray-3 hover:opacity-90 text-white font-semibold py-2 px-6 rounded-md inline-flex items-center mt-4">
+                  <img
+                    className="mr-4"
+                    src="/images/github-white.svg"
+                    alt="Github Social Media"
+                  />
+                  <span>Github</span>
+                </button>
+              </span>
+            </a>
+            <a id="linkedin" href={userData.linkedin ?? ""} target="_blank">
+              <span>
+                <button className="bg-gray-3 hover:opacity-90 text-white font-semibold py-2 px-6 rounded-md inline-flex items-center mt-4">
+                  <img
+                    className="mr-4"
+                    src="/images/linkedin.png"
+                    alt="LinkedIn Social Media"
+                    width="20px"
+                  />
+                  <span>LinkedIn</span>
+                </button>
+              </span>
+            </a>
+          </div>
+
           <div>
             <h1 className="mt-4 text-xl font-semibold">EYCoin</h1>
             <div className="flex place-items-center">
@@ -186,17 +154,9 @@ export default function Header({ userData, session, listenToDocumentChange }) {
                 <CurrencyDollarIcon className="h-5 w-5 mr-2 mt-3 text-yellow-1" />
               </span>
               <p className="mt-2 text-yellow-1 text-xl font-semibold">
-                {userData.map((user) => {
-                  return (
-                    <h1
-                      id="name"
-                      className="text-xl font-semibold"
-                      key={user.id}
-                    >
-                      {user.eycoin}
-                    </h1>
-                  )
-                })}
+                <h1 id="name" className="text-xl font-semibold">
+                  {userData.eycoin}
+                </h1>
               </p>
             </div>
           </div>

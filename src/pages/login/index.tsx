@@ -1,8 +1,19 @@
-import styles from "./login.module.scss"
-import { signIn, signOut, useSession } from "next-auth/react"
+import { signInWithEmailAndPassword } from "firebase/auth"
+import router from "next/router"
+import { auth } from "../../config/firebase"
 
 export default function Page() {
-  const { data: session, status } = useSession()
+  const login = async () => {
+    const email = (document.getElementById("email") as HTMLInputElement).value
+    const password = (document.getElementById("password") as HTMLInputElement)
+      .value
+    try {
+      await signInWithEmailAndPassword(auth, email, password)
+      router.push("/")
+    } catch (error) {
+      console.log("error.message")
+    }
+  }
 
   return (
     <div className="grid md:grid-cols-2 gap-2 place-items-center bg-gray-3 sm:grid grid-cols-1 max-w-7xl m-auto ">
@@ -30,13 +41,15 @@ export default function Page() {
               <div className="py-7">
                 <input
                   placeholder="E-mail"
+                  id="email"
                   type="text"
                   className="rounded-lg  bg-gray-3 px-4 py-3 mt-1 mb-5 text-sm w-full focus:outline-none"
                 />
 
                 <input
                   placeholder="Password"
-                  type="text"
+                  id="password"
+                  type="password"
                   className="rounded-lg  bg-gray-3 px-4 py-3 mt-1 mb-1 text-sm w-full focus:outline-none"
                 />
                 <a className="text-sm cursor-pointer hover:opacity-80">
@@ -45,6 +58,7 @@ export default function Page() {
                 <button
                   type="button"
                   className="mt-5 transition duration-200 bg-yellow-1 text-black w-full py-2.5 rounded-lg text-sm font-semibold text-center inline-block hover:opacity-80"
+                  onClick={login}
                 >
                   <span className="inline-block mr-2">Login</span>
                   <svg
@@ -85,7 +99,7 @@ export default function Page() {
                   <img src="/images/github-white.svg" alt="" className="h-5" />
                   <a
                     className="inline-block mr-2"
-                    onClick={() => signIn("github")}
+                    // onClick={() => signIn("github")}
                   >
                     Github
                   </a>
@@ -97,7 +111,7 @@ export default function Page() {
                   <img src="/images/linkedin.png" alt="" className="h-5" />
                   <a
                     className="inline-block mr-2"
-                    onClick={() => signIn("linkedin")}
+                    // onClick={() => signIn("linkedin")}
                   >
                     LinkedIn
                   </a>

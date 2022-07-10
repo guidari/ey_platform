@@ -1,8 +1,31 @@
-import styles from "./login.module.scss"
-import { signIn, signOut, useSession } from "next-auth/react"
+import { createUserWithEmailAndPassword } from "firebase/auth"
+import { auth, db } from "../../config/firebase"
+import { useRouter } from "next/router"
+import { createUser } from "../../services/user.service"
+
+import { arrayUnion, collection, doc, updateDoc } from "firebase/firestore"
 
 export default function Page() {
-  const { data: session, status } = useSession()
+  const router = useRouter()
+
+  const usersRef = collection(db, "users")
+
+  const registerUser = async () => {
+    const email = (document.getElementById("email") as HTMLInputElement).value
+    const name = (document.getElementById("name") as HTMLInputElement).value
+    const password = (document.getElementById("password") as HTMLInputElement)
+      .value
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((cred) => {
+        const userId = cred.user.uid
+
+        return createUser(userId, email, name)
+      })
+      .then(() => {
+        console.log("User created")
+        router.push("/")
+      })
+  }
 
   return (
     <div className="grid md:grid-cols-2 gap-2 place-items-center bg-gray-3 sm:grid grid-cols-1 max-w-7xl m-auto ">
@@ -30,29 +53,33 @@ export default function Page() {
               <div className="py-7">
                 <input
                   placeholder="Full name"
+                  id="name"
                   type="text"
                   className="rounded-lg  bg-gray-3 px-4 py-3 mt-1 mb-5 text-sm w-full focus:outline-none"
                 />
 
                 <input
                   placeholder="E-mail"
+                  id="email"
                   type="text"
                   className="rounded-lg  bg-gray-3 px-4 py-3 mt-1 mb-5 text-sm w-full focus:outline-none"
                 />
                 <input
                   placeholder="Password"
-                  type="text"
+                  id="password"
+                  type="password"
                   className="rounded-lg  bg-gray-3 px-4 py-3 mt-1 mb-5 text-sm w-full focus:outline-none"
                 />
                 <input
                   placeholder="Confirm password"
-                  type="text"
+                  type="password"
                   className="rounded-lg  bg-gray-3 px-4 py-3 mt-1 mb-1 text-sm w-full focus:outline-none"
                 />
 
                 <button
                   type="button"
                   className="mt-5 transition duration-200 bg-yellow-1 text-black w-full py-2.5 rounded-lg text-sm font-semibold text-center inline-block hover:opacity-80"
+                  onClick={registerUser}
                 >
                   <span className="inline-block mr-2">Register</span>
                   <svg

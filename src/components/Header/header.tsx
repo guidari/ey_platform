@@ -1,10 +1,13 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from "react"
+import { Fragment, useState } from "react"
 import { Disclosure, Menu, Transition } from "@headlessui/react"
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline"
-import { signIn, signOut, useSession } from "next-auth/react"
-import router from "next/router"
+// import { signIn, signOut, useSession } from "next-auth/react"
+// import router from "next/router"
 import { NavLink } from "./NavLink"
+import { onAuthStateChanged, signOut } from "firebase/auth"
+import { auth } from "../../config/firebase"
+import router from "next/router"
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
@@ -16,17 +19,28 @@ interface INavigation {
   current: Boolean
 }
 
-const navigation: INavigation[] = [
-  { name: "Home", href: "/", current: true },
-  { name: "Jobs", href: "/jobs", current: false },
-  { name: "Training", href: "/training", current: false },
-]
-
 export default function Header() {
-  const { data: session, status } = useSession()
-  const loading = status === "loading"
-  if (typeof window !== "undefined" && loading) return null
+  // const { data: session, status } = useSession()
+  // const loading = status === "loading"
+  // if (typeof window !== "undefined" && loading) return null
 
+  const [user, setUser] = useState<any>({})
+
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser)
+  })
+
+  // signOut(auth)
+  //   .then(() => {
+  //     router.push("/")
+  //   })
+  //   .catch((error) => {
+  //     console.log(error.message)
+  //   })
+
+  const logout = () => {
+    signOut(auth)
+  }
   return (
     <Disclosure as="nav" className="bg-gray-3">
       {({ open }) => (
@@ -67,7 +81,7 @@ export default function Header() {
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <>
-                  {!session && (
+                  {!user && (
                     <a
                       className="block px-4 py-2 text-sm text-gray-300 flex gap-2 items-center"
                       // onClick={() => signIn("linkedin")}
@@ -77,7 +91,7 @@ export default function Header() {
                     </a>
                   )}
 
-                  {session && (
+                  {user && (
                     <>
                       <button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                         <span className="sr-only">View notifications</span>
@@ -93,7 +107,7 @@ export default function Header() {
                                 <span className="sr-only">Open user menu</span>
                                 <img
                                   className="h-8 w-8 rounded-full"
-                                  src={session.user?.image!}
+                                  src={user.image}
                                   alt=""
                                 />
                               </Menu.Button>
@@ -133,7 +147,7 @@ export default function Header() {
                                         active ? "bg-gray-100" : "",
                                         "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
                                       )}
-                                      onClick={() => signOut()}
+                                      onClick={logout}
                                     >
                                       Sign out
                                     </a>

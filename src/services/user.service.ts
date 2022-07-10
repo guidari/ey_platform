@@ -27,22 +27,24 @@ export const getUser = async (email: string) => {
   return user
 }
 
-export const createUser = async (
-  email: string,
-  name: string,
-  image: string
-) => {
+export const createUser = async (id: string, email: string, name: string) => {
   const languages = [
     { language: "Language1", profiency: "Profiency" },
     { language: "Language2", profiency: "Profiency" },
     { language: "Language3", profiency: "Profiency" },
   ]
+  const image = ""
+  const location = ""
+  const phone = ""
 
   const progress = [{ courses: 0 }, { hours: 0 }, { challenges: 0 }]
-  setDoc(doc(usersRef), {
-    name: name,
+  setDoc(doc(usersRef, id), {
+    id: id,
     email: email,
+    name: name,
     image: image,
+    location: location,
+    phone: phone,
     languages: languages,
     progress: progress,
     eycoin: 0,

@@ -12,6 +12,7 @@ import {
   DocumentData,
   QueryDocumentSnapshot,
 } from "firebase/firestore"
+import { getAuth } from "firebase/auth"
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -20,7 +21,7 @@ import {
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 const firebaseConfig = {
-  apiKey: process.env.API_KEY,
+  apiKey: "AIzaSyAGTFprRk7F_kOT0jRhtds2Lok0nP5XmjI",
   authDomain: process.env.AUTH_DOMAIN,
   projectId: "ey-platform",
   storageBucket: process.env.STORAGE_BUCKET,
@@ -32,6 +33,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
+const auth = getAuth(app)
+
 const usersRef = collection(db, "Users")
 
 export const getUserByEmail = async (email: string) => {
@@ -50,16 +53,4 @@ export const getUserByEmail = async (email: string) => {
   return user
 }
 
-// export const createUser = async (
-//   email: string,
-//   name: string,
-//   image: string
-// ) => {
-//   setDoc(doc(usersRef), {
-//     name: name,
-//     email: email,
-//     image: image,
-//   })
-// }
-
-export { app, db }
+export { app, db, auth }
