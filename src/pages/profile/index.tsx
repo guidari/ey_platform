@@ -40,45 +40,18 @@ type IUser = [
   }
 ]
 
-export default function Page(props: { sessionProps: any }) {
-  // const { data: session, status } = useSession()
-
-  // if (!props.sessionProps) {
-  //   return (
-  //     <Layout>
-  //       <AccessDenied />
-  //     </Layout>
-  //   )
-  // }
-
-  // const usersRef = collection(db, "users")
-
-  // console.log("props.sessionProps.user.email", props.sessionProps.user.email)
-
-  // const { data, isLoading, error, refetch } = useQuery("users", async () => {
-  //   const q = query(
-  //     usersRef,
-  //     where("email", "==", props.sessionProps.user.email)
-  //     // where("email", "==", userEmail)
-  //     // where("email", "==", "joao@gmail.com")
-  //   )
-  //   const data = await getDocs(q)
-  //   const user = data.docs.map((user) => ({
-  //     ...user.data(),
-  //     id: user.id,
-  //   }))
-
-  //   return user
-  // })
-
+export default function Page() {
   const [user, loading, error] = useAuthState(auth)
   const [userData, setUserData] = useState<any>([])
 
   const fetchUserName = async () => {
+    if (typeof window !== "undefined" && loading) return null
+
     try {
       const q = query(collection(db, "users"), where("id", "==", user?.uid))
       const doc = await getDocs(q)
       const data = doc.docs[0].data()
+
       setUserData(data)
     } catch (err) {
       console.error(err)
@@ -88,116 +61,100 @@ export default function Page(props: { sessionProps: any }) {
 
   useEffect((): any => {
     if (loading) return
-    if (!user)
+    console.log("nao to logado")
+
+    if (!user) {
       return (
         <Layout>
           <AccessDenied />
         </Layout>
       )
+    }
     fetchUserName()
   }, [user, loading])
 
-  // Avoid to render the wrong session
-  // const loading = status === "loading"
-  // if (typeof window !== "undefined" && loading) {
-  //   return null
-  // }
+  console.log("user", user)
 
   // If session exists, display content
   return (
     <Layout>
-      {/* Header user info */}
+      {/* {loading ? (<Spinner />) : !user ? (<AccessDenied />)  : user ? (<h1>Logado</h1>)} */}
+
       {loading ? (
         <Spinner />
-      ) : error ? (
-        <h1>Error</h1>
+      ) : !user ? (
+        <AccessDenied />
       ) : (
-        <Header
-          userData={userData}
-          session={props.sessionProps}
-          listenToDocumentChange={fetchUserName}
-        />
-      )}
-      {/* Close - Header user info */}
-      <div className="grid grid-cols-2 max-w-screen-xl maxxl:grid-cols-1 place-items-left maxxl:place-items-center m-auto pt-5">
-        {/* ABOUT */}
-        <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+        <>
+          {/* Header user info */}
           {loading ? (
             <Spinner />
           ) : error ? (
             <h1>Error</h1>
           ) : (
-            <About userData={userData} listenToDocumentChange={fetchUserName} />
-          )}
-        </section>
-
-        {/* EXPERIENCE */}
-        <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-          <Experience />
-        </section>
-
-        {/* LANGUAGES */}
-        <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-          {loading ? (
-            <Spinner />
-          ) : error ? (
-            <h1>Error</h1>
-          ) : (
-            <Languages
+            <Header
               userData={userData}
               listenToDocumentChange={fetchUserName}
             />
           )}
-        </section>
+          {/* Close - Header user info */}
+          <div className="grid grid-cols-2 max-w-screen-xl maxxl:grid-cols-1 place-items-left maxxl:place-items-center m-auto pt-5">
+            {/* ABOUT */}
+            <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+              <About
+                userData={userData}
+                listenToDocumentChange={fetchUserName}
+              />
+            </section>
 
-        {/* EDUCATION */}
-        <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-          <Education />
-        </section>
+            {/* EXPERIENCE */}
+            <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+              <Experience />
+            </section>
 
-        {/* SKILLS */}
-        <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-          {loading ? (
-            <Spinner />
-          ) : error ? (
-            <h1>Error</h1>
-          ) : (
-            <Skills
-              userData={userData}
-              listenToDocumentChange={fetchUserName}
-            />
-          )}
-        </section>
+            {/* LANGUAGES */}
+            <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+              <Languages
+                userData={userData}
+                listenToDocumentChange={fetchUserName}
+              />
+            </section>
 
-        {/* VIDEO INTRODUCTION */}
-        <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-          <h1 className="text-xl font-semibold">Video Introduction</h1>
+            {/* EDUCATION */}
+            <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+              <Education />
+            </section>
 
-          <div className="flex">
-            {/* <VideoCameraIcon className="w-6 text-gray-3 bg-yellow-1 rounded-bl-md rounded-tl-md" /> */}
-            <input
-              type="file"
-              className="block w-full mt-5 text-sm text-gray-4
-      file:mr-4 file:py-2 file:px-4
-      file:rounded-md file:border-0
-      file:text-sm file:font-semibold
-      file:bg-yellow-1 file:text-gray-3
-      hover:opacity-80
-    "
-            />
+            {/* SKILLS */}
+            <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+              <Skills
+                userData={userData}
+                listenToDocumentChange={fetchUserName}
+              />
+            </section>
+
+            {/* VIDEO INTRODUCTION */}
+            <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+              <h1 className="text-xl font-semibold">Video Introduction</h1>
+
+              <div className="flex">
+                {/* <VideoCameraIcon className="w-6 text-gray-3 bg-yellow-1 rounded-bl-md rounded-tl-md" /> */}
+                <input
+                  type="file"
+                  className="block w-full mt-5 text-sm text-gray-4
+        file:mr-4 file:py-2 file:px-4
+        file:rounded-md file:border-0
+        file:text-sm file:font-semibold
+        file:bg-yellow-1 file:text-gray-3
+        hover:opacity-80
+      "
+                />
+              </div>
+            </section>
           </div>
-        </section>
-      </div>
+        </>
+      )}
+      {/* {!user && <AccessDenied />} */}
     </Layout>
   )
-}
-
-export async function getServerSideProps(
-  context: GetSessionParams | undefined
-) {
-  return {
-    props: {
-      sessionProps: await getSession(context),
-    },
-  }
 }

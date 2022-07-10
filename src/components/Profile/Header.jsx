@@ -8,38 +8,7 @@ import {
 import { useState } from "react"
 import ModalSocial from "../Modal/modalSocial"
 
-// type IUser = {
-//   id: string
-//   name: string
-//   email: string
-//   about: string
-//   github: string
-//   linkedin: string
-//   headline: string
-//   image: string
-//   languages: []
-//   skills: []
-//   location: string
-//   phone: string
-// }
-
-// type ISession = {
-//   user: {
-//     name: string
-//     email: string
-//     image: string
-//   }
-//   expires: any
-//   foo: any
-// }
-
-// interface HeaderProps {
-//   userData: any
-//   session: any
-//   // userDocumentChange: any
-// }
-
-export default function Header({ userData, session, listenToDocumentChange }) {
+export default function Header({ userData, listenToDocumentChange }) {
   // listenToDocumentChange: any
   const [openModalSocial, setOpenModalSocial] = useState(false)
 
