@@ -3,23 +3,25 @@ import { Fragment, useEffect, useState } from "react"
 import { Disclosure, Menu, Transition } from "@headlessui/react"
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline"
 import { NavLink } from "./NavLink"
-import { signOut } from "firebase/auth"
-import { auth, db } from "../../config/firebase"
+import { getAuth, signOut } from "firebase/auth"
+import { db } from "../../config/firebase"
 import router from "next/router"
 import { collection, getDocs, query, where } from "firebase/firestore"
 import { useAuthState } from "react-firebase-hooks/auth"
 import Spinner from "../Spinner"
+import { SearchBar } from "../Courses/SearchBar"
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
 }
 
 export default function Header() {
+  const auth = getAuth()
   const [user, loading, error] = useAuthState(auth)
   const [userData, setUserData] = useState<any>([])
 
   const fetchUserName = async () => {
-    if (typeof window !== "undefined" && loading) return null
+    // if (typeof window !== "undefined" && loading) return null
 
     try {
       const q = query(collection(db, "users"), where("id", "==", user?.uid))
@@ -32,8 +34,7 @@ export default function Header() {
 
   useEffect((): any => {
     if (loading) return
-    console.log("nao to logado")
-
+    if (!user) return router.push("/login")
     fetchUserName()
   }, [user, loading])
 
@@ -93,6 +94,7 @@ export default function Header() {
                   </a>
                 ) : (
                   <>
+                    <SearchBar />
                     <button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                       <span className="sr-only">View notifications</span>
                       <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -173,10 +175,20 @@ export default function Header() {
               <NavLink title="Home" href="/" />
               <NavLink title="Jobs" href="/jobs" />
               <NavLink title="Courses" href="/courses" />
+              <SearchBar />
             </div>
           </Disclosure.Panel>
         </>
       )}
     </Disclosure>
   )
+}
+
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const res = await fetch(`https://.../data`)
+  const data = await res.json()
+
+  // Pass data to the page via props
+  return { props: { data } }
 }

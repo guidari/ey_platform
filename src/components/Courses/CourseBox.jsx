@@ -1,4 +1,4 @@
-export default function CourseBox({ coursesData, refetch }) {
+export default function CourseBox({ coursesData }) {
   return (
     <>
       {coursesData.slice(0, 4).map((course) => {
@@ -32,9 +32,12 @@ export default function CourseBox({ coursesData, refetch }) {
           </div>
         )
       })}
-      <button className="cursor-pointer bg-yellow-1 text-black w-3/6 px-3 py-2 rounded-md text-sm font-medium">
-        Load more
-      </button>
+      <a
+        href="/allCourses"
+        className="cursor-pointer bg-yellow-1 text-black w-3/6 px-3 py-2 rounded-md text-sm font-medium text-center"
+      >
+        More Courses
+      </a>
     </>
   )
 }

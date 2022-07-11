@@ -1,11 +1,8 @@
 import Layout from "../../components/layout"
-import { useSession } from "next-auth/react"
-import AccessDenied from "../../components/access-denied"
-import { useEffect, useState } from "react"
 import GrayBox from "../../components/GrayBox/grayBox"
-
 import CourseBox from "../../components/Courses/CourseBox"
 import ButtonTopics from "../../components/Courses/ButtonTopics"
+import { SearchBar } from "../../components/Courses/SearchBar"
 
 import { DesktopComputerIcon } from "@heroicons/react/outline"
 import { useQuery } from "react-query"
@@ -37,11 +34,11 @@ export default function Page() {
   // let courses: ICourses
 
   // Recommended for you
-  const { data, isLoading, error, refetch } = useQuery("users", async () => {
-    const response = await fetch(
-      "https://calm-refuge-90714.herokuapp.com/courses"
-    )
-    // const response = await fetch("http://localhost:3333/courses")
+  const { data, isLoading, error, refetch } = useQuery("courses", async () => {
+    // const response = await fetch(
+    //   "https://calm-refuge-90714.herokuapp.com/courses"
+    // )
+    const response = await fetch("http://localhost:3333/courses")
     const data: ICourses = await response.json()
 
     const courses = data.results.map((course: ICourse) => {
@@ -92,6 +89,7 @@ export default function Page() {
   return (
     <Layout>
       <div className="flex flex-col gap-5 max-w-screen-xl maxxl:inline m-auto pt-5">
+        <SearchBar />
         <GrayBox title="My Progress" size="full">
           <div className="grid grid-cols-4 maxxl:grid-cols-2 maxmd:grid-cols-1 gap-5 justify-between px-5 maxmd:px-0 py-2">
             <div className="flex gap-2">
@@ -166,14 +164,13 @@ export default function Page() {
             <h1>Error</h1>
           ) : (
             <>
-              <CourseBox coursesData={data} refetch={refetch} />
+              <CourseBox coursesData={data} />
               {/* {data?.results} */}
             </>
           )}
 
           {/* {courses.results.map((course) => {})} */}
         </div>
-
         <h1 className="text-xl font-semibold my-5 w-full max2xl:w-5/6 mx-auto">
           Topics recommended for you
         </h1>

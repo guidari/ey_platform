@@ -1,5 +1,5 @@
 import Layout from "../components/layout"
-import { auth, db } from "../config/firebase"
+import { db } from "../config/firebase"
 import { useAuthState } from "react-firebase-hooks/auth"
 
 import { query, where, collection, getDocs } from "firebase/firestore"
@@ -7,8 +7,11 @@ import GrayBox from "../components/GrayBox/grayBox"
 import { useEffect, useState } from "react"
 
 import router from "next/router"
+import { getAuth } from "firebase/auth"
 
 export default function Page() {
+  const auth = getAuth()
+
   const [user, loading, error] = useAuthState(auth)
   const [userData, setUserData] = useState<any>([])
 

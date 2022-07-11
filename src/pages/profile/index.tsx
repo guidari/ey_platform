@@ -1,7 +1,7 @@
 import Layout from "../../components/layout"
 import AccessDenied from "../../components/access-denied"
 
-import { auth, db } from "../../config/firebase"
+import { db } from "../../config/firebase"
 import { query, where, collection, getDocs } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import Header from "../../components/Profile/Header"
@@ -12,6 +12,7 @@ import Experience from "../../components/Profile/Experience"
 import Education from "../../components/Profile/Education"
 import Spinner from "../../components/Spinner"
 import { useAuthState } from "react-firebase-hooks/auth"
+import { getAuth } from "firebase/auth"
 
 type IUser = [
   {
@@ -31,6 +32,8 @@ type IUser = [
 ]
 
 export default function Page() {
+  const auth = getAuth()
+
   const [user, loading, error] = useAuthState(auth)
   const [userData, setUserData] = useState<any>([])
 
