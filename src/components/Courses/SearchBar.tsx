@@ -6,7 +6,7 @@ export function SearchBar() {
 
   return (
     <div className="flex border-1 rounded-md mx-2 place-items-center h-8 bg-gray-1 maxmd:hidden">
-      <span className="bg-gray-1 rounded-tl rounded-bl pl-1">
+      <span className="bg-gray-1 rounded-tl rounded-bl">
         <svg
           className="w-6 h-6 py-1"
           fill="currentColor"

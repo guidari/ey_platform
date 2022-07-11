@@ -1,7 +1,7 @@
-export default function CourseBox({ coursesData }) {
+export default function CourseBox({ coursesData, numberCourses }) {
   return (
     <>
-      {coursesData.slice(0, 4).map((course) => {
+      {coursesData.slice(0, numberCourses).map((course) => {
         return (
           <div key={course.id} className="bg-gray-1 rounded-md max-w-md">
             <img
