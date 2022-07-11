@@ -32,12 +32,7 @@ export default function CourseBox({ coursesData, numberCourses }) {
           </div>
         )
       })}
-      <a
-        href="/allCourses"
-        className="cursor-pointer bg-yellow-1 text-black w-3/6 px-3 py-2 rounded-md text-sm font-medium text-center"
-      >
-        More Courses
-      </a>
+      
     </>
   )
 }
