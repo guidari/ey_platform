@@ -7,6 +7,7 @@ import { SearchBar } from "../../components/Courses/SearchBar"
 import { DesktopComputerIcon } from "@heroicons/react/outline"
 import { useQuery } from "react-query"
 import Spinner from "../../components/Spinner"
+
 interface ICourses {
   aggregations: Array<any>
   boosted_language: string
@@ -31,8 +32,6 @@ interface ICourse {
 }
 
 export default function Page() {
-  // let courses: ICourses
-
   // Recommended for you
   const { data, isLoading, error, refetch } = useQuery("courses", async () => {
     // const response = await fetch(
@@ -58,32 +57,6 @@ export default function Page() {
 
     return courses
   })
-
-  // fetch("http://localhost:3333/search", {
-  //   method: "GET",
-  //   headers: { name: "java" },
-  // })
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     courses = data
-  //     console.log("data", data)
-  //     // mountCoursesSection()
-  //   })
-
-  // const mountCoursesSection = () => {
-  //   console.log("courses", courses.results)
-  // let coursesList = ""
-
-  // courses.results.forEach((course: ICourse) => {
-  //   coursesList += `
-  //     ${course.title} <br>
-  //   `
-
-  //   document.querySelector("#coursesList")!.innerHTML = coursesList
-  // })
-  // }
-
-  // If no session exists, display access denied message
 
   // If session exists, display content
   return (
