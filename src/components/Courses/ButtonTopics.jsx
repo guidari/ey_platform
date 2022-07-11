@@ -1,17 +1,4 @@
 export default function ButtonTopics({ title }) {
-  // const getCourseClicked = () => {
-  //   const btnValue = document.getElementById("btn-course").value
-  //   fetch("http://localhost:3333/search", {
-  //     method: "GET",
-  //     headers: { name: btnValue },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log("data", data)
-  //       // mountCoursesSection()
-  //     })
-  // }
-
   return (
     <a
       id="btn-course"
