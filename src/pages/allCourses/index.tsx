@@ -1,10 +1,6 @@
 import Layout from "../../components/layout"
-import { getAuth } from "firebase/auth"
-import { collection, getDocs, query, where } from "firebase/firestore"
-import router from "next/router"
-import { useContext, useEffect, useState } from "react"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { db } from "../../config/firebase"
+import { useContext, useState } from "react"
+
 import { useQuery } from "react-query"
 import Spinner from "../../components/Spinner"
 import CourseBox from "../../components/Courses/CourseBox"
@@ -39,10 +35,10 @@ export default function Page() {
   const [courses, setCourses] = useState<any>()
 
   const { data, isLoading, error } = useQuery("courses", async () => {
-    const response = await fetch(
-      "https://calm-refuge-90714.herokuapp.com/courses"
-    )
-    // const response = await fetch("http://localhost:3333/courses")
+    // const response = await fetch(
+    //   "https://calm-refuge-90714.herokuapp.com/courses"
+    // )
+    const response = await fetch("http://localhost:3333/courses")
     const data: ICourses = await response.json()
 
     const courses = data.results.map((course: ICourse) => {

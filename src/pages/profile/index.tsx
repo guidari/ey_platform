@@ -1,5 +1,5 @@
 import Layout from "../../components/layout"
-import AccessDenied from "../../components/access-denied"
+import AccessDenied from "../../components/AccessDenied"
 
 import { db } from "../../config/firebase"
 import { query, where, collection, getDocs } from "firebase/firestore"
