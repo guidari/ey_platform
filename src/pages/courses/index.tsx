@@ -7,6 +7,8 @@ import { SearchBar } from "../../components/Courses/SearchBar"
 import { DesktopComputerIcon } from "@heroicons/react/outline"
 import { useQuery } from "react-query"
 import Spinner from "../../components/Spinner"
+import { UserContext } from "../../context/userContext"
+import { useContext } from "react"
 
 interface ICourses {
   aggregations: Array<any>
@@ -32,12 +34,15 @@ interface ICourse {
 }
 
 export default function Page() {
+  const userContext = useContext(UserContext)
+  console.log("userContext", userContext)
+
   // Recommended for you
   const { data, isLoading, error, refetch } = useQuery("courses", async () => {
-    const response = await fetch(
-      "https://calm-refuge-90714.herokuapp.com/courses"
-    )
-    // const response = await fetch("http://localhost:3333/courses")
+    // const response = await fetch(
+    //   "https://calm-refuge-90714.herokuapp.com/courses"
+    // )
+    const response = await fetch("http://localhost:3333/courses")
     const data: ICourses = await response.json()
 
     const courses = data.results.map((course: ICourse) => {
@@ -69,7 +74,9 @@ export default function Page() {
                 <DesktopComputerIcon className="w-12 bg-gray-3 p-3 rounded-full text-yellow-1" />
               </div>
               <div>
-                <h1 className="text-2xl font-semibold">11</h1>
+                <h1 className="text-2xl font-semibold">
+                  {userContext?.progress.courses}
+                </h1>
                 <h2 className="text-lg maxmd:text-md font-semibold">
                   Completed courses
                 </h2>
@@ -81,7 +88,9 @@ export default function Page() {
                 <DesktopComputerIcon className="w-12 bg-gray-3 p-3 rounded-full text-yellow-1" />
               </div>
               <div>
-                <h1 className="text-2xl font-semibold">11</h1>
+                <h1 className="text-2xl font-semibold">
+                  {userContext?.progress.courses}
+                </h1>
                 <h2 className="text-lg font-semibold">Completed courses</h2>
               </div>
             </div>
@@ -91,7 +100,9 @@ export default function Page() {
                 <DesktopComputerIcon className="w-12 bg-gray-3 p-3 rounded-full text-yellow-1" />
               </div>
               <div>
-                <h1 className="text-2xl font-semibold">11</h1>
+                <h1 className="text-2xl font-semibold">
+                  {userContext?.progress.hours}
+                </h1>
                 <h2 className="text-lg font-semibold">
                   Hours Completed this year
                 </h2>
@@ -103,7 +114,9 @@ export default function Page() {
                 <DesktopComputerIcon className="w-12 bg-gray-3 p-3 rounded-full text-yellow-1" />
               </div>
               <div>
-                <h1 className="text-2xl font-semibold">11</h1>
+                <h1 className="text-2xl font-semibold">
+                  {userContext?.progress.challenges}
+                </h1>
                 <h2 className="text-lg font-semibold">Completed Challenges</h2>
               </div>
             </div>

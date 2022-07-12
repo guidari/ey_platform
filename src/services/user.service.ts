@@ -37,7 +37,7 @@ export const createUser = async (id: string, email: string, name: string) => {
   const location = ""
   const phone = ""
 
-  const progress = [{ courses: 0 }, { hours: 0 }, { challenges: 0 }]
+  const progress = { courses: 0, hours: 0, challenges: 0 }
   setDoc(doc(usersRef, id), {
     id: id,
     email: email,

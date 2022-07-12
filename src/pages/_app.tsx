@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from "react-query/devtools"
 import { QueryClient, QueryClientProvider } from "react-query"
 
 import "../styles/globals.css"
+import { UserProvider } from "../context/userContext"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,8 +16,10 @@ const queryClient = new QueryClient({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <Component {...pageProps} />
-      <ReactQueryDevtools />
+      <UserProvider>
+        <Component {...pageProps} />
+        <ReactQueryDevtools />
+      </UserProvider>
     </QueryClientProvider>
   )
 }
