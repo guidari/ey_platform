@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import Layout from "../../components/layout"
+import Layout from "../../components/Layout"
 import { UserContext } from "../../context/userContext"
 
 export default function Page() {

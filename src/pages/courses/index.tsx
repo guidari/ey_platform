@@ -1,4 +1,4 @@
-import Layout from "../../components/layout"
+import Layout from "../../components/Layout"
 import GrayBox from "../../components/GrayBox/grayBox"
 import CourseBox from "../../components/Courses/CourseBox"
 import ButtonTopics from "../../components/Courses/ButtonTopics"
@@ -74,10 +74,10 @@ export default function Page() {
               </div>
               <div>
                 <h1 className="text-2xl font-semibold">
-                  {userContext?.progress.courses}
+                  {userContext?.progress.enrolledCourses}
                 </h1>
                 <h2 className="text-lg maxmd:text-md font-semibold">
-                  Completed courses
+                  Enrolled courses
                 </h2>
               </div>
             </div>
@@ -88,7 +88,7 @@ export default function Page() {
               </div>
               <div>
                 <h1 className="text-2xl font-semibold">
-                  {userContext?.progress.courses}
+                  {userContext?.progress.completedCourses}
                 </h1>
                 <h2 className="text-lg font-semibold">Completed courses</h2>
               </div>
@@ -150,8 +150,8 @@ export default function Page() {
             <>
               <CourseBox coursesData={data} numberCourses={4} />
               <a
-                href="/allCourses"
-                className="cursor-pointer bg-yellow-1 text-black w-3/6 px-3 py-2 rounded-md text-sm font-medium text-center"
+                href="/courses/allCourses"
+                className="cursor-pointer bg-yellow-1 text-black w-3/6 px-3 py-2 rounded-md text-sm font-medium text-center hover:opacity-80"
               >
                 More Courses
               </a>

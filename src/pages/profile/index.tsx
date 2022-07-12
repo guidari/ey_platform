@@ -1,4 +1,4 @@
-import Layout from "../../components/layout"
+import Layout from "../../components/Layout"
 import AccessDenied from "../../components/AccessDenied"
 
 import { db } from "../../config/firebase"

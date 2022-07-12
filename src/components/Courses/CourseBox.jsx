@@ -1,4 +1,24 @@
+import { arrayUnion, doc, updateDoc } from "firebase/firestore"
+import Link from "next/link"
+import { useContext, useState } from "react"
+import { db } from "../../config/firebase"
+import { UserContext } from "../../context/userContext"
+import Button from "../Button/Button"
+
 export default function CourseBox({ coursesData, numberCourses }) {
+  const userContext = useContext(UserContext)
+
+  const [hidden, setHidden] = useState("")
+  function enrollCourse(event) {
+    const value = event.target.value
+    console.log(value)
+
+    // updateDoc(doc(db, `users/${userContext.id}`), {
+    //   enrolledCourses: arrayUnion(value),
+    // })
+
+    // setHidden("hidden")
+  }
   return (
     <>
       {coursesData.slice(0, numberCourses).map((course) => {
@@ -17,22 +37,22 @@ export default function CourseBox({ coursesData, numberCourses }) {
                 })}
               </p>
               <div className="my-2 flex gap-5">
-                <a
-                  href={"https://www.udemy.com" + course.url}
-                  target="_blank"
-                  className="cursor-pointer bg-yellow-1 text-black px-3 py-2 rounded-md text-sm font-medium"
+                <a href={"https://www.udemy.com" + course.url} target="_blank">
+                  <Button>Learn More</Button>
+                </a>
+
+                <Button
+                  value={course.id}
+                  onClick={(event) => enrollCourse(event)}
+                  color={"yellow"}
                 >
-                  Learn more
-                </a>
-                <a className=" cursor-pointer bg-yellow-1 text-black px-3 py-2 rounded-md text-sm font-medium">
                   Enroll
-                </a>
+                </Button>
               </div>
             </div>
           </div>
         )
       })}
-      
     </>
   )
 }

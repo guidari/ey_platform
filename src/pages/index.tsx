@@ -1,4 +1,4 @@
-import Layout from "../components/layout"
+import Layout from "../components/Layout"
 import { useAuthState } from "react-firebase-hooks/auth"
 
 import GrayBox from "../components/GrayBox/grayBox"

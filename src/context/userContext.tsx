@@ -22,11 +22,13 @@ type IUser = {
   headline: string
   image: string
   languages: []
+  enrolledCourses: []
   skills: []
   progress: {
-    courses: number
+    completedCourses: number
     hours: number
     challenges: number
+    enrolledCourses: number
   }
   location: string
   phone: string
@@ -64,7 +66,7 @@ export function UserProvider({ children }: IUserProps) {
 
   useEffect((): any => {
     if (loading) return
-    if (!user) return router.push("/login")
+    // if (!user) return router.push("/login")
     fetchUserName()
   }, [user, loading])
 
