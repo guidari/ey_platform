@@ -58,8 +58,6 @@ export default function Page() {
 
   const [courses, setCourses] = useState<any>()
 
-  // useQuery("courses", { refetchOnWindowFocus: false })
-
   const { data, isLoading, error } = useQuery("courses", async () => {
     const response = await fetch(
       "https://calm-refuge-90714.herokuapp.com/courses"
