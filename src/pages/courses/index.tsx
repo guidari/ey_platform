@@ -35,7 +35,6 @@ interface ICourse {
 
 export default function Page() {
   const userContext = useContext(UserContext)
-  console.log("userContext", userContext)
 
   // Recommended for you
   const { data, isLoading, error, refetch } = useQuery("courses", async () => {

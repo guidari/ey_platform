@@ -2,12 +2,13 @@ import Layout from "../../components/layout"
 import { getAuth } from "firebase/auth"
 import { collection, getDocs, query, where } from "firebase/firestore"
 import router from "next/router"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { db } from "../../config/firebase"
 import { useQuery } from "react-query"
 import Spinner from "../../components/Spinner"
 import CourseBox from "../../components/Courses/CourseBox"
+import { UserContext } from "../../context/userContext"
 
 interface ICourses {
   aggregations: Array<any>
@@ -33,28 +34,7 @@ interface ICourse {
 }
 
 export default function Page() {
-  const auth = getAuth()
-
-  const [user, loading] = useAuthState(auth)
-  const [userData, setUserData] = useState<any>([])
-
-  const fetchUserName = async () => {
-    // if (typeof window !== "undefined" && loading) return null
-
-    try {
-      const q = query(collection(db, "users"), where("id", "==", user?.uid))
-      const doc = await getDocs(q)
-      const data = doc.docs[0].data()
-
-      setUserData(data)
-    } catch (err) {}
-  }
-
-  useEffect((): any => {
-    if (loading) return
-    if (!user) return router.push("/login")
-    fetchUserName()
-  }, [user, loading])
+  const userContext = useContext(UserContext)
 
   const [courses, setCourses] = useState<any>()
 

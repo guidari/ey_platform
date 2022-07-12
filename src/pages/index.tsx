@@ -1,45 +1,25 @@
 import Layout from "../components/layout"
-import { db } from "../config/firebase"
 import { useAuthState } from "react-firebase-hooks/auth"
 
-import { query, where, collection, getDocs } from "firebase/firestore"
 import GrayBox from "../components/GrayBox/grayBox"
-import { useEffect, useState } from "react"
+import { useContext } from "react"
 
-import router from "next/router"
 import { getAuth } from "firebase/auth"
+import { UserContext } from "../context/userContext"
 
 export default function Page() {
+  const userContext = useContext(UserContext)
+
   const auth = getAuth()
 
   const [user, loading, error] = useAuthState(auth)
-  const [userData, setUserData] = useState<any>([])
-
-  const fetchUserName = async () => {
-    try {
-      const q = query(collection(db, "users"), where("id", "==", user?.uid))
-      const doc = await getDocs(q)
-      const data = doc.docs[0].data()
-      setUserData(data)
-    } catch (err) {
-      console.log("User not authenticated")
-    }
-  }
-
-  useEffect((): any => {
-    if (loading) return
-    if (!user) return router.push("/")
-    fetchUserName()
-  }, [user, loading])
-
-  console.log("userData", userData)
 
   return (
     <Layout>
       {user && (
         <div className="w-4/6 maxxl:w-5/6 m-auto">
           <h1 className="text-xl font-semibold mt-5">
-            Welcome back {userData.name}!
+            Welcome back {userContext?.name}!
           </h1>
         </div>
       )}

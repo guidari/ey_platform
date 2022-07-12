@@ -1,5 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useEffect, useState } from "react"
+import { Fragment, useContext, useEffect, useState } from "react"
 import { Disclosure, Menu, Transition } from "@headlessui/react"
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline"
 import { NavLink } from "./NavLink"
@@ -10,33 +10,36 @@ import { collection, getDocs, query, where } from "firebase/firestore"
 import { useAuthState } from "react-firebase-hooks/auth"
 import Spinner from "../Spinner"
 import { SearchBar } from "../Courses/SearchBar"
+import { UserContext } from "../../context/userContext"
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
 }
 
 export default function Header() {
+  const userContext = useContext(UserContext)
+
   const auth = getAuth()
   const [user, loading, error] = useAuthState(auth)
-  const [userData, setUserData] = useState<any>([])
+  // const [userData, setUserData] = useState<any>([])
 
-  const fetchUserName = async () => {
-    // if (typeof window !== "undefined" && loading) return null
+  // const fetchUserName = async () => {
+  //   // if (typeof window !== "undefined" && loading) return null
 
-    try {
-      const q = query(collection(db, "users"), where("id", "==", user?.uid))
-      const doc = await getDocs(q)
-      const data = doc.docs[0].data()
+  //   try {
+  //     const q = query(collection(db, "users"), where("id", "==", user?.uid))
+  //     const doc = await getDocs(q)
+  //     const data = doc.docs[0].data()
 
-      setUserData(data)
-    } catch (err) {}
-  }
+  //     setUserData(data)
+  //   } catch (err) {}
+  // }
 
-  useEffect((): any => {
-    if (loading) return
-    if (!user) return router.push("/login")
-    fetchUserName()
-  }, [user, loading])
+  // useEffect((): any => {
+  //   if (loading) return
+  //   if (!user) return router.push("/login")
+  //   fetchUserName()
+  // }, [user, loading])
 
   const logout = () => {
     signOut(auth)
@@ -109,9 +112,9 @@ export default function Header() {
                               <img
                                 className="h-8 w-8 rounded-full"
                                 src={
-                                  userData.image == ""
+                                  userContext?.image == ""
                                     ? `/images/userGeneric.png`
-                                    : userData.image
+                                    : userContext?.image
                                 }
                                 alt=""
                               />

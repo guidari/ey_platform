@@ -100,9 +100,9 @@ export default function Page() {
             </section>
 
             {/* EXPERIENCE */}
-            <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+            {/* <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
               <Experience />
-            </section>
+            </section> */}
 
             {/* LANGUAGES */}
             <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
@@ -113,9 +113,9 @@ export default function Page() {
             </section>
 
             {/* EDUCATION */}
-            <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+            {/* <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
               <Education />
-            </section>
+            </section> */}
 
             {/* SKILLS */}
             <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
