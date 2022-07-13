@@ -6,32 +6,28 @@ interface IButton {
   onClick?: () => void
   value?: number
   color?: string
+  hidden?: ""
 }
 
-export default function Button({ children, onClick, value, color }: IButton) {
-  const user = useContext(UserContext)
+export default function Button({
+  children,
+  onClick,
+  value,
+  color,
+  hidden,
+}: IButton) {
+  const userContext = useContext(UserContext)
 
-  function setColorGray() {
-    color = "gray"
-  }
-  function setColorYeloow() {
-    color = "yellow"
+  if (!color) {
+    color = "bg-yellow-1"
   }
 
   return (
     <>
-      {user?.enrolledCourses.forEach((course) => {
-        if (course == value) {
-          console.log("igual")
-          setColorGray()
-        } else {
-          setColorYeloow()
-        }
-      })}
       <button
         value={value}
         onClick={onClick}
-        className={`cursor-pointer bg-${color}-1 text-black px-3 py-2 rounded-md text-sm font-medium hover:opacity-80`}
+        className={`cursor-pointer ${color} text-black px-3 py-2 rounded-md text-sm font-medium hover:opacity-80 ${hidden}`}
       >
         {children}
       </button>
