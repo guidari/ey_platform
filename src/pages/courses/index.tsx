@@ -130,7 +130,7 @@ export default function Page() {
               <CourseBox coursesData={data} numberCourses={4} />
               <a
                 href="/courses/allCourses"
-                className="cursor-pointer bg-yellow-1 text-black w-3/6 px-3 py-2 rounded-md text-sm font-medium text-center hover:opacity-80"
+                className="cursor-pointer bg-yellow-1 text-black w-3/6 px-3 py-2 rounded-md text-sm font-medium text-center ease-out duration-300 hover:opacity-80"
               >
                 More Courses
               </a>
