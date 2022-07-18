@@ -1,4 +1,5 @@
 import { signInWithEmailAndPassword } from "firebase/auth"
+import Link from "next/link"
 import router from "next/router"
 import { auth } from "../../config/firebase"
 
@@ -79,13 +80,12 @@ export default function Page() {
               </div>
               {/* Don't have an account? */}
               <p className="text-center mb-5">
-                Don't have an account?{" "}
-                <a
-                  href="register"
-                  className="text-yellow-1 cursor-pointer hover:opacity-80"
-                >
-                  Register
-                </a>
+                Don't have an account?
+                <Link href="register">
+                  <a className="text-yellow-1 cursor-pointer hover:opacity-80">
+                    Register
+                  </a>
+                </Link>
               </p>
               <hr />
               {/* Login with github and LinkedIn */}
@@ -138,9 +138,9 @@ export default function Page() {
                         d="M10 19l-7-7m0 0l7-7m-7 7h18"
                       />
                     </svg>
-                    <a href="/" className="inline-block ml-1">
-                      Back to home
-                    </a>
+                    <Link href="/">
+                      <a className="inline-block ml-1">Back to home</a>
+                    </Link>
                   </button>
                 </div>
               </div>

@@ -11,6 +11,7 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import Spinner from "../Spinner"
 import { SearchBar } from "../Courses/SearchBar"
 import { UserContext } from "../../context/userContext"
+import Link from "next/link"
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
@@ -88,13 +89,14 @@ export default function Header() {
                 {loading ? (
                   <Spinner />
                 ) : !user ? (
-                  <a
-                    className="block px-4 py-2 text-sm text-gray-300 flex gap-2 items-center"
-                    // onClick={() => signIn("linkedin")}
-                    href="/login"
-                  >
-                    Sign in
-                  </a>
+                  <Link href="/login">
+                    <a
+                      className="block px-4 py-2 text-sm text-gray-300 flex gap-2 items-center"
+                      // onClick={() => signIn("linkedin")}
+                    >
+                      Sign in
+                    </a>
+                  </Link>
                 ) : (
                   <>
                     <button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
@@ -136,15 +138,16 @@ export default function Header() {
                             >
                               <Menu.Item>
                                 {({ active }) => (
-                                  <a
-                                    href="profile"
-                                    className={classNames(
-                                      active ? "bg-gray-100" : "",
-                                      "block px-4 py-2 text-sm text-gray-700"
-                                    )}
-                                  >
-                                    Your Profile
-                                  </a>
+                                  <Link href="/profile">
+                                    <a
+                                      className={classNames(
+                                        active ? "bg-gray-100" : "",
+                                        "block px-4 py-2 text-sm text-gray-700"
+                                      )}
+                                    >
+                                      Your Profile
+                                    </a>
+                                  </Link>
                                 )}
                               </Menu.Item>
 

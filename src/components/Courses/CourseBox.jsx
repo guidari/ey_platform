@@ -97,7 +97,7 @@ export default function CourseBox({ coursesData, numberCourses }) {
                   </Button>
                 )} */}
 
-                {userContext?.enrolledCourses.length > 0 &&
+                {userContext?.enrolledCourses != undefined &&
                   userContext?.enrolledCourses.map((index) => {
                     if (index == course.id) {
                       return (

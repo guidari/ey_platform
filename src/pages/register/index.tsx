@@ -4,6 +4,7 @@ import { useRouter } from "next/router"
 import { createUser } from "../../services/user.service"
 
 import { arrayUnion, collection, doc, updateDoc } from "firebase/firestore"
+import Link from "next/link"
 
 export default function Page() {
   const router = useRouter()
@@ -119,9 +120,9 @@ export default function Page() {
                         d="M10 19l-7-7m0 0l7-7m-7 7h18"
                       />
                     </svg>
-                    <a href="/" className="inline-block ml-1">
-                      Back to home
-                    </a>
+                    <Link href="/">
+                      <a className="inline-block ml-1">Back to home</a>
+                    </Link>
                   </button>
                 </div>
               </div>
