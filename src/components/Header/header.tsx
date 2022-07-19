@@ -83,6 +83,7 @@ export default function Header() {
                     <NavLink title="Jobs" href="/jobs" />
                     <NavLink title="Courses" href="/courses" />
                     <NavLink title="Challenges" href="/challenges" />
+                    <NavLink title="Store" href="/store" />
                   </div>
                 </div>
               </div>
@@ -182,6 +183,7 @@ export default function Header() {
               <NavLink title="Jobs" href="/jobs" />
               <NavLink title="Courses" href="/courses" />
               <NavLink title="Challenges" href="/challenges" />
+              <NavLink title="Store" href="/store" />
               <SearchBar />
             </div>
           </Disclosure.Panel>

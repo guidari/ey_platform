@@ -13,10 +13,10 @@ export default function Page({ challengeNotion }: any) {
 
   return (
     <Layout>
-      <div className="w-5/6 m-auto">
-        <div className="flex maxlg:flex-col gap-5 max-w-screen-xl m-auto pt-5">
+      <div className="w-5/6 m-auto max-w-screen-xl">
+        <div className="flex maxxl:flex-col gap-5  pt-5">
           <div className="flex-initial w-full p-5 bg-gray-1 rounded-md mt-5">
-            <div className="flex gap-5 mb-5">
+            <div className="flex maxsm:grid gap-5 mb-5">
               <Button icon={<DocumentTextIcon className="h-5 w-5" />}>
                 Code template
               </Button>
@@ -38,8 +38,8 @@ export default function Page({ challengeNotion }: any) {
             <NotionRenderer blockMap={challengeNotion} />
           </div>
 
-          <div className="flex-initial w-3/6 maxlg:w-full p-5 bg-gray-1 rounded-md mt-5">
-            <h1 className="text-xl font-semibold mb-5">Ranking</h1>
+          <div className="flex-initial w-3/6 maxxl:w-full p-5 bg-gray-1 rounded-md mt-5">
+            <h1 className="text-xl font-semibold mb-5">Global Rank</h1>
             <UserRank />
             <UserRank />
             <UserRank />

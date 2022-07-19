@@ -7,7 +7,9 @@ export default function UserRank() {
 
       <div>
         <h3 className="text-md font-semibold">Sana Minatozaki</h3>
-        <p className="text-yellow-1">00:42:15</p>
+        <p className="text-sm">
+          Solved challenges: <span className="text-yellow-1">14</span>
+        </p>
       </div>
     </div>
   )

@@ -63,7 +63,7 @@ export default function CourseBox({ coursesData, numberCourses }) {
                     className="hover:opacity-50 "
                   />
                   <div className="absolute inset-0 z-10 flex place-items-center justify-center opacity-0 hover:opacity-100 ease-out duration-300">
-                    <span className="bg-gray-1 px-4 py-2 rounded-md">
+                    <span className="bg-yellow-1 text-gray-3 font-semibold px-4 py-2 rounded-md">
                       Learn More
                     </span>
                   </div>
