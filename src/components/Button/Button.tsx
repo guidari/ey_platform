@@ -1,4 +1,4 @@
-import { ReactNode, useContext, useState } from "react"
+import { ReactElement, ReactNode, useContext, useState } from "react"
 import { UserContext } from "../../context/userContext"
 
 interface IButton {
@@ -7,6 +7,7 @@ interface IButton {
   value?: number
   color?: string
   hidden?: ""
+  icon?: ReactElement
 }
 
 export default function Button({
@@ -15,6 +16,7 @@ export default function Button({
   value,
   color,
   hidden,
+  icon,
 }: IButton) {
   const userContext = useContext(UserContext)
 
@@ -29,7 +31,11 @@ export default function Button({
         onClick={onClick}
         className={`cursor-pointer ${color} text-black px-3 py-2 rounded-md text-sm font-medium ease-out duration-300 hover:opacity-80 ${hidden}`}
       >
-        {children}
+        {/* {!icon && { children }} */}
+        <div className="flex place-items-center gap-2">
+          {icon}
+          {children}
+        </div>
       </button>
     </>
   )
