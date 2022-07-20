@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { NotionRenderer } from "react-notion"
 import Button from "../../components/Button/Button"
 import UserRank from "../../components/Challenge/UserRank"
@@ -8,8 +8,12 @@ import { UserContext } from "../../context/userContext"
 import { DocumentTextIcon, LockClosedIcon } from "@heroicons/react/outline"
 import Image from "next/image"
 
+import ModalSubmitChallenge from "../../components/Modal/ModalSubmitChallenge"
+
 export default function Page({ challengeNotion }: any) {
   const userContext = useContext(UserContext)
+  const [openModalSubmitChallenge, setOpenModalSubmitChallenge] =
+    useState(false)
 
   return (
     <Layout>
@@ -28,9 +32,17 @@ export default function Page({ challengeNotion }: any) {
                     height={20}
                   />
                 }
+                onClick={() => {
+                  setOpenModalSubmitChallenge(true)
+                }}
               >
                 Submit
               </Button>
+              {openModalSubmitChallenge && (
+                <ModalSubmitChallenge
+                  closeModal={setOpenModalSubmitChallenge}
+                />
+              )}
               <Button icon={<LockClosedIcon className="h-5 w-5" />}>
                 Solution
               </Button>
@@ -39,7 +51,7 @@ export default function Page({ challengeNotion }: any) {
           </div>
 
           <div className="flex-initial w-3/6 maxxl:w-full p-5 bg-gray-1 rounded-md mt-5">
-            <h1 className="text-xl font-semibold mb-5">Global Rank</h1>
+            <h1 className="text-xl font-semibold mb-5">Global Rank 🏆</h1>
             <UserRank />
             <UserRank />
             <UserRank />

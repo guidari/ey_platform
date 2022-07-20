@@ -21,7 +21,7 @@ export default function About({ userData, listenToDocumentChange }) {
           closeModal={setOpenModalAbout}
           aboutText={document.getElementById("aboutText")?.innerText}
           user={userData}
-          titleEdit={"About"}
+          titleEdit={"Edit About"}
           listenToDocumentChange={listenToDocumentChange}
         />
       )}

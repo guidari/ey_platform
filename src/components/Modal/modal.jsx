@@ -56,7 +56,7 @@ export default function Modal({
                         as="h3"
                         className="text-lg leading-6 font-medium text-white"
                       >
-                        Edit {titleEdit}
+                        {titleEdit}
                       </Dialog.Title>
                       <div className="mt-5">{children}</div>
                     </div>

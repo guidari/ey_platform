@@ -39,7 +39,7 @@ export default function Languages({ userData, listenToDocumentChange }) {
           <ModalLanguage
             closeModal={setOpenModalLanguage}
             user={userData}
-            titleEdit={"Languages"}
+            titleEdit={"Edit Languages"}
             listenToDocumentChange={listenToDocumentChange}
           />
         )}

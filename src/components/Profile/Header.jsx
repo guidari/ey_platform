@@ -72,7 +72,7 @@ export default function Header({ userData, listenToDocumentChange }) {
             <ModalSocial
               closeModal={setOpenModalSocial}
               user={userData}
-              titleEdit={"Social Information"}
+              titleEdit={"Edit Social Information"}
               listenToDocumentChange={listenToDocumentChange}
               name={document.querySelector("#name")?.innerHTML ?? ""}
               headline={document.querySelector("#headline")?.innerHTML ?? ""}
