@@ -2,13 +2,13 @@ import { useContext, useState } from "react"
 import { NotionRenderer } from "react-notion"
 import Button from "../../components/Button/Button"
 import UserRank from "../../components/Challenge/UserRank"
-import Layout from "../../components/Layout"
 import { UserContext } from "../../context/userContext"
 
 import { DocumentTextIcon, LockClosedIcon } from "@heroicons/react/outline"
 import Image from "next/image"
 
 import ModalSubmitChallenge from "../../components/Modal/ModalSubmitChallenge"
+import Layout from "../../components/Layout"
 
 export default function Page({ challengeNotion }: any) {
   const userContext = useContext(UserContext)

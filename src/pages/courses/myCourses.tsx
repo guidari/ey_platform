@@ -4,7 +4,7 @@ import CourseBox from "../../components/Courses/CourseBox"
 import Layout from "../../components/Layout"
 import Spinner from "../../components/Spinner"
 import { UserContext } from "../../context/userContext"
-import { ICourses, ICourse } from "./Interfaces/ICourses"
+import { ICourses } from "../../interface/ICourses"
 
 export default function Page() {
   const userContext = useContext(UserContext)

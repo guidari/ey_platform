@@ -9,8 +9,8 @@ import { useQuery } from "react-query"
 import Spinner from "../../components/Spinner"
 import { UserContext } from "../../context/userContext"
 import { useContext } from "react"
-
-import { ICourses, ICourse } from "./Interfaces/ICourses"
+import { ICourses } from "../../interface/ICourses"
+import { ICourse } from "../../interface/ICourse"
 
 export default function Page() {
   const userContext = useContext(UserContext)
