@@ -11,28 +11,7 @@ import { createContext, ReactNode, useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useQuery } from "react-query"
 import { db } from "../config/firebase"
-
-type IUser = {
-  id: string
-  name: string
-  email: string
-  about: string
-  github: string
-  linkedin: string
-  headline: string
-  image: string
-  languages: []
-  enrolledCourses: []
-  skills: []
-  progress: {
-    completedCourses: number
-    hours: number
-    challenges: number
-    enrolledCourses: number
-  }
-  location: string
-  phone: string
-}
+import { IUser } from "../interface/IUser"
 
 interface IUserProps {
   children: ReactNode

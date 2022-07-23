@@ -38,5 +38,6 @@ export const createUser = async (id: string, email: string, name: string) => {
     eycoin: 0,
     skills: [],
     enrolledCourses: [],
+    submitedChallenges: [],
   })
 }

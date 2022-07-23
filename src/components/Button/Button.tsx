@@ -8,6 +8,7 @@ interface IButton {
   color?: string
   hidden?: ""
   icon?: ReactElement
+  disabled?: boolean
 }
 
 export default function Button({
@@ -17,6 +18,7 @@ export default function Button({
   color,
   hidden,
   icon,
+  disabled,
 }: IButton) {
   const userContext = useContext(UserContext)
 
@@ -30,6 +32,7 @@ export default function Button({
         value={value}
         onClick={onClick}
         className={`cursor-pointer ${color} text-black px-3 py-2 rounded-md text-sm font-medium ease-out duration-300 hover:opacity-80 ${hidden}`}
+        disabled={disabled}
       >
         {/* {!icon && { children }} */}
         <div className="flex place-items-center gap-2">

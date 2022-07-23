@@ -1,19 +1,54 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { NotionRenderer } from "react-notion"
 import Button from "../../components/Button/Button"
 import UserRank from "../../components/Challenge/UserRank"
-import { UserContext } from "../../context/userContext"
+
+import { doc, DocumentData, getDoc } from "firebase/firestore"
 
 import { DocumentTextIcon, LockClosedIcon } from "@heroicons/react/outline"
 import Image from "next/image"
 
 import ModalSubmitChallenge from "../../components/Modal/ModalSubmitChallenge"
 import Layout from "../../components/Layout"
+import { db } from "../../config/firebase"
+import Spinner from "../../components/Spinner"
+import { IChallenge } from "../../interface/IChallenge"
+import { UserContext } from "../../context/userContext"
 
-export default function Page({ challengeNotion }: any) {
+export default function Page() {
   const userContext = useContext(UserContext)
+
   const [openModalSubmitChallenge, setOpenModalSubmitChallenge] =
     useState(false)
+
+  const [challenge, setChallenge] = useState<IChallenge | DocumentData>()
+  const [challengeNotion, setChallengeNotion] = useState<any>()
+  const [challengeId, setChallengeId] = useState<any>()
+
+  let colorDisable
+  let disabledSubmit
+
+  async function getChallenge() {
+    const docRef = doc(db, "challenges", "CYVNxvaeDkVJUJCwE4D1")
+    const docSnap = await getDoc(docRef)
+    console.log("docSnap", docSnap)
+
+    if (docSnap.exists()) {
+      const data = await fetch(docSnap.data().url).then((res) => res.json())
+      setChallengeNotion(data)
+
+      setChallengeId(docSnap.id)
+
+      setChallenge(docSnap.data())
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!")
+    }
+  }
+
+  useEffect(() => {
+    getChallenge()
+  }, [])
 
   return (
     <Layout>
@@ -35,19 +70,34 @@ export default function Page({ challengeNotion }: any) {
                 onClick={() => {
                   setOpenModalSubmitChallenge(true)
                 }}
+                {...userContext?.submitedChallenges.map((item) => {
+                  if (item == challengeId) {
+                    disabledSubmit = true
+                    colorDisable = "bg-gray-2"
+                  } else {
+                  }
+                })}
+                color={colorDisable}
+                disabled={disabledSubmit}
               >
                 Submit
               </Button>
               {openModalSubmitChallenge && (
                 <ModalSubmitChallenge
                   closeModal={setOpenModalSubmitChallenge}
+                  challenge={challenge}
+                  challengeId={challengeId}
                 />
               )}
               <Button icon={<LockClosedIcon className="h-5 w-5" />}>
                 Solution
               </Button>
             </div>
-            <NotionRenderer blockMap={challengeNotion} />
+            {!challengeNotion ? (
+              <Spinner />
+            ) : (
+              <NotionRenderer blockMap={challengeNotion} />
+            )}
           </div>
 
           <div className="flex-initial w-3/6 maxxl:w-full p-5 bg-gray-1 rounded-md mt-5">
@@ -65,16 +115,4 @@ export default function Page({ challengeNotion }: any) {
       </div>
     </Layout>
   )
-}
-
-export async function getStaticProps() {
-  const data = await fetch(
-    "https://notion-api.splitbee.io/v1/page/2e22de6b770e4166be301490f6ffd420"
-  ).then((res) => res.json())
-
-  return {
-    props: {
-      challengeNotion: data,
-    },
-  }
 }
