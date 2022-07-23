@@ -14,22 +14,20 @@ import Spinner from "../../components/Spinner"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { getAuth } from "firebase/auth"
 
-type IUser = [
-  {
-    id: string
-    name: string
-    email: string
-    about: string
-    github: string
-    linkedin: string
-    headline: string
-    image: string
-    languages: []
-    skills: []
-    location: string
-    phone: string
-  }
-]
+interface IUser {
+  id: string
+  name: string
+  email: string
+  about: string
+  github: string
+  linkedin: string
+  headline: string
+  image: string
+  languages: []
+  skills: []
+  location: string
+  phone: string
+}
 
 export default function Page() {
   const auth = getAuth()
