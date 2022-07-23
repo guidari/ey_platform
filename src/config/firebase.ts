@@ -24,7 +24,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyAGTFprRk7F_kOT0jRhtds2Lok0nP5XmjI",
   authDomain: process.env.AUTH_DOMAIN,
   projectId: "ey-platform",
-  storageBucket: process.env.STORAGE_BUCKET,
+  storageBucket: "ey-platform.appspot.com",
   messagingSenderId: process.env.MESSAGING_SENDER_ID,
   appId: process.env.APP_ID,
   measurementId: process.env.MEASUREMENT_ID,

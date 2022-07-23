@@ -9,10 +9,7 @@ import { useState } from "react"
 import ModalSocial from "../Modal/modalSocial"
 
 export default function Header({ userData, listenToDocumentChange }) {
-  // listenToDocumentChange: any
   const [openModalSocial, setOpenModalSocial] = useState(false)
-
-  console.log("userData Profile Header", userData)
 
   return (
     <div className="bg-gray-1 p-5">
