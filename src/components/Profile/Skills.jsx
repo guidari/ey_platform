@@ -1,7 +1,7 @@
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore"
 import { useState } from "react"
 import { db } from "../../config/firebase"
-import Skill from "../Skill/skill"
+import Skill from "../Skill"
 import Spinner from "../Spinner"
 
 export default function Skills({ userData, listenToDocumentChange }) {
