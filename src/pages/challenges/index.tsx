@@ -31,7 +31,6 @@ export default function Page() {
   async function getChallenge() {
     const docRef = doc(db, "challenges", "CYVNxvaeDkVJUJCwE4D1")
     const docSnap = await getDoc(docRef)
-    console.log("docSnap", docSnap)
 
     if (docSnap.exists()) {
       const data = await fetch(docSnap.data().url).then((res) => res.json())

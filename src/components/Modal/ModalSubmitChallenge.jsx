@@ -11,9 +11,6 @@ export default function ModalSubmitChallenge({
 }) {
   const userContext = useContext(UserContext)
 
-  console.log("challenge", challenge)
-  console.log("challengeId", challengeId)
-
   const progressChallenge = userContext.progress.challenges
   const progressCompletedCourses = userContext.progress.completedCourses
   const progressEnrolledCourses = userContext.progress.enrolledCourses
