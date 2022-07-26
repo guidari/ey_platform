@@ -8,11 +8,13 @@ export default function Page() {
     const email = (document.getElementById("email") as HTMLInputElement).value
     const password = (document.getElementById("password") as HTMLInputElement)
       .value
+
     try {
       await signInWithEmailAndPassword(auth, email, password)
       router.push("/")
     } catch (error) {
-      console.log("error.message")
+      console.log("error", error)
+      alert("User not found")
     }
   }
 

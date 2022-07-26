@@ -1,4 +1,9 @@
-export default function UserRank() {
+interface IUserRank {
+  name: string
+  solvedChallenges: number
+}
+
+export default function UserRank({ name, solvedChallenges }: IUserRank) {
   return (
     <div className="flex gap-3 mb-5">
       <div>
@@ -6,9 +11,10 @@ export default function UserRank() {
       </div>
 
       <div>
-        <h3 className="text-md font-semibold">Sana Minatozaki</h3>
+        <h3 className="text-md font-semibold">{name}</h3>
         <p className="text-sm">
-          Solved challenges: <span className="text-yellow-1">14</span>
+          Solved challenges:{" "}
+          <span className="text-yellow-1">{solvedChallenges}</span>
         </p>
       </div>
     </div>
