@@ -1,19 +1,14 @@
-import UserRank from "../../components/Challenge/UserRank"
 import Layout from "../../components/Layout"
 import NotionChallenge from "../../components/Challenge/NotionChallenge"
 
-import { collection, DocumentData, getDocs } from "firebase/firestore"
+import { collection, getDocs } from "firebase/firestore"
 import { db } from "../../config/firebase"
-import { useEffect, useState } from "react"
-import Spinner from "../../components/Spinner"
-import { IUser } from "../../interface/IUser"
+import { useEffect } from "react"
 
 export default function Page() {
-  const [users, setUsers] = useState<DocumentData>()
-
   async function getAllUsers() {
     const docRef = collection(db, "users")
-    // console.log("docRef", docRef)
+
     const docSnap = await getDocs(docRef)
     console.log("docSnap", docSnap)
 
@@ -46,7 +41,6 @@ export default function Page() {
     } else {
       document.querySelector("#globalRank")!.innerHTML = "No users found"
     }
-    setUsers(docSnap)
   }
 
   useEffect(() => {
