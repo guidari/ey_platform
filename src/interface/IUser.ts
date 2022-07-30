@@ -7,6 +7,7 @@ export type IUser = {
   linkedin: string
   headline: string
   image: string
+  eycoin: number
   languages: []
   enrolledCourses: []
   submitedChallenges: []

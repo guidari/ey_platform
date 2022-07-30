@@ -30,7 +30,13 @@ export default function ModalSocial({
       console.log("Uploaded a blob or file!")
     })
 
-    const image = `https://firebasestorage.googleapis.com/v0/b/ey-platform.appspot.com/o/${user.id}?alt=media&token=be9fab49-74d8-4c91-8d66-9f29c08c94fa`
+    let image
+
+    if (!imageUpload && !user.image) {
+      image = ""
+    } else {
+      image = `https://firebasestorage.googleapis.com/v0/b/ey-platform.appspot.com/o/${user.id}?alt=media&token=be9fab49-74d8-4c91-8d66-9f29c08c94fa`
+    }
 
     updateDoc(doc(db, `users/${userId}`), {
       name: nameTyped.value,

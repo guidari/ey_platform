@@ -16,22 +16,29 @@ export default function Page() {
           <p>Shop or redeem our products for free by using EyCoins.</p>
         </div>
 
-        <h1 className="text-2xl font-semibold my-5">Merchandise</h1>
+        <div className="flex justify-between place-items-center">
+          <h1 className="text-2xl font-semibold my-5">Merchandise</h1>
+          <div className="bg-yellow-2 p-2 rounded-md">
+            <h1 className="text-black font-semibold">
+              Your EY Coin: 💰 <span>{userContext?.eycoin}</span>
+            </h1>
+          </div>
+        </div>
         <div className="grid grid-cols-5 m-auto maxxl:grid-cols-4 maxlg:grid-cols-3 maxmd:grid-cols-2 maxsm:grid-cols-1 gap-5 justify-between">
-          <StoreBox image="/images/ey-tshirt.png" />
-          <StoreBox image="/images/ey-tshirt.png" />
-          <StoreBox image="/images/ey-tshirt.png" />
-          <StoreBox image="/images/ey-tshirt.png" />
-          <StoreBox image="/images/ey-tshirt.png" />
+          <StoreBox image="/images/ey-tshirt.png" price={5} />
+          <StoreBox image="/images/ey-tshirt.png" price={10} />
+          <StoreBox image="/images/ey-tshirt.png" price={15} />
+          <StoreBox image="/images/ey-tshirt.png" price={150} />
+          <StoreBox image="/images/ey-tshirt.png" price={5} />
         </div>
 
         <h1 className="text-2xl font-semibold my-5">Code challenge boost</h1>
         <div className="grid grid-cols-5 m-auto maxxl:grid-cols-4 maxlg:grid-cols-3 maxmd:grid-cols-2 maxsm:grid-cols-1 gap-5 justify-between">
-          <StoreBox image="/images/boost.png" />
-          <StoreBox image="/images/boost.png" />
-          <StoreBox image="/images/boost.png" />
-          <StoreBox image="/images/boost.png" />
-          <StoreBox image="/images/boost.png" />
+          <StoreBox image="/images/boost.png" price={5} />
+          <StoreBox image="/images/boost.png" price={5} />
+          <StoreBox image="/images/boost.png" price={5} />
+          <StoreBox image="/images/boost.png" price={5} />
+          <StoreBox image="/images/boost.png" price={5} />
         </div>
       </div>
     </Layout>

@@ -1,8 +1,10 @@
 import { getAuth } from "firebase/auth"
 import {
   collection,
+  doc,
   DocumentData,
   getDocs,
+  onSnapshot,
   query,
   where,
 } from "firebase/firestore"
@@ -29,24 +31,12 @@ export function UserProvider({ children }: IUserProps) {
   const auth = getAuth()
 
   const [user, loading, error] = useAuthState(auth)
-  const [userData, setUserData] = useState<IUser | undefined>(undefined)
+  const [userData, setUserData] = useState<IUser | any>()
 
-  const fetchUserName = async () => {
-    // if (typeof window !== "undefined" && loading) return null
-
-    try {
-      const q = query(collection(db, "users"), where("id", "==", user?.uid))
-      const doc = await getDocs(q)
-      const data = doc.docs[0].data()
-
-      setUserData(data as IUser)
-    } catch (err) {}
-  }
-
-  useEffect((): any => {
-    if (loading) return
-    // if (!user) return router.push("/login")
-    fetchUserName()
+  useEffect(() => {
+    onSnapshot(doc(db, "users", `${user?.uid}`), (doc) => {
+      setUserData(doc.data())
+    })
   }, [user, loading])
 
   return (

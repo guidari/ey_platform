@@ -2,10 +2,13 @@ import Layout from "../components/Layout"
 import { useAuthState } from "react-firebase-hooks/auth"
 
 import GrayBox from "../components/GrayBox/grayBox"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 
 import { getAuth } from "firebase/auth"
 import { UserContext } from "../context/userContext"
+import { doc, updateDoc } from "firebase/firestore"
+import { db } from "../config/firebase"
+import { stringify } from "querystring"
 
 export default function Page() {
   const userContext = useContext(UserContext)
@@ -13,6 +16,39 @@ export default function Page() {
   const auth = getAuth()
 
   const [user, loading, error] = useAuthState(auth)
+
+  // const [date, setDate] = useState<Number>()
+
+  // let updatedEycoin
+
+  // const dateNow = new Date()
+  // const day = dateNow.getDate()
+
+  // const getDay = window.localStorage.getItem("date")
+
+  // !userContext ? console.log("Carregando") : addDailyEyCoin()
+
+  // function addDailyEyCoin() {
+  //   if (getDay == JSON.stringify(day)) {
+  //     console.log("Not able to get the daily coin")
+  //   }
+  //   updatedEycoin = userContext!.eycoin + 1
+
+  //   setDate(day)
+  //   window.localStorage.setItem("date", `${day}`)
+
+  //   updateDoc(doc(db, `users/${userContext?.id}`), {
+  //     eycoin: updatedEycoin,
+  //   })
+
+  //   alert("You earned 1 EYCoin due the daily check in")
+  // }
+
+  // useEffect(() => {
+  //   addDailyEyCoin()
+  // }, [])
+
+  // console.log(date)
 
   return (
     <Layout>
@@ -23,7 +59,6 @@ export default function Page() {
           </h1>
         </div>
       )}
-
       <div className="flex gap-5 w-4/6 maxxl:w-5/6 maxlg:inline m-auto pt-5">
         <div id="column1" className="flex justify-center w-full">
           <GrayBox title="Courses" size="full">
