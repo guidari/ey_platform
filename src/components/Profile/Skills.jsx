@@ -1,7 +1,7 @@
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore"
 import { useState } from "react"
 import { db } from "../../config/firebase"
-import Skill from "../Skill/index.Jsx"
+import SkillBox from "../SkillBox"
 import Spinner from "../Spinner"
 
 export default function Skills({ userData, listenToDocumentChange }) {
@@ -50,7 +50,7 @@ export default function Skills({ userData, listenToDocumentChange }) {
           <Spinner />
         ) : (
           userData?.skills?.map((item) => (
-            <Skill skill={item} onClick={() => deleteUserSkill(item)} />
+            <SkillBox skill={item} onClick={() => deleteUserSkill(item)} />
           ))
         )}
       </div>

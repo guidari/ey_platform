@@ -16,10 +16,13 @@ export default function Page() {
     async () => {
       let myCoursesArray: any = []
       userContext?.enrolledCourses.forEach(async (id) => {
-        const response = await fetch("http://localhost:3333/mycourses", {
-          method: "GET",
-          headers: { id: id },
-        })
+        const response = await fetch(
+          process.env.NEXT_PUBLIC_NODE_API + "mycourses",
+          {
+            method: "GET",
+            headers: { id: id },
+          }
+        )
         const data: ICourses = await response.json()
         console.log("data", data)
         setMyCourses(data)

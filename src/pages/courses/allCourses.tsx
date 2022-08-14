@@ -17,7 +17,7 @@ export default function Page() {
     // // const response = await fetch(
     // //   "https://calm-refuge-90714.herokuapp.com/courses"
     // // )
-    const response = await fetch("http://localhost:3333/courses")
+    const response = await fetch(process.env.NEXT_PUBLIC_NODE_API + "courses")
     const data: ICourses = await response.json()
 
     const courses = data.results.map((course: ICourse) => {
@@ -44,7 +44,7 @@ export default function Page() {
     const value = event.target.value
     console.log(value)
 
-    fetch("http://localhost:3333/search", {
+    fetch(process.env.NEXT_PUBLIC_NODE_API + "search", {
       // fetch("https://calm-refuge-90714.herokuapp.com/search", {
       method: "GET",
       headers: { name: value },

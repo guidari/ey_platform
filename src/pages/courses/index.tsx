@@ -19,7 +19,7 @@ export default function Page() {
     // const response = await fetch(
     //   "https://calm-refuge-90714.herokuapp.com/courses"
     // )
-    const response = await fetch("http://localhost:3333/courses")
+    const response = await fetch(process.env.NEXT_PUBLIC_NODE_API + "courses")
     const data: ICourses = await response.json()
 
     const courses = data.results.map((course: ICourse) => {
