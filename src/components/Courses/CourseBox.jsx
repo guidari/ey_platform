@@ -10,21 +10,37 @@ export default function CourseBox({ coursesData, numberCourses }) {
 
   const [textButton, setTextButton] = useState("")
 
+  const progressChallenge = userContext.progress.challenges
+  const progressCompletedCourses = userContext.progress.completedCourses
+  const progressEnrolledCourses = userContext.progress.enrolledCourses
+  const progressHours = userContext.progress.hours
+
   function enrollCourse(event) {
-    const value = event.target.value
+    const value = event.currentTarget.value
     console.log(value)
 
     updateDoc(doc(db, `users/${userContext?.id}`), {
       enrolledCourses: arrayUnion(value),
+      progress: {
+        challenges: progressChallenge,
+        completedCourses: progressCompletedCourses,
+        enrolledCourses: progressEnrolledCourses + 1,
+        hours: progressHours,
+      },
     })
   }
 
   function cancelCourse(event) {
-    const value = event.target.value
-    console.log(value)
+    const value = event.currentTarget.value
 
     updateDoc(doc(db, `users/${userContext?.id}`), {
       enrolledCourses: arrayRemove(value),
+      progress: {
+        challenges: progressChallenge,
+        completedCourses: progressCompletedCourses,
+        enrolledCourses: progressEnrolledCourses - 1,
+        hours: progressHours,
+      },
     })
   }
 
@@ -83,6 +99,7 @@ export default function CourseBox({ coursesData, numberCourses }) {
                   key={course.id}
                   value={course.id}
                   onClick={(event) => enrollCourse(event)}
+                  className="transition-all duration-500 ease-in-out"
                 >
                   Enroll
                 </Button>
@@ -105,7 +122,7 @@ export default function CourseBox({ coursesData, numberCourses }) {
                           key={course.id}
                           value={course.id}
                           onClick={(event) => cancelCourse(event)}
-                          color="bg-yellow-2"
+                          color="bg-yellow-2 transition-all duration-500 ease-in-out"
                         >
                           Cancel Enroll
                         </Button>

@@ -1,16 +1,15 @@
-import Layout from "../../components/Layout"
-import GrayBox from "../../components/GrayBox/grayBox"
-import CourseBox from "../../components/Courses/CourseBox"
 import ButtonTopics from "../../components/Courses/ButtonTopics"
-import { SearchBar } from "../../components/Courses/SearchBar"
+import CourseBox from "../../components/Courses/CourseBox"
+import GrayBox from "../../components/GrayBox/grayBox"
+import Layout from "../../components/Layout"
 
 import { DesktopComputerIcon } from "@heroicons/react/outline"
+import { useContext } from "react"
 import { useQuery } from "react-query"
 import Spinner from "../../components/Spinner"
 import { UserContext } from "../../context/userContext"
-import { useContext } from "react"
-import { ICourses } from "../../interface/ICourses"
 import { ICourse } from "../../interface/ICourse"
+import { ICourses } from "../../interface/ICourses"
 
 export default function Page() {
   const userContext = useContext(UserContext)
@@ -100,9 +99,18 @@ export default function Page() {
             </div>
           </div>
         </GrayBox>
-        <h1 className="text-xl font-semibold my-5 w-full max2xl:w-5/6 mx-auto">
-          Recommended for you
-        </h1>
+        <div className="my-5 w-full max2xl:w-5/6 mx-auto flex justify-between place-items-center">
+          <h1 className="text-xl font-semibold ">Recommended for you</h1>
+          <div className="w-60">
+            <a
+              href="/courses/myCourses"
+              className="cursor-pointer float-right bg-yellow-1 text-black w-100 px-3 py-2 rounded-md text-sm font-medium text-center ease-out duration-300 hover:opacity-80"
+            >
+              My Courses
+            </a>
+          </div>
+        </div>
+
         <div className="grid grid-cols-4 max2xl:w-5/6 m-auto maxxl:grid-cols-2 maxmd:grid-cols-1 gap-5 justify-between">
           {/* <CourseBox
             title="React - The Complete Guide (incl Hooks, React Router, Redux)"
@@ -134,6 +142,7 @@ export default function Page() {
               >
                 More Courses
               </a>
+
               {/* {data?.results} */}
             </>
           )}

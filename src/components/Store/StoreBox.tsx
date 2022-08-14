@@ -1,12 +1,4 @@
-import {
-  doc,
-  updateDoc,
-  query,
-  where,
-  onSnapshot,
-  collection,
-  DocumentData,
-} from "firebase/firestore"
+import { doc, DocumentData, onSnapshot, updateDoc } from "firebase/firestore"
 import { useContext, useEffect, useState } from "react"
 import { db } from "../../config/firebase"
 import { UserContext } from "../../context/userContext"
@@ -63,7 +55,6 @@ export default function StoreBox({ image, price }: IStoreBoxPropx) {
         <p>EY Tech Shirt</p>
         <span className="text-yellow-2">💰 {price}</span>
       </div>
-      {user?.name}
     </div>
   )
 }

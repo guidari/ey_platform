@@ -1,18 +1,16 @@
-import Layout from "../../components/Layout"
 import AccessDenied from "../../components/AccessDenied"
+import Layout from "../../components/Layout"
 
-import { db } from "../../config/firebase"
-import { query, where, collection, getDocs } from "firebase/firestore"
+import { getAuth } from "firebase/auth"
+import { collection, getDocs, query, where } from "firebase/firestore"
 import { useEffect, useState } from "react"
-import Header from "../../components/Profile/Header"
+import { useAuthState } from "react-firebase-hooks/auth"
 import About from "../../components/Profile/About"
+import Header from "../../components/Profile/Header"
 import Languages from "../../components/Profile/Languages"
 import Skills from "../../components/Profile/Skills"
-import Experience from "../../components/Profile/Experience"
-import Education from "../../components/Profile/Education"
 import Spinner from "../../components/Spinner"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { getAuth } from "firebase/auth"
+import { db } from "../../config/firebase"
 
 interface IUser {
   id: string
@@ -88,7 +86,7 @@ export default function Page() {
             />
           )}
           {/* Close - Header user info */}
-          <div className="grid grid-cols-2 max-w-screen-xl maxxl:grid-cols-1 place-items-left maxxl:place-items-center m-auto pt-5">
+          <div className="grid grid-cols-2 max-w-screen-xl maxxl:grid-cols-1 place-it ems-stretch maxxl:place-items-center m-auto pt-5">
             {/* ABOUT */}
             <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
               <About

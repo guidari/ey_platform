@@ -1,8 +1,6 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { useQuery } from "react-query"
-import CourseBox from "../../components/Courses/CourseBox"
 import Layout from "../../components/Layout"
-import Spinner from "../../components/Spinner"
 import { UserContext } from "../../context/userContext"
 import { ICourses } from "../../interface/ICourses"
 
@@ -10,6 +8,8 @@ export default function Page() {
   const userContext = useContext(UserContext)
 
   const [myCourses, setMyCourses] = useState<any>()
+
+  console.log("userContext?.enrolledCourses", userContext?.enrolledCourses)
 
   const { data, isLoading, error, refetch } = useQuery(
     "myCourses",
