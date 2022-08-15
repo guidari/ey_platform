@@ -9,7 +9,6 @@ import router from "next/router"
 import { collection, getDocs, query, where } from "firebase/firestore"
 import { useAuthState } from "react-firebase-hooks/auth"
 import Spinner from "../Spinner"
-import { SearchBar } from "../Courses/SearchBar"
 import { UserContext } from "../../context/userContext"
 import Link from "next/link"
 
@@ -184,7 +183,6 @@ export default function Header() {
               <NavLink title="Courses" href="/courses" />
               <NavLink title="Challenges" href="/challenges" />
               <NavLink title="Store" href="/store" />
-              <SearchBar />
             </div>
           </Disclosure.Panel>
         </>

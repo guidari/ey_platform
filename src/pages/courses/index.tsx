@@ -11,6 +11,7 @@ import { UserContext } from "../../context/userContext"
 import { ICourse } from "../../interface/ICourse"
 import { ICourses } from "../../interface/ICourses"
 import NotAuthorized from "../notAuthorized"
+import Link from "next/link"
 
 export default function Page() {
   const userContext = useContext(UserContext)
@@ -104,12 +105,11 @@ export default function Page() {
         <div className="my-5 w-full max2xl:w-5/6 mx-auto flex justify-between place-items-center">
           <h1 className="text-xl font-semibold ">Recommended for you</h1>
           <div className="w-60">
-            <a
-              href="/courses/myCourses"
-              className="cursor-pointer float-right bg-yellow-1 text-black w-100 px-3 py-2 rounded-md text-sm font-medium text-center ease-out duration-300 hover:opacity-80"
-            >
-              My Courses
-            </a>
+            <Link href="/courses/myCourses">
+              <a className="cursor-pointer float-right bg-yellow-1 text-black w-100 px-3 py-2 rounded-md text-sm font-medium text-center ease-out duration-300 hover:opacity-80">
+                My Courses
+              </a>
+            </Link>
           </div>
         </div>
 
@@ -138,12 +138,11 @@ export default function Page() {
           ) : (
             <>
               <CourseBox coursesData={data} numberCourses={4} />
-              <a
-                href="/courses/allCourses"
-                className="cursor-pointer bg-yellow-1 text-black w-3/6 px-3 py-2 rounded-md text-sm font-medium text-center ease-out duration-300 hover:opacity-80"
-              >
-                More Courses
-              </a>
+              <Link href="/courses/allCourses">
+                <a className="cursor-pointer bg-yellow-1 text-black w-3/6 px-3 py-2 rounded-md text-sm font-medium text-center ease-out duration-300 hover:opacity-80">
+                  More Courses
+                </a>
+              </Link>
 
               {/* {data?.results} */}
             </>
