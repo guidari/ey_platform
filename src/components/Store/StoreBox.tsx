@@ -39,14 +39,16 @@ export default function StoreBox({ image, price }: IStoreBoxPropx) {
       <div className="rounded-md">
         <div className="overflow-hidden">
           <div className="relative rounded-tl-md rounded-tr-md cursor-pointer hover:scale-110 ease-out duration-300 ">
-            <img src={image} alt="" />
+            <img src={image} alt={image} />
             <div className="absolute inset-0 z-10 flex place-items-center justify-center opacity-0 hover:opacity-100 ease-out duration-300">
-              <button
-                onClick={buyItem}
-                className="bg-yellow-1 text-gray-3 font-semibold px-4 py-2 rounded-md"
-              >
-                Buy
-              </button>
+              {userContext && (
+                <button
+                  onClick={buyItem}
+                  className="bg-yellow-1 text-gray-3 font-semibold px-4 py-2 rounded-md"
+                >
+                  Buy
+                </button>
+              )}
             </div>
           </div>
         </div>

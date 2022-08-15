@@ -52,23 +52,28 @@ export default function NotionChallenge() {
         <Button icon={<DocumentTextIcon className="h-5 w-5" />}>
           Code template
         </Button>
-        <Button
-          icon={<Image src="/images/github-black.svg" width={20} height={20} />}
-          onClick={() => {
-            setOpenModalSubmitChallenge(true)
-          }}
-          {...userContext?.submitedChallenges.map((item) => {
-            if (item == challengeId) {
-              disabledSubmit = true
-              colorDisable = "bg-gray-2"
-            } else {
+        {userContext && (
+          <Button
+            icon={
+              <Image src="/images/github-black.svg" width={20} height={20} />
             }
-          })}
-          color={colorDisable}
-          disabled={disabledSubmit}
-        >
-          Submit
-        </Button>
+            onClick={() => {
+              setOpenModalSubmitChallenge(true)
+            }}
+            {...userContext?.submitedChallenges.map((item) => {
+              if (item == challengeId) {
+                disabledSubmit = true
+                colorDisable = "bg-gray-2"
+              } else {
+              }
+            })}
+            color={colorDisable}
+            disabled={disabledSubmit}
+          >
+            Submit
+          </Button>
+        )}
+
         {openModalSubmitChallenge && (
           <ModalSubmitChallenge
             closeModal={setOpenModalSubmitChallenge}

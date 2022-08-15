@@ -13,7 +13,17 @@ export default function Page() {
           <h1 className="text-xl font-semibold">
             Welcome to our store {userContext?.name}!
           </h1>
-          <p>Shop or redeem our products for free by using EyCoins.</p>
+          {userContext && (
+            <p>Shop or redeem our products for free by using EyCoins.</p>
+          )}
+          {!userContext && (
+            <p>
+              <a className="text-yellow-2" href="/login">
+                Sign in
+              </a>{" "}
+              to redeem our products for free using EyCoins.
+            </p>
+          )}
         </div>
 
         <div className="flex justify-between place-items-center">

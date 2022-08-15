@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 
 export default function NotAuthorized() {
   return (
@@ -6,14 +7,13 @@ export default function NotAuthorized() {
       <div className="px-4 lg:py-12">
         <div className="lg:gap-5 lg:flex">
           <div className="flex flex-col items-center justify-center md:py-24 lg:py-32">
-            <h1 className="font-bold text-yellow-2 text-9xl">404</h1>
-            <p className="mb-2 text-2xl font-bold text-center text-gray-800 md:text-3xl">
-              <span className="text-yellow-1">Oops!</span>
+            <p className="mb-2 text-4xl font-bold text-center text-yellow-1 ">
+              Oops!
             </p>
             <p className="mb-8 text-center text-gray-500 md:text-xl">
               You are not logged in
               <br />
-              to ssee this page
+              to see this page
             </p>
             <a
               href="/login"
@@ -35,6 +35,27 @@ export default function NotAuthorized() {
                 />
               </svg>
             </a>
+            <div className="text-center sm:text-left whitespace-nowrap">
+              <button className="transition duration-200 mt-5 mx-5 px-5 py-2 cursor-pointer font-normal text-sm rounded-lg text-gray-500 hover:bg-yellow-1 focus:outline-none focus:bg-yellow-1 hover:text-black">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="w-4 h-4 inline-block align-text-top"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                  />
+                </svg>
+                <Link href="/">
+                  <a className="inline-block ml-1">Back to home</a>
+                </Link>
+              </button>
+            </div>
           </div>
           <div className="mt-4 ml-5">
             <Image src="/images/notAuthorized.svg" width={500} height={500} />
