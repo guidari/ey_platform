@@ -10,15 +10,17 @@ import Spinner from "../../components/Spinner"
 import { UserContext } from "../../context/userContext"
 import { ICourse } from "../../interface/ICourse"
 import { ICourses } from "../../interface/ICourses"
+import NotAuthorized from "../notAuthorized"
 
 export default function Page() {
   const userContext = useContext(UserContext)
 
+  if (!userContext) {
+    return <NotAuthorized />
+  }
+
   // Recommended for you
   const { data, isLoading, error, refetch } = useQuery("courses", async () => {
-    // const response = await fetch(
-    //   "https://calm-refuge-90714.herokuapp.com/courses"
-    // )
     const response = await fetch(process.env.NEXT_PUBLIC_NODE_API + "courses")
     const data: ICourses = await response.json()
 

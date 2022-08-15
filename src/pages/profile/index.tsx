@@ -11,6 +11,7 @@ import Skills from "../../components/Profile/Skills"
 import Languages from "../../components/Profile/Languages"
 import Spinner from "../../components/Spinner"
 import { db } from "../../config/firebase"
+import NotAuthorized from "../notAuthorized"
 
 interface IUser {
   id: string
@@ -32,6 +33,10 @@ export default function Page() {
 
   const [user, loading, error] = useAuthState(auth)
   const [userData, setUserData] = useState<any>([])
+
+  if (!user) {
+    return <NotAuthorized />
+  }
 
   const fetchUserName = async () => {
     if (typeof window !== "undefined" && loading) return null

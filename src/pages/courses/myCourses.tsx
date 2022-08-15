@@ -3,9 +3,14 @@ import { useQuery } from "react-query"
 import Layout from "../../components/Layout"
 import { UserContext } from "../../context/userContext"
 import { ICourses } from "../../interface/ICourses"
+import NotAuthorized from "../notAuthorized"
 
 export default function Page() {
   const userContext = useContext(UserContext)
+
+  if (!userContext) {
+    return <NotAuthorized />
+  }
 
   const [myCourses, setMyCourses] = useState<any>()
 
