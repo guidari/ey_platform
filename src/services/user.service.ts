@@ -22,7 +22,7 @@ export const createUser = async (id: string, email: string, name: string) => {
 
   const progress = {
     completedCourses: 0,
-    enrolledCourses: 0,
+    coursesInProgress: 0,
     hours: 0,
     challenges: 0,
   }
@@ -39,5 +39,9 @@ export const createUser = async (id: string, email: string, name: string) => {
     skills: [],
     enrolledCourses: [],
     submitedChallenges: [],
+    challenges: 0,
+    completedCourses: 0,
+    coursesInProgress: 0,
+    hours: 0,
   })
 }

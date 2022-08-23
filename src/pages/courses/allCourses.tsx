@@ -12,9 +12,9 @@ import NotAuthorized from "../notAuthorized"
 export default function Page() {
   const userContext = useContext(UserContext)
 
-  if (!userContext) {
-    return <NotAuthorized />
-  }
+  // if (!userContext) {
+  //   return <NotAuthorized />
+  // }
 
   const [courses, setCourses] = useState<any>()
 
@@ -123,7 +123,7 @@ export default function Page() {
             <h1>Error</h1>
           ) : (
             <>
-              <CourseBox coursesData={courses} numberCourses={12} />
+              <CourseBox coursesData={courses || data} numberCourses={12} />
             </>
           )}
         </div>

@@ -8,40 +8,48 @@ import Button from "../Button/Button"
 export default function CourseBox({ coursesData, numberCourses }) {
   const userContext = useContext(UserContext)
 
-  const [textButton, setTextButton] = useState("")
+  if (userContext) {
+    const progressChallenge = userContext.progress.challenges
+    const progressCompletedCourses = userContext.progress.completedCourses
+    const progressEnrolledCourses = userContext.progress.coursesInProgress
+    const progressHours = userContext.progress.hours
 
-  const progressChallenge = userContext.progress.challenges
-  const progressCompletedCourses = userContext.progress.completedCourses
-  const progressEnrolledCourses = userContext.progress.enrolledCourses
-  const progressHours = userContext.progress.hours
+    function enrollCourse(event) {
+      const value = event.currentTarget.value
+      console.log(value)
 
-  function enrollCourse(event) {
-    const value = event.currentTarget.value
-    console.log(value)
-
-    updateDoc(doc(db, `users/${userContext?.id}`), {
-      enrolledCourses: arrayUnion(value),
-      progress: {
+      updateDoc(doc(db, `users/${userContext?.id}`), {
+        enrolledCourses: arrayUnion(value),
         challenges: progressChallenge,
         completedCourses: progressCompletedCourses,
-        enrolledCourses: progressEnrolledCourses + 1,
+        coursesInProgress: progressEnrolledCourses + 1,
         hours: progressHours,
-      },
-    })
-  }
+        progress: {
+          challenges: progressChallenge,
+          completedCourses: progressCompletedCourses,
+          coursesInProgress: progressEnrolledCourses + 1,
+          hours: progressHours,
+        },
+      })
+    }
 
-  function cancelCourse(event) {
-    const value = event.currentTarget.value
+    function cancelCourse(event) {
+      const value = event.currentTarget.value
 
-    updateDoc(doc(db, `users/${userContext?.id}`), {
-      enrolledCourses: arrayRemove(value),
-      progress: {
+      updateDoc(doc(db, `users/${userContext?.id}`), {
+        enrolledCourses: arrayRemove(value),
         challenges: progressChallenge,
         completedCourses: progressCompletedCourses,
-        enrolledCourses: progressEnrolledCourses - 1,
+        coursesInProgress: progressEnrolledCourses - 1,
         hours: progressHours,
-      },
-    })
+        progress: {
+          challenges: progressChallenge,
+          completedCourses: progressCompletedCourses,
+          coursesInProgress: progressEnrolledCourses - 1,
+          hours: progressHours,
+        },
+      })
+    }
   }
 
   // let Enroll = "Enroll"
@@ -70,7 +78,7 @@ export default function CourseBox({ coursesData, numberCourses }) {
       {coursesData.slice(0, numberCourses).map((course) => {
         return (
           <div key={course.id} className="bg-gray-1 rounded-md max-w-md">
-            <div className="overflow-hidden ">
+            <div className="overflow-hidden rounded-tl-md rounded-tr-md">
               <div className="relative rounded-tl-md rounded-tr-md cursor-pointer hover:scale-110 ease-out duration-300 ">
                 <a href={"https://www.udemy.com" + course.url} target="_blank">
                   <img
@@ -95,26 +103,34 @@ export default function CourseBox({ coursesData, numberCourses }) {
                 })}
               </p>
               <div className="my-2 flex gap-5">
-                <Button
-                  key={course.id}
-                  value={course.id}
-                  onClick={(event) => enrollCourse(event)}
-                  className="transition-all duration-500 ease-in-out"
-                >
-                  Enroll
-                </Button>
-
-                {/* {userContext?.enrolledCourses.length === 0 && (
+                {userContext && (
                   <Button
                     key={course.id}
                     value={course.id}
                     onClick={(event) => enrollCourse(event)}
+                    className="transition-all duration-500 ease-in-out"
                   >
                     Enroll
                   </Button>
-                )} */}
+                )}
 
-                {userContext?.enrolledCourses != undefined &&
+                {!userContext ? (
+                  <p>
+                    <Link href="/login">
+                      <span
+                        style={{
+                          color: "#FFE600",
+                          fontWeight: "bold",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Sign in
+                      </span>
+                    </Link>{" "}
+                    to enroll a course
+                  </p>
+                ) : (
+                  userContext?.enrolledCourses != undefined &&
                   userContext?.enrolledCourses.map((index) => {
                     if (index == course.id) {
                       return (
@@ -128,35 +144,8 @@ export default function CourseBox({ coursesData, numberCourses }) {
                         </Button>
                       )
                     }
-                    // else {
-                    //   return (
-                    //     <Button
-                    //       key={course.id}
-                    //       value={course.id}
-                    //       onClick={(event) => enrollCourse(event)}
-                    //     >
-                    //       Enroll
-                    //     </Button>
-                    //   )
-                    // }
-                  })}
-
-                {/* <Button
-                  key={course.id}
-                  value={course.id}
-                  onClick={(event) => updateEnrolledCourses(event)}
-                >
-                  {userContext?.enrolledCourses.map((index) => {
-                    console.log("index", index)
-                    if (course.id != index) {
-                      console.log("Enroll")
-                      return Enroll
-                    } else {
-                      console.log("Cancel")
-                      return Cancel
-                    }
-                  })}
-                </Button> */}
+                  })
+                )}
               </div>
             </div>
           </div>

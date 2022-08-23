@@ -3,7 +3,8 @@ import NotionChallenge from "../../components/Challenge/NotionChallenge"
 
 import { collection, getDocs } from "firebase/firestore"
 import { db } from "../../config/firebase"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import axios from "axios"
 
 export default function Page() {
   async function getAllUsers() {

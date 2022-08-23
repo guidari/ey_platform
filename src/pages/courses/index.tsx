@@ -1,24 +1,21 @@
 import ButtonTopics from "../../components/Courses/ButtonTopics"
 import CourseBox from "../../components/Courses/CourseBox"
-import GrayBox from "../../components/GrayBox/grayBox"
 import Layout from "../../components/Layout"
 
-import { DesktopComputerIcon } from "@heroicons/react/outline"
-import { useContext } from "react"
 import { useQuery } from "react-query"
 import Spinner from "../../components/Spinner"
-import { UserContext } from "../../context/userContext"
 import { ICourse } from "../../interface/ICourse"
 import { ICourses } from "../../interface/ICourses"
 import NotAuthorized from "../notAuthorized"
 import Link from "next/link"
+import UserProgress from "../../components/Courses/UserProgress"
 
 export default function Page() {
-  const userContext = useContext(UserContext)
-
-  if (!userContext) {
-    return <NotAuthorized />
-  }
+  // if (!userContext) {
+  //   setTimeout(() => {
+  //     return <NotAuthorized />
+  //   }, 500)
+  // }
 
   // Recommended for you
   const { data, isLoading, error, refetch } = useQuery("courses", async () => {
@@ -47,61 +44,8 @@ export default function Page() {
   return (
     <Layout>
       <div className="flex flex-col gap-5 max-w-screen-xl maxxl:inline m-auto pt-5">
-        <GrayBox title="My Progress" size="full">
-          <div className="grid grid-cols-4 maxxl:grid-cols-2 maxmd:grid-cols-1 gap-5 justify-between px-5 maxmd:px-0 py-2">
-            <div className="flex gap-2">
-              <div>
-                <DesktopComputerIcon className="w-12 bg-gray-3 p-3 rounded-full text-yellow-1" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-semibold">
-                  {userContext?.progress.enrolledCourses}
-                </h1>
-                <h2 className="text-lg maxmd:text-md font-semibold">
-                  Enrolled courses
-                </h2>
-              </div>
-            </div>
+        <UserProgress />
 
-            <div className="flex gap-2">
-              <div>
-                <DesktopComputerIcon className="w-12 bg-gray-3 p-3 rounded-full text-yellow-1" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-semibold">
-                  {userContext?.progress.completedCourses}
-                </h1>
-                <h2 className="text-lg font-semibold">Completed courses</h2>
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <div>
-                <DesktopComputerIcon className="w-12 bg-gray-3 p-3 rounded-full text-yellow-1" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-semibold">
-                  {userContext?.progress.hours}
-                </h1>
-                <h2 className="text-lg font-semibold">
-                  Hours Completed this year
-                </h2>
-              </div>
-            </div>
-
-            <div className="flex gap-2">
-              <div>
-                <DesktopComputerIcon className="w-12 bg-gray-3 p-3 rounded-full text-yellow-1" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-semibold">
-                  {userContext?.progress.challenges}
-                </h1>
-                <h2 className="text-lg font-semibold">Completed Challenges</h2>
-              </div>
-            </div>
-          </div>
-        </GrayBox>
         <div className="my-5 w-full max2xl:w-5/6 mx-auto flex justify-between place-items-center">
           <h1 className="text-xl font-semibold ">Recommended for you</h1>
           <div className="w-60">
@@ -114,23 +58,6 @@ export default function Page() {
         </div>
 
         <div className="grid grid-cols-4 max2xl:w-5/6 m-auto maxxl:grid-cols-2 maxmd:grid-cols-1 gap-5 justify-between">
-          {/* <CourseBox
-            title="React - The Complete Guide (incl Hooks, React Router, Redux)"
-            professor="Academind by Maximilian Schwarzmüller"
-          />
-          <CourseBox
-            title="React - The Complete Guide (incl Hooks, React Router, Redux)"
-            professor="Academind by Maximilian Schwarzmüller"
-          />
-          <CourseBox
-            title="React - The Complete Guide (incl Hooks, React Router, Redux)"
-            professor="Academind by Maximilian Schwarzmüller"
-          />
-          <CourseBox
-            title="React - The Complete Guide (incl Hooks, React Router, Redux)"
-            professor="Academind by Maximilian Schwarzmüller"
-          /> */}
-
           {isLoading ? (
             <Spinner />
           ) : error ? (

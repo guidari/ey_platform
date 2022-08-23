@@ -27,7 +27,7 @@ export default function Page() {
           alt="EY Logo branco com traço amarelo em cima"
         />
         <h1 className="text-5xl font-bold mt-5">
-          Make you first <br></br>step with us!
+          Make your first <br></br>step with us!
         </h1>
         <img
           className="mt-10 maxmd:hidden"
@@ -54,6 +54,11 @@ export default function Page() {
                   id="password"
                   type="password"
                   className="rounded-lg  bg-gray-3 px-4 py-3 mt-1 mb-1 text-sm w-full focus:outline-none"
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      login()
+                    }
+                  }}
                 />
                 <a className="text-sm cursor-pointer hover:opacity-80">
                   I forgot my password

@@ -11,12 +11,16 @@ export type IUser = {
   languages: []
   enrolledCourses: []
   submitedChallenges: []
+  completedCourses: number
+  hours: number
+  challenges: number
+  coursesInProgress: number
   skills: []
   progress: {
     completedCourses: number
     hours: number
     challenges: number
-    enrolledCourses: number
+    coursesInProgress: number
   }
   location: string
   phone: string

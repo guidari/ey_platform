@@ -12,6 +12,7 @@ import { db } from "../../config/firebase"
 import Spinner from "../../components/Spinner"
 import { IChallenge } from "../../interface/IChallenge"
 import { UserContext } from "../../context/userContext"
+import axios from "axios"
 
 export default function NotionChallenge() {
   const userContext = useContext(UserContext)
@@ -22,6 +23,8 @@ export default function NotionChallenge() {
   const [challenge, setChallenge] = useState<IChallenge | DocumentData>()
   const [challengeNotion, setChallengeNotion] = useState<any>()
   const [challengeId, setChallengeId] = useState<any>()
+
+  const [notion, setNotion] = useState()
 
   let colorDisable
   let disabledSubmit
@@ -46,6 +49,17 @@ export default function NotionChallenge() {
   useEffect(() => {
     getChallenge()
   }, [])
+
+  axios
+    .get(process.env.NEXT_PUBLIC_NODE_API + "jobs")
+    .then(function (response) {
+      console.log("response", response.data)
+      setNotion(response.data.url)
+    })
+    .catch((err) => {
+      console.log("err", err)
+    })
+
   return (
     <div className="flex-initial w-full p-5 bg-gray-1 rounded-md mt-5">
       <div className="flex maxsm:grid gap-5 mb-5">

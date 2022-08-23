@@ -13,7 +13,7 @@ export default function ModalSubmitChallenge({
 
   const progressChallenge = userContext.progress.challenges
   const progressCompletedCourses = userContext.progress.completedCourses
-  const progressEnrolledCourses = userContext.progress.enrolledCourses
+  const progressEnrolledCourses = userContext.progress.coursesInProgress
   const progressHours = userContext.progress.hours
 
   const submissionsChallenge = challenge.submissions
@@ -21,10 +21,14 @@ export default function ModalSubmitChallenge({
   function updateDocuments() {
     updateDoc(doc(db, `users/${userContext?.id}`), {
       submitedChallenges: arrayUnion(challengeId),
+      challenges: progressChallenge + 1,
+      completedCourses: progressCompletedCourses,
+      coursesInProgress: progressEnrolledCourses,
+      hours: progressHours,
       progress: {
         challenges: progressChallenge + 1,
         completedCourses: progressCompletedCourses,
-        enrolledCourses: progressEnrolledCourses,
+        coursesInProgress: progressEnrolledCourses,
         hours: progressHours,
       },
     })
