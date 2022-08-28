@@ -1,7 +1,13 @@
-import { ReactElement, ReactNode, useContext, useState } from "react"
+import {
+  ButtonHTMLAttributes,
+  ReactElement,
+  ReactNode,
+  useContext,
+  useState,
+} from "react"
 import { UserContext } from "../../context/userContext"
 
-interface IButton {
+type IButton = ButtonHTMLAttributes<any> & {
   children: ReactNode
   onClick?: () => void
   value?: number
@@ -19,6 +25,7 @@ export default function Button({
   hidden,
   icon,
   disabled,
+  ...rest
 }: IButton) {
   const userContext = useContext(UserContext)
 
@@ -33,6 +40,7 @@ export default function Button({
         onClick={onClick}
         className={`cursor-pointer ${color} text-black px-3 py-2 rounded-md text-sm font-medium ease-out duration-300 hover:opacity-80 ${hidden}`}
         disabled={disabled}
+        {...rest}
       >
         {/* {!icon && { children }} */}
         <div className="flex place-items-center gap-2">
