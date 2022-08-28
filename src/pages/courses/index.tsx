@@ -19,7 +19,11 @@ export default function Page() {
 
   // Recommended for you
   const { data, isLoading, error, refetch } = useQuery("courses", async () => {
-    const response = await fetch(process.env.NEXT_PUBLIC_NODE_API + "courses")
+    // const response = await fetch(process.env.NEXT_PUBLIC_NODE_API + "courses") // Not wokrking for now
+    const response = await fetch(process.env.NEXT_PUBLIC_NODE_API + "search", {
+      method: "GET",
+      headers: { name: "javascript", language: "English" },
+    })
     const data: ICourses = await response.json()
 
     const courses = data.results.map((course: ICourse) => {

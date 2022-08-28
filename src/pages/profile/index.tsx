@@ -91,59 +91,61 @@ export default function Page() {
             />
           )}
           {/* Close - Header user info */}
-          <div className="grid grid-cols-2 max-w-screen-xl maxxl:grid-cols-1 place-it ems-stretch maxxl:place-items-center m-auto pt-5">
-            {/* ABOUT */}
-            <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-              <About
-                userData={userData}
-                listenToDocumentChange={fetchUserName}
-              />
-            </section>
+          <div className="flex">
+            <div className="grid grid-cols-2 max-w-screen-xl maxxl:grid-cols-1 m-auto pt-5 gap-5">
+              {/* ABOUT */}
+              <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+                <About
+                  userData={userData}
+                  listenToDocumentChange={fetchUserName}
+                />
+              </section>
 
-            {/* EXPERIENCE */}
-            {/* <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+              {/* EXPERIENCE */}
+              {/* <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
               <Experience />
             </section> */}
 
-            {/* LANGUAGES */}
-            <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-              <Languages
-                userData={userData}
-                listenToDocumentChange={fetchUserName}
-              />
-            </section>
+              {/* LANGUAGES */}
+              <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+                <Languages
+                  userData={userData}
+                  listenToDocumentChange={fetchUserName}
+                />
+              </section>
 
-            {/* EDUCATION */}
-            {/* <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+              {/* EDUCATION */}
+              {/* <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
               <Education />
             </section> */}
 
-            {/* SKILLS */}
-            <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-              <Skills
-                userData={userData}
-                listenToDocumentChange={fetchUserName}
-              />
-            </section>
+              {/* SKILLS */}
+              <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+                <Skills
+                  userData={userData}
+                  listenToDocumentChange={fetchUserName}
+                />
+              </section>
 
-            {/* VIDEO INTRODUCTION */}
-            <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-              <h1 className="text-xl font-semibold">Video Introduction</h1>
+              {/* VIDEO INTRODUCTION */}
+              <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
+                <h1 className="text-xl font-semibold">Video Introduction</h1>
 
-              <div className="flex">
-                {/* <VideoCameraIcon className="w-6 text-gray-3 bg-yellow-1 rounded-bl-md rounded-tl-md" /> */}
-                <input
-                  type="file"
-                  className="block w-full mt-5 text-sm text-gray-4
+                <div className="flex">
+                  {/* <VideoCameraIcon className="w-6 text-gray-3 bg-yellow-1 rounded-bl-md rounded-tl-md" /> */}
+                  <input
+                    type="file"
+                    className="block w-full mt-5 text-sm text-gray-4
         file:mr-4 file:py-2 file:px-4
         file:rounded-md file:border-0
         file:text-sm file:font-semibold
         file:bg-yellow-1 file:text-gray-3
         hover:opacity-80
       "
-                />
-              </div>
-            </section>
+                  />
+                </div>
+              </section>
+            </div>
           </div>
         </>
       )}
