@@ -1,12 +1,9 @@
+import axios from "axios"
+import Link from "next/link"
 import { useContext, useEffect, useState } from "react"
-import { useQuery } from "react-query"
 import CourseBox from "../../components/Courses/CourseBox"
 import Layout from "../../components/Layout"
 import { UserContext } from "../../context/userContext"
-import { ICourses } from "../../interface/ICourses"
-import NotAuthorized from "../notAuthorized"
-import axios from "axios"
-import Link from "next/link"
 
 export default function Page() {
   const userContext = useContext(UserContext)
@@ -16,6 +13,8 @@ export default function Page() {
   const user = userContext
 
   useEffect(() => {
+    setMyCourses([])
+
     let tokenHeaders
     userContext?.enrolledCourses.map((item) => {
       console.log("item id", item)

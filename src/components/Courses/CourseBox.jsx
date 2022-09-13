@@ -1,6 +1,6 @@
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore"
 import Link from "next/link"
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import { db } from "../../config/firebase"
 import { UserContext } from "../../context/userContext"
 import Button from "../Button/Button"
@@ -108,7 +108,6 @@ export default function CourseBox({ coursesData, numberCourses }) {
                     key={course.id}
                     value={course.id}
                     onClick={(event) => enrollCourse(event)}
-                    className="transition-all duration-500 ease-in-out"
                   >
                     Enroll
                   </Button>
