@@ -27,12 +27,43 @@ export default function JobDescription() {
         <div className="grid grid-cols-5 maxmd:grid-cols-1 gap-10">
           <div className="col-span-4">
             <h1 className="text-lg font-semibold">Job description</h1>
+            <p>O que esperamos de você?</p>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
-              deserunt sapiente iure impedit ipsum culpa fugit temporibus
-              obcaecati labore nisi a voluptates, consectetur ad dignissimos
-              iusto nostrum nemo? Enim, quaerat.
+              Estamos buscando pessoas que queiram se desenvolver e aprender
+              constantemente, compartilhando, colaborando, inovando e entregando
+              valor para todos os nossos clientes.
             </p>
+            <br />
+
+            <strong>Responsabilidades da Oportunidade</strong>
+            <br />
+
+            <ul>
+              <li>Atuação em time ágil e multidisciplinar com engenharia;</li>
+              <li>Desenvolvimento de Front end;</li>
+              <li>
+                Construir soluções e suportar os processos de Garantias de
+                Imóveis;
+              </li>
+              <li>
+                Construir soluções e suportar os processos de Garantias de
+                Imóveis;
+              </li>
+            </ul>
+            <br />
+
+            <strong>Requisitos</strong>
+
+            <ul>
+              <li>HTML;</li>
+              <li>Micro Front-End;</li>
+              <li>Javascript;</li>
+              <li>TypeScript;</li>
+              <li>Angular;</li>
+              <li>CSS;</li>
+              <li>Github;</li>
+              <li>Conhecimento em arquitetura de micro front end.</li>
+            </ul>
           </div>
 
           <div>
