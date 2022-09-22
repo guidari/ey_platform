@@ -32,3 +32,16 @@ iframe {
   border-radius: 0.5rem;
   filter: invert(1);
 }
+
+:root {
+  --yellow-1: #ffe600;
+  --yellow-2: #f2c94c;
+
+  --white: #ffffff;
+  --white-200: #f2f2f2;
+
+  --gray-100: #47475a;
+  --gray-300: #2e2e38;
+  --gray-700: #1a1a28;
+  --gray-900: #c1bccc;
+}

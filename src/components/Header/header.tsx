@@ -1,16 +1,14 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useContext, useEffect, useState } from "react"
 import { Disclosure, Menu, Transition } from "@headlessui/react"
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline"
-import { NavLink } from "./NavLink"
 import { getAuth, signOut } from "firebase/auth"
-import { db } from "../../config/firebase"
-import router from "next/router"
-import { collection, getDocs, query, where } from "firebase/firestore"
-import { useAuthState } from "react-firebase-hooks/auth"
-import Spinner from "../Spinner"
-import { UserContext } from "../../context/userContext"
 import Link from "next/link"
+import router from "next/router"
+import { Fragment, useContext } from "react"
+import { useAuthState } from "react-firebase-hooks/auth"
+import { UserContext } from "../../context/userContext"
+import Spinner from "../Spinner"
+import { NavLink } from "./NavLink"
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
@@ -83,6 +81,7 @@ export default function Header() {
                     <NavLink title="Courses" href="/courses" />
                     <NavLink title="Challenges" href="/challenges" />
                     <NavLink title="Store" href="/store" />
+                    <NavLink title="News" href="/news" />
                   </div>
                 </div>
               </div>
@@ -183,6 +182,7 @@ export default function Header() {
               <NavLink title="Courses" href="/courses" />
               <NavLink title="Challenges" href="/challenges" />
               <NavLink title="Store" href="/store" />
+              <NavLink title="News" href="/news" />
             </div>
           </Disclosure.Panel>
         </>
