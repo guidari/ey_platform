@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react"
-import { NotionRenderer } from "react-notion"
 import Button from "../../components/Button/Button"
 
 import { doc, DocumentData, getDoc } from "firebase/firestore"
@@ -7,12 +6,12 @@ import { doc, DocumentData, getDoc } from "firebase/firestore"
 import { DocumentTextIcon, LockClosedIcon } from "@heroicons/react/outline"
 import Image from "next/image"
 
-import ModalSubmitChallenge from "../../components/Modal/ModalSubmitChallenge"
-import { db } from "../../config/firebase"
-import Spinner from "../../components/Spinner"
-import { IChallenge } from "../../interface/IChallenge"
-import { UserContext } from "../../context/userContext"
 import axios from "axios"
+import ModalSubmitChallenge from "../../components/Modal/ModalSubmitChallenge"
+import Spinner from "../../components/Spinner"
+import { db } from "../../config/firebase"
+import { UserContext } from "../../context/userContext"
+import { IChallenge } from "../../interface/IChallenge"
 
 export default function NotionChallenge() {
   const userContext = useContext(UserContext)
