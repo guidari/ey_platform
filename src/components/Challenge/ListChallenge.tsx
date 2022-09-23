@@ -1,17 +1,19 @@
 import { Box } from "@mui/material"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
 
-export default function ListChallenge() {
+export default function ListChallenge({ onRowClick }: any) {
   const rows = [
     {
-      id: 1,
+      id: "CYVNxvaeDkVJUJCwE4D1",
       title: "React",
       level: "Easy",
+      rating: 4,
     },
     {
       id: 2,
       title: "Java",
       level: "Medium",
+      rating: 3,
     },
   ]
 
@@ -28,6 +30,13 @@ export default function ListChallenge() {
       width: 252,
       headerClassName: "header-style",
     },
+    // {
+    //   field: "rating",
+    //   headerName: "Rating",
+    //   renderCell: (params: any) => (params.value ? <p>{params}</p> : ""),
+    //   width: 252,
+    //   headerClassName: "header-style",
+    // },
   ]
 
   return (
@@ -60,7 +69,7 @@ export default function ListChallenge() {
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[10]}
-        // onRowClick={onRowClick}
+        onRowClick={onRowClick}
         autoHeight
       />
     </Box>

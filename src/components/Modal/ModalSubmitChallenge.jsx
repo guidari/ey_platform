@@ -15,6 +15,7 @@ export default function ModalSubmitChallenge({
   const progressCompletedCourses = userContext.progress.completedCourses
   const progressEnrolledCourses = userContext.progress.coursesInProgress
   const progressHours = userContext.progress.hours
+  const coin = userContext.eycoin
 
   const submissionsChallenge = challenge.submissions
 
@@ -25,6 +26,7 @@ export default function ModalSubmitChallenge({
       completedCourses: progressCompletedCourses,
       coursesInProgress: progressEnrolledCourses,
       hours: progressHours,
+      eycoin: coin + 10,
       progress: {
         challenges: progressChallenge + 1,
         completedCourses: progressCompletedCourses,
@@ -56,6 +58,10 @@ export default function ModalSubmitChallenge({
       closeModal={closeModal}
       titleEdit="Submit challenge"
       saveChanges={submiteChallenge}
+      sx={{
+        postion: "absolute",
+        zIndex: 999,
+      }}
     >
       <input
         type="text"
