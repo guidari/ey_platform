@@ -7,19 +7,18 @@ import { DocumentTextIcon, LockClosedIcon } from "@heroicons/react/outline"
 import Image from "next/image"
 
 import { Box } from "@mui/material"
-import ModalSubmitChallenge from "../../components/Modal/ModalSubmitChallenge"
 import { db } from "../../config/firebase"
 import { UserContext } from "../../context/userContext"
 import { IChallenge } from "../../interface/IChallenge"
+import SubmitChallenge from "../Modal/SubimitChallenge"
 
 export default function Challenge({ data }: any) {
-  console.log("dsAT", data)
+  console.log("data", data)
   const userContext = useContext(UserContext)
 
   const [openModalSubmitChallenge, setOpenModalSubmitChallenge] =
     useState(false)
   const [challenge, setChallenge] = useState<IChallenge | DocumentData>()
-  const [challengeNotion, setChallengeNotion] = useState<any>()
   const [challengeId, setChallengeId] = useState<any>()
 
   const [notion, setNotion] = useState()
@@ -30,11 +29,7 @@ export default function Challenge({ data }: any) {
   async function getChallenge() {
     const docRef = doc(db, "challenges", data.id)
     const docSnap = await getDoc(docRef)
-
     if (docSnap.exists()) {
-      const data = await fetch(docSnap.data().url).then((res) => res.json())
-      setChallengeNotion(data)
-
       setChallengeId(docSnap.id)
 
       setChallenge(docSnap.data())
@@ -76,16 +71,11 @@ export default function Challenge({ data }: any) {
           </Button>
         )}
 
-        {openModalSubmitChallenge && (
-          <ModalSubmitChallenge
-            closeModal={setOpenModalSubmitChallenge}
-            challenge={challenge}
-            challengeId={challengeId}
-          />
-        )}
         <Button icon={<LockClosedIcon className="h-5 w-5" />}>Solution</Button>
       </div>
-
+      {openModalSubmitChallenge && (
+        <SubmitChallenge challenge={challenge} challengeId={data.id} />
+      )}
       <p>
         You are given the heads of two sorted linked lists
         <strong>list1</strong> and <strong>list2</strong>.

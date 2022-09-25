@@ -1,42 +1,65 @@
-import { Box } from "@mui/material"
+import { Box, Rating } from "@mui/material"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
 
+import { collection, getDocs } from "firebase/firestore"
+import { SetStateAction, useEffect, useState } from "react"
+import { db } from "../../config/firebase"
+
 export default function ListChallenge({ onRowClick }: any) {
-  const rows = [
-    {
-      id: "CYVNxvaeDkVJUJCwE4D1",
-      title: "React",
-      level: "Easy",
-      rating: 4,
-    },
-    {
-      id: 2,
-      title: "Java",
-      level: "Medium",
-      rating: 3,
-    },
-  ]
+  const [challenges, setChallenges] = useState<any[]>([])
+
+  useEffect(() => {
+    getChallenges()
+  }, [])
+
+  async function getChallenges() {
+    const querySnapshot = await getDocs(collection(db, "challenges"))
+
+    querySnapshot.forEach((doc) => {
+      const document: SetStateAction<any[]> = []
+
+      querySnapshot.forEach((doc) => {
+        document.push({
+          ...doc.data(),
+        })
+      })
+
+      setChallenges(document)
+    })
+  }
+
+  console.log("challenges", challenges)
 
   const columns: GridColDef[] = [
     {
       field: "title",
       headerName: "Title",
-      width: 252,
+      width: 393,
       headerClassName: "header-style",
     },
     {
       field: "level",
       headerName: "Level",
-      width: 252,
+      width: 200,
       headerClassName: "header-style",
     },
-    // {
-    //   field: "rating",
-    //   headerName: "Rating",
-    //   renderCell: (params: any) => (params.value ? <p>{params}</p> : ""),
-    //   width: 252,
-    //   headerClassName: "header-style",
-    // },
+    {
+      field: "rating",
+      headerName: "Rating",
+      renderCell: (params: any) => (
+        <Rating
+          sx={{
+            color: "var(--yellow-1)",
+          }}
+          name="read-only"
+          defaultValue={params.value}
+          precision={0.5}
+          readOnly
+        />
+      ),
+      width: 200,
+      headerClassName: "header-style",
+    },
   ]
 
   return (
@@ -65,7 +88,7 @@ export default function ListChallenge({ onRowClick }: any) {
             fill: "var(--white)",
           },
         }}
-        rows={rows}
+        rows={challenges}
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[10]}

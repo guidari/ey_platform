@@ -1,12 +1,5 @@
-import {
-  getDocs,
-  query,
-  where,
-  collection,
-  setDoc,
-  doc,
-} from "firebase/firestore"
-import { db, app } from "../config/firebase"
+import { collection, doc, setDoc } from "firebase/firestore"
+import { db } from "../config/firebase"
 
 const usersRef = collection(db, "users")
 
@@ -43,5 +36,6 @@ export const createUser = async (id: string, email: string, name: string) => {
     completedCourses: 0,
     coursesInProgress: 0,
     hours: 0,
+    notifications: [],
   })
 }

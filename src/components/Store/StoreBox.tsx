@@ -14,7 +14,7 @@ export default function StoreBox({ image, price }: IStoreBoxPropx) {
   function buyItem() {
     console.log("price", price)
     if (userContext!.eycoin < price) {
-      alert("You don't have enough coins to buy this")
+      return alert("You don't have enough coins to buy this")
     }
 
     const updatedEycoin = userContext!.eycoin - price
