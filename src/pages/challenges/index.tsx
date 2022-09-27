@@ -1,5 +1,4 @@
 import { Backdrop, Box, Fade, Modal, useMediaQuery } from "@mui/material"
-import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import Challenge from "../../components/Challenge/Challenge"
@@ -29,11 +28,12 @@ export default function Page() {
 
           <div className="flex-initial w-3/6 maxxl:w-full p-5 rounded-md mt-5">
             <Link href="challenges/weekChallenge">
-              <Image
+              <img
                 src="/images/week_challenge.png"
                 width={380}
                 height={170}
                 className="rounded-md cursor-pointer"
+                alt="Week challenge image"
               />
             </Link>
           </div>

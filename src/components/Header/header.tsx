@@ -1,6 +1,6 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Disclosure, Menu, Transition } from "@headlessui/react"
-import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline"
+import { MenuIcon, XIcon } from "@heroicons/react/outline"
 import { getAuth, signOut } from "firebase/auth"
 import Link from "next/link"
 import router from "next/router"
@@ -9,6 +9,7 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import { UserContext } from "../../context/userContext"
 import Spinner from "../Spinner"
 import { NavLink } from "./NavLink"
+import Notifications from "./Notifications"
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
@@ -99,10 +100,7 @@ export default function Header() {
                   </Link>
                 ) : (
                   <>
-                    <button className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                      <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
+                    <Notifications />
 
                     {/* Profile dropdown */}
                     <Menu as="div" className="ml-3 relative">

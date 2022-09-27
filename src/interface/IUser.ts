@@ -17,6 +17,7 @@ export type IUser = {
   coursesInProgress: number
   arrayCompletedCourses: []
   skills: []
+  notifications: []
   progress: {
     completedCourses: number
     hours: number
