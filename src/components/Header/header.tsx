@@ -64,16 +64,22 @@ export default function Header() {
               </div>
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
-                  <img
-                    className="block lg:hidden h-8 w-auto"
-                    src="/images/ey-white-logo.png"
-                    alt="Workflow"
-                  />
-                  <img
-                    className="hidden lg:block h-8 w-auto"
-                    src="/images/ey-white-logo.png"
-                    alt="Workflow"
-                  />
+                  <a href="/courses">
+                    <img
+                      className="block lg:hidden h-8 w-auto"
+                      src="/images/ey-white-logo.png"
+                      alt="Workflow"
+                    />
+                  </a>
+                  <div className="cursor-pointer">
+                    <Link href="courses">
+                      <img
+                        className="hidden lg:block h-8 w-auto"
+                        src="/images/ey-white-logo.png"
+                        alt="Workflow"
+                      />
+                    </Link>
+                  </div>
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">

@@ -40,9 +40,9 @@ export default function Notifications() {
                     {userContext?.notifications.map((item: any) => {
                       return (
                         <div className="mb-2">
-                          <div className="flex justify-between mt-2">
+                          <div className="flex justify-between mt-2 place-items-center">
                             <p>🔔 {item.title}</p>
-                            <p>{item.date}</p>
+                            <p className="text-xs">{item.date}</p>
                           </div>
                           <p className="mb-2 ">{item.description}</p>
                         </div>
