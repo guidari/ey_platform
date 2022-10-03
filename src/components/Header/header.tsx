@@ -120,7 +120,9 @@ export default function Header() {
                                 src={
                                   userContext?.image == ""
                                     ? `/images/userGeneric.png`
-                                    : userContext?.image
+                                    : `${
+                                        userContext?.image
+                                      }?noCache=${Math.random()}`
                                 }
                                 alt=""
                               />

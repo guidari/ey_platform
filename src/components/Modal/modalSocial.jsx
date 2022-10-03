@@ -1,9 +1,9 @@
-import { db } from "../../config/firebase"
-import { updateDoc, doc } from "firebase/firestore"
+import { doc, updateDoc } from "firebase/firestore"
 import { getStorage, ref, uploadBytes } from "firebase/storage"
+import { db } from "../../config/firebase"
 
-import Modal from "./modal"
 import { useState } from "react"
+import Modal from "./modal"
 
 export default function ModalSocial({
   closeModal,

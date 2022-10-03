@@ -7,8 +7,9 @@ import { useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import About from "../../components/Profile/About"
 import Header from "../../components/Profile/Header"
-import Skills from "../../components/Profile/Skills"
 import Languages from "../../components/Profile/Languages"
+import Skills from "../../components/Profile/Skills"
+import Video from "../../components/Profile/Video"
 import Spinner from "../../components/Spinner"
 import { db } from "../../config/firebase"
 import NotAuthorized from "../notAuthorized"
@@ -129,21 +130,7 @@ export default function Page() {
 
               {/* VIDEO INTRODUCTION */}
               <section className="bg-gray-1 w-[35rem] maxsm:w-5/6 p-5 rounded-md mt-5">
-                <h1 className="text-xl font-semibold">Video Introduction</h1>
-
-                <div className="flex">
-                  {/* <VideoCameraIcon className="w-6 text-gray-3 bg-yellow-1 rounded-bl-md rounded-tl-md" /> */}
-                  <input
-                    type="file"
-                    className="block w-full mt-5 text-sm text-gray-4
-        file:mr-4 file:py-2 file:px-4
-        file:rounded-md file:border-0
-        file:text-sm file:font-semibold
-        file:bg-yellow-1 file:text-gray-3
-        hover:opacity-80
-      "
-                  />
-                </div>
+                <Video />
               </section>
             </div>
           </div>

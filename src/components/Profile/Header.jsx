@@ -1,14 +1,17 @@
 import {
+  CurrencyDollarIcon,
   InboxIcon,
   LocationMarkerIcon,
   PencilIcon,
   PhoneIcon,
-  CurrencyDollarIcon,
 } from "@heroicons/react/outline"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { UserContext } from "../../context/userContext"
 import ModalSocial from "../Modal/modalSocial"
 
 export default function Header({ userData, listenToDocumentChange }) {
+  const userContext = useContext(UserContext)
+
   const [openModalSocial, setOpenModalSocial] = useState(false)
 
   return (
@@ -17,7 +20,9 @@ export default function Header({ userData, listenToDocumentChange }) {
         <section className="flex gap-4">
           <img
             src={
-              userData.image == "" ? `/images/userGeneric.png` : userData.image
+              userContext.image == ""
+                ? `/images/userGeneric.png`
+                : `${userContext.image}?noCache=${Math.random()}`
             }
             alt="User profile picture"
             width="170px"
