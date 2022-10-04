@@ -1,14 +1,14 @@
 import { useContext, useState } from "react"
 import Layout from "../../components/Layout"
 
+import { CircularProgress } from "@mui/material"
+import Link from "next/link"
 import { useQuery } from "react-query"
 import CourseBox from "../../components/Courses/CourseBox"
 import Spinner from "../../components/Spinner"
 import { UserContext } from "../../context/userContext"
 import { ICourse } from "../../interface/ICourse"
 import { ICourses } from "../../interface/ICourses"
-import NotAuthorized from "../notAuthorized"
-import Link from "next/link"
 
 export default function Page() {
   const userContext = useContext(UserContext)
@@ -18,8 +18,10 @@ export default function Page() {
   // }
 
   const [courses, setCourses] = useState<any>()
+  const [loading, setLoading] = useState(false)
 
   const { data, isLoading, error } = useQuery("courses", async () => {
+    setLoading(true)
     // // const response = await fetch(
     // //   "https://calm-refuge-90714.herokuapp.com/courses"
     // // )
@@ -46,11 +48,14 @@ export default function Page() {
     })
     setCourses(courses)
     console.log("data", data)
+    setLoading(false)
 
     return courses
   })
 
   function searchCourse(event: any) {
+    setLoading(true)
+
     const value = event.target.value
     console.log(value)
 
@@ -76,6 +81,7 @@ export default function Page() {
             visible_instructors: course.visible_instructors,
           }
         })
+        setLoading(false)
         setCourses(courses)
         // mountCoursesSection()
       })
@@ -120,6 +126,7 @@ export default function Page() {
                 }
               }}
             />
+            {loading && <CircularProgress />}
           </div>
 
           <div className="w-60">

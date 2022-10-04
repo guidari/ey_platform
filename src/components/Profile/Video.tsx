@@ -1,3 +1,4 @@
+import { CircularProgress } from "@mui/material"
 import { doc, updateDoc } from "firebase/firestore"
 import { getStorage, ref, uploadBytes } from "firebase/storage"
 import { useContext, useEffect, useState } from "react"
@@ -7,6 +8,7 @@ import { UserContext } from "../../context/userContext"
 export default function Video() {
   const user = useContext(UserContext)
 
+  const [loading, setLoading] = useState(false)
   const [userVideo, setUserVideo] = useState<string>()
   const [rand, setRand] = useState(0)
 
@@ -14,7 +16,8 @@ export default function Video() {
     setUserVideo(`${user?.video}?noCache=${Math.random()}`)
   }, [])
 
-  const updateVideo = (event: any) => {
+  const updateVideo = async (event: any) => {
+    setLoading(true)
     const videoUpload = event.target.files[0]
 
     const preview = document.getElementById("videoChosen") as HTMLImageElement
@@ -32,8 +35,14 @@ export default function Video() {
     const storage = getStorage()
     const storageRef = ref(storage, `${user?.id}video`)
 
-    uploadBytes(storageRef, videoUpload).then((snapshot) => {
+    await uploadBytes(storageRef, videoUpload).then((snapshot) => {
       console.log("Uploaded a blob or file!")
+      const videoItem = document.querySelector("#video") as HTMLVideoElement
+      const source = document.querySelector("#source") as HTMLSourceElement
+      source.src = `${user!.video}?noCache=${Math.random()}`
+      videoItem.load()
+      videoItem.play()
+      setLoading(false)
     })
 
     let video
@@ -48,6 +57,9 @@ export default function Video() {
       video,
     })
     setRand(rand + 1)
+
+    // setTimeout(() => {}, 4000)
+
     console.log("Video updated")
   }
 
@@ -70,9 +82,16 @@ hover:opacity-80
           onChange={updateVideo}
         />
       </div>
-
-      <video width="100%" height="250" style={{ marginTop: 20 }} controls>
+      {loading && <CircularProgress />}
+      <video
+        id="video"
+        width="100%"
+        height="250"
+        style={{ marginTop: 20 }}
+        controls
+      >
         <source
+          id="source"
           src={
             userVideo
               ? `${userVideo}?noCache=${Math.random() + rand}`

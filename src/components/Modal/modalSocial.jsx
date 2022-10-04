@@ -2,6 +2,7 @@ import { doc, updateDoc } from "firebase/firestore"
 import { getStorage, ref, uploadBytes } from "firebase/storage"
 import { db } from "../../config/firebase"
 
+import { CircularProgress } from "@mui/material"
 import { useState } from "react"
 import Modal from "./modal"
 
@@ -19,25 +20,30 @@ export default function ModalSocial({
   linkedin,
 }) {
   const [imageUpload, setImageUpload] = useState(null)
+  const [loading, setLoading] = useState(null)
 
-  const updateSocialInformation = () => {
+  const updateSocialInformation = async () => {
+    setLoading(true)
     const userId = user.id
 
     const storage = getStorage()
     const storageRef = ref(storage, user.id)
 
-    uploadBytes(storageRef, imageUpload).then((snapshot) => {
-      console.log("Uploaded a blob or file!")
-    })
+    if (imageUpload) {
+      uploadBytes(storageRef, imageUpload).then((snapshot) => {
+        console.log("Uploaded a blob or file!")
+        setLoading(false)
+      })
+    }
 
     let image
 
-    if (!imageUpload && !user.image) {
-      image = ""
+    if (!imageUpload) {
+      image = user.image
     } else {
       image = `https://firebasestorage.googleapis.com/v0/b/ey-platform.appspot.com/o/${user.id}?alt=media&token=be9fab49-74d8-4c91-8d66-9f29c08c94fa`
     }
-
+    console.log("imager", image)
     updateDoc(doc(db, `users/${userId}`), {
       name: nameTyped.value,
       headline: headlineTyped.value,
@@ -48,8 +54,11 @@ export default function ModalSocial({
       linkedin: linkedinTyped.value,
       image,
     })
+
+    setLoading(false)
     closeModal(false)
     listenToDocumentChange()
+    setImageUpload("")
     console.log("Social Information updated")
   }
 
@@ -123,6 +132,7 @@ export default function ModalSocial({
           setImageUpload(event.target.files[0])
         }}
       />
+      {loading && <CircularProgress />}
     </Modal>
   )
 }
