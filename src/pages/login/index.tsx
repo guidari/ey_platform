@@ -87,7 +87,7 @@ export default function Page() {
               </div>
               {/* Don't have an account? */}
               <p className="text-center mb-5">
-                Don't have an account?
+                Don't have an account?{" "}
                 <Link href="register">
                   <a className="text-yellow-1 cursor-pointer hover:opacity-80">
                     Register
@@ -102,6 +102,7 @@ export default function Page() {
                 <button
                   type="button"
                   className="transition duration-200 bg-gray-3 text-white py-2.5 rounded-lg text-sm font-semibold flex place-items-center gap-4 pl-5 pr-10 hover:opacity-80"
+                  disabled
                 >
                   <img src="/images/github-white.svg" alt="" className="h-5" />
                   <a
@@ -114,6 +115,7 @@ export default function Page() {
                 <button
                   type="button"
                   className="transition duration-200 bg-gray-3 text-white py-2.5 rounded-lg text-sm font-semibold flex place-items-center gap-4 pl-5 pr-10 hover:opacity-80"
+                  disabled
                 >
                   <img src="/images/linkedin.png" alt="" className="h-5" />
                   <a

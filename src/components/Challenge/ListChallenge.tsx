@@ -34,14 +34,16 @@ export default function ListChallenge({ onRowClick }: any) {
     {
       field: "title",
       headerName: "Title",
-      width: 393,
+      // width: 393,
       headerClassName: "header-style",
+      flex: 1,
     },
     {
       field: "level",
       headerName: "Level",
-      width: 200,
+      // width: 100,
       headerClassName: "header-style",
+      flex: 1,
     },
     {
       field: "rating",
@@ -57,8 +59,9 @@ export default function ListChallenge({ onRowClick }: any) {
           readOnly
         />
       ),
-      width: 200,
+      // width: 200,
       headerClassName: "header-style",
+      flex: 1,
     },
   ]
 

@@ -1,23 +1,29 @@
-import { createUserWithEmailAndPassword } from "firebase/auth"
-import { auth, db } from "../../config/firebase"
 import { useRouter } from "next/router"
-import { createUser } from "../../services/user.service"
+import { auth } from "../../config/firebase"
 
-import { arrayUnion, collection, doc, updateDoc } from "firebase/firestore"
+import { Box } from "@mui/material"
+import { createUserWithEmailAndPassword } from "firebase/auth"
 import Link from "next/link"
+import { createUser } from "../../services/user.service"
 
 export default function Page() {
   const router = useRouter()
 
-  const usersRef = collection(db, "users")
-
-  const registerUser = async () => {
+  const registerUser = async (e: any) => {
+    e.preventDefault()
     const email = (document.getElementById("email") as HTMLInputElement).value
     const name = (document.getElementById("name") as HTMLInputElement).value
     const password = (document.getElementById("password") as HTMLInputElement)
       .value
+    const passwordCheck = (
+      document.getElementById("passwordCheck") as HTMLInputElement
+    ).value
+    if (password !== passwordCheck) {
+      alert("Type the same password")
+      return false
+    }
     await createUserWithEmailAndPassword(auth, email, password)
-      .then((cred) => {
+      .then((cred: any) => {
         const userId = cred.user.uid
 
         return createUser(userId, email, name)
@@ -51,36 +57,42 @@ export default function Page() {
         <div className="flex flex-col justify-center sm:py-12 mt-5">
           <div className="p-5 xs:p-0 mx-auto md:w-full md:max-w-md">
             <div className="bg-gray-1 shadow w-full rounded-lg px-10 py-5">
-              <div className="py-7">
+              <Box className="py-7" component="form" onSubmit={registerUser}>
                 <input
                   placeholder="Full name"
                   id="name"
                   type="text"
                   className="rounded-lg  bg-gray-3 px-4 py-3 mt-1 mb-5 text-sm w-full focus:outline-none"
+                  required
                 />
 
                 <input
                   placeholder="E-mail"
                   id="email"
-                  type="text"
+                  type="email"
                   className="rounded-lg  bg-gray-3 px-4 py-3 mt-1 mb-5 text-sm w-full focus:outline-none"
+                  required
                 />
                 <input
                   placeholder="Password"
                   id="password"
                   type="password"
                   className="rounded-lg  bg-gray-3 px-4 py-3 mt-1 mb-5 text-sm w-full focus:outline-none"
+                  minLength={6}
+                  required
                 />
                 <input
                   placeholder="Confirm password"
+                  id="passwordCheck"
                   type="password"
+                  minLength={6}
                   className="rounded-lg  bg-gray-3 px-4 py-3 mt-1 mb-1 text-sm w-full focus:outline-none"
+                  required
                 />
 
                 <button
-                  type="button"
                   className="mt-5 transition duration-200 bg-yellow-1 text-black w-full py-2.5 rounded-lg text-sm font-semibold text-center inline-block hover:opacity-80"
-                  onClick={registerUser}
+                  type="submit"
                 >
                   <span className="inline-block mr-2">Register</span>
                   <svg
@@ -98,7 +110,12 @@ export default function Page() {
                     />
                   </svg>
                 </button>
-              </div>
+                <Box
+                  sx={{ textAlign: "center", marginTop: 2, marginBottom: -1 }}
+                >
+                  <Link href="login"> Back to login</Link>
+                </Box>
+              </Box>
             </div>
 
             {/* Back to home */}

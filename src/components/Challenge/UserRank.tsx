@@ -1,13 +1,18 @@
 interface IUserRank {
   name: string
   solvedChallenges: number
+  image: string
 }
 
-export default function UserRank({ name, solvedChallenges }: IUserRank) {
+export default function UserRank({ name, solvedChallenges, image }: IUserRank) {
   return (
     <div className="flex gap-3 mb-5">
       <div>
-        <img src="/images/ibm.png" alt="User" className="rounded-full w-12" />
+        <img
+          src={image ? image : "/images/ibm.png"}
+          alt="User"
+          className="rounded-full w-12"
+        />
       </div>
 
       <div>
