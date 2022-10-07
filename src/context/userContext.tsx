@@ -1,17 +1,7 @@
 import { getAuth } from "firebase/auth"
-import {
-  collection,
-  doc,
-  DocumentData,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from "firebase/firestore"
-import router from "next/router"
+import { doc, onSnapshot } from "firebase/firestore"
 import { createContext, ReactNode, useEffect, useState } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
-import { useQuery } from "react-query"
 import { db } from "../config/firebase"
 import { IUser } from "../interface/IUser"
 
