@@ -37,5 +37,6 @@ export const createUser = async (id: string, email: string, name: string) => {
     coursesInProgress: 0,
     hours: 0,
     notifications: [],
+    appliedJobs: [],
   })
 }
