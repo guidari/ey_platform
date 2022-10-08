@@ -22,24 +22,19 @@ export default function DailyCoin() {
   const handleClose = () => setOpen(false)
 
   useEffect(() => {
-    if (user) {
-      const dailyCoin = localStorage.getItem("dailyCoin")?.split(" ")
-      const dateNow = new Date(Date.now()).toString()?.split(" ")
-
-      if (dailyCoin![2] !== dateNow[2]) {
-        return console.log("Wait until tomorrow to win a coin")
-      }
-
-      const updatedEycoin = userContext!.eycoin + 1
-      updateDoc(doc(db, `users/${userContext?.id}`), {
-        eycoin: updatedEycoin,
-      })
-      setOpen(true)
-      localStorage.setItem(
-        "dailyCoin",
-        new Date(Date.now() + 24 * 60 * 60 * 1000).toString()
-      )
+    const dailyCoin = localStorage.getItem("dailyCoin")?.split(" ")
+    const dateNow = new Date(Date.now()).toString()?.split(" ")
+    console.log("dailyCoin", dailyCoin, "dateNow", dateNow)
+    if (dailyCoin![2] === dateNow[2]) {
+      return console.log("Wait until tomorrow to win a coin")
     }
+
+    const updatedEycoin = userContext!.eycoin + 1
+    updateDoc(doc(db, `users/${userContext?.id}`), {
+      eycoin: updatedEycoin,
+    })
+    setOpen(true)
+    localStorage.setItem("dailyCoin", new Date(Date.now()).toString())
   }, [])
 
   return (
