@@ -75,7 +75,7 @@ export default function JobDescription() {
         <div className="w-5/6 m-auto max-w-screen-xl py-5 flex place-items-center justify-between">
           <div>
             <h1 className="text-xl font-semibold">{job?.title}</h1>
-            <p>ID da vaga: {job?.id} | Ernst & Young</p>
+            <p>ID: {job?.id} | Ernst & Young</p>
           </div>
 
           <div>

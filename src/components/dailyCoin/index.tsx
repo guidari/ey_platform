@@ -22,12 +22,15 @@ export default function DailyCoin() {
   const handleClose = () => setOpen(false)
 
   const updateCoin = () => {
-    const updatedEycoin = userContext!.eycoin + 1
-    updateDoc(doc(db, `users/${userContext?.id}`), {
-      eycoin: updatedEycoin,
-    })
-    setOpen(true)
-    localStorage.setItem("dailyCoin", new Date(Date.now()).toString())
+    console.log("user", user, "userContext", userContext)
+    if (userContext) {
+      const updatedEycoin = userContext!.eycoin + 1
+      updateDoc(doc(db, `users/${userContext?.id}`), {
+        eycoin: updatedEycoin,
+      })
+      setOpen(true)
+      localStorage.setItem("dailyCoin", new Date(Date.now()).toString())
+    }
   }
 
   useEffect(() => {

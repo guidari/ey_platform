@@ -4,7 +4,6 @@ import { useContext } from "react"
 
 import { useMediaQuery } from "@mui/material"
 import { getAuth } from "firebase/auth"
-import DailyCoin from "../components/dailyCoin"
 import Layout from "../components/Layout"
 import { UserContext } from "../context/userContext"
 
@@ -19,7 +18,7 @@ export default function Page() {
   return (
     <Layout>
       <h1>Home</h1>
-      <DailyCoin />
+      {/* <DailyCoin /> */}
     </Layout>
   )
 }
