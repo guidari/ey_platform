@@ -132,7 +132,7 @@ export default function ModalSocial({
           setImageUpload(event.target.files[0])
         }}
       />
-      {loading && <CircularProgress />}
+      {loading && <CircularProgress sx={{ color: "var(--yellow-1)" }} />}
     </Modal>
   )
 }

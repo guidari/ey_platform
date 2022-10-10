@@ -2,6 +2,7 @@ import ButtonTopics from "../../components/Courses/ButtonTopics"
 import CourseBox from "../../components/Courses/CourseBox"
 import Layout from "../../components/Layout"
 
+import { CircularProgress } from "@mui/material"
 import Link from "next/link"
 import { useContext, useState } from "react"
 import { useQuery } from "react-query"
@@ -13,8 +14,11 @@ import { ICourses } from "../../interface/ICourses"
 
 export default function Page() {
   const userContext = useContext(UserContext)
-
-  const [tech, setTech] = useState("javascript")
+  console.log("userContext")
+  const [tech, setTech] = useState(
+    userContext?.skills[0] ? userContext?.skills[0] : "javascript"
+  )
+  const [loading, setLoading] = useState(false)
 
   // Recommended for you
   const { data, isLoading, error, refetch } = useQuery("courses", async () => {
@@ -40,7 +44,7 @@ export default function Page() {
         visible_instructors: course.visible_instructors,
       }
     })
-
+    setLoading(false)
     return courses
   })
 
@@ -58,37 +62,43 @@ export default function Page() {
       <div className="flex flex-col gap-5 max-w-screen-xl maxxl:inline m-auto pt-5">
         <UserProgress />
 
-        <div className="my-5 w-full max2xl:w-5/6 mx-auto flex justify-between place-items-center">
-          <div className="flex gap-5 place-items-center">
-            <h1 className="text-xl font-semibold ">
-              Find a course based on your skills
-            </h1>
-            <select
-              name="skill"
-              id="skill"
-              className="rounded-lg bg-gray-1 px-4 py-3  mt-2 mb-5 text-sm w-40 focus:outline-none"
-              onChange={(event) => {
-                console.log("ioi")
-                newSkill(event)
-              }}
-            >
-              {userContext?.skills.map((item: any) => {
-                return (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                )
-              })}
-            </select>
+        {userContext && (
+          <div className="my-5 w-full max2xl:w-5/6 mx-auto flex justify-between place-items-center">
+            <div className="flex gap-5 place-items-center">
+              <h1 className="text-xl font-semibold ">
+                Find a course based on your skills
+              </h1>
+
+              <select
+                name="skill"
+                id="skill"
+                className="rounded-lg bg-gray-1 px-4 py-3  mt-2 mb-5 text-sm w-40 focus:outline-none"
+                onChange={(event) => {
+                  setLoading(true)
+                  newSkill(event)
+                }}
+              >
+                {userContext?.skills.map((item: any) => {
+                  return (
+                    <option key={item} value={item}>
+                      {item}
+                    </option>
+                  )
+                })}
+              </select>
+              {loading && (
+                <CircularProgress sx={{ color: "var(--yellow-1)" }} />
+              )}
+            </div>
+            <div className="w-60">
+              <Link href="/courses/myCourses">
+                <a className="cursor-pointer float-right bg-yellow-1 text-black w-100 px-3 py-2 rounded-md text-sm font-medium text-center ease-out duration-300 hover:opacity-80">
+                  My Courses
+                </a>
+              </Link>
+            </div>
           </div>
-          <div className="w-60">
-            <Link href="/courses/myCourses">
-              <a className="cursor-pointer float-right bg-yellow-1 text-black w-100 px-3 py-2 rounded-md text-sm font-medium text-center ease-out duration-300 hover:opacity-80">
-                My Courses
-              </a>
-            </Link>
-          </div>
-        </div>
+        )}
 
         <div className="grid grid-cols-4 max2xl:w-5/6 m-auto maxxl:grid-cols-2 maxmd:grid-cols-1 gap-5 justify-between">
           {isLoading ? (

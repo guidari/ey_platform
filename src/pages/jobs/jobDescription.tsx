@@ -30,6 +30,12 @@ export default function JobDescription() {
   let disabledSubmit
   let title
 
+  if (!userContext) {
+    disabledSubmit = true
+    colorDisable = "bg-gray-2"
+    title = "Sign in to apply for a job"
+  }
+
   const {
     query: { id },
   } = router

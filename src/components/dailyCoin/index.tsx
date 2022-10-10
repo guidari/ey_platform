@@ -22,7 +22,6 @@ export default function DailyCoin() {
   const handleClose = () => setOpen(false)
 
   const updateCoin = () => {
-    console.log("user", user, "userContext", userContext)
     if (userContext) {
       const updatedEycoin = userContext!.eycoin + 1
       updateDoc(doc(db, `users/${userContext?.id}`), {
