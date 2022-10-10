@@ -1,5 +1,4 @@
 import DailyCoin from "../dailyCoin"
-import Footer from "../Footer/footer"
 import Header from "../Header/header"
 
 interface LayoutProps {
@@ -13,7 +12,7 @@ export default function Layout({ children }: LayoutProps) {
       <DailyCoin />
 
       <main>{children}</main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }
