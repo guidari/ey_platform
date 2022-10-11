@@ -12,6 +12,7 @@ export default function Layout({ children }: LayoutProps) {
       <DailyCoin />
 
       <main>{children}</main>
+
       {/* <Footer /> */}
     </>
   )
