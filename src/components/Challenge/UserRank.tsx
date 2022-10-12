@@ -11,7 +11,7 @@ export default function UserRank({ name, solvedChallenges, image }: IUserRank) {
         <img
           src={image ? image : "/images/ibm.png"}
           alt="User"
-          className="rounded-full w-12"
+          className="rounded-full w-12 h-12"
         />
       </div>
 
