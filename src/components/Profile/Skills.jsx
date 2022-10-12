@@ -15,6 +15,8 @@ export default function Skills({ userData, listenToDocumentChange }) {
     })
     console.log("data added")
     listenToDocumentChange()
+    const skillInput = document.querySelector("#skillInput")
+    skillInput.value = ""
   }
 
   const deleteUserSkill = (item) => {
