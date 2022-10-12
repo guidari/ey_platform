@@ -104,12 +104,12 @@ export default function Page() {
                   className="transition duration-200 bg-gray-3 text-white py-2.5 rounded-lg text-sm font-semibold flex place-items-center gap-4 pl-5 pr-10 hover:opacity-80"
                   disabled
                 >
-                  <img src="/images/github-white.svg" alt="" className="h-5" />
+                  <img src="/images/ey-white-logo.png" alt="" className="h-5" />
                   <a
                     className="inline-block mr-2"
                     // onClick={() => signIn("github")}
                   >
-                    Github
+                    Account
                   </a>
                 </button>
                 <button

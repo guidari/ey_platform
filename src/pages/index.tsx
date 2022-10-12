@@ -2,7 +2,7 @@ import { useAuthState } from "react-firebase-hooks/auth"
 
 import { useContext } from "react"
 
-import { Grid, useMediaQuery } from "@mui/material"
+import { Box, Grid, useMediaQuery } from "@mui/material"
 import { getAuth } from "firebase/auth"
 import Link from "next/link"
 import Button from "../components/Button/Button"
@@ -32,13 +32,19 @@ export default function Page() {
           }}
         >
           <Grid xs={6} sx={{ marginTop: 4 }}>
-            <img
-              src="/images/code_home.svg"
-              alt="Looking to a code screen"
-              width={100}
-            />
+            <Box
+              sx={{
+                height: 80,
+              }}
+            >
+              <img
+                src="/images/code_home.svg"
+                alt="Looking to a code screen"
+                width={100}
+              />
+            </Box>
             <h1 className="text-yellow-1 font-bold text-3xl mt-3">
-              Improve your coding skills.
+              Improve your coding skills
             </h1>
             <p className="text-lg my-5">
               Technical interviews usually have coding challenges to select a
@@ -49,14 +55,22 @@ export default function Page() {
               <Button>Try a free challenge</Button>
             </Link>
           </Grid>
+
           <Grid xs={6} sx={{ marginTop: 4 }}>
-            <img
-              src="/images/job_hunter.svg"
-              alt="Looking to a code screen"
-              width={100}
-            />
+            <Box
+              sx={{
+                height: 80,
+              }}
+            >
+              <img
+                src="/images/knowledge.svg"
+                alt="Looking to a code screen"
+                width={100}
+              />
+            </Box>
+
             <h1 className="text-yellow-1 font-bold text-3xl mt-3">
-              Build new projects to show off
+              Build new projects
             </h1>
             <p className="text-lg my-5">
               Find a course that best suits your needs and dive in to the coding
@@ -65,6 +79,64 @@ export default function Page() {
 
             <Link href="/courses">
               <Button>Find a course</Button>
+            </Link>
+          </Grid>
+
+          <Grid xs={6} sx={{ marginTop: 4 }}>
+            <Box
+              sx={{
+                height: 80,
+              }}
+            >
+              <img
+                src="/images/job_hunter.svg"
+                alt="Looking to a code screen"
+                width={100}
+              />
+            </Box>
+
+            <h1 className="text-yellow-1 font-bold text-3xl mt-3">
+              Your carrer with EY
+            </h1>
+            <p className="text-lg my-5">
+              Browse through the vast jobs opportunities that we have for you,
+              and apply to the one that best suits your carrer.
+            </p>
+
+            <Link href="/jobs">
+              <Button>Find a job</Button>
+            </Link>
+          </Grid>
+
+          <Grid xs={6} sx={{ marginTop: 4 }}>
+            <Box
+              sx={{
+                height: 80,
+              }}
+            >
+              <img
+                src="/images/profileData.svg"
+                alt="Looking to a code screen"
+                width={100}
+              />
+            </Box>
+
+            <h1 className="text-yellow-1 font-bold text-3xl mt-3">
+              Boost your profile
+            </h1>
+            <p className="text-lg my-5">
+              Make sure that your profile describe the best of you. One of our
+              recruiters might be watching you.
+            </p>
+
+            <Link href="/profile">
+              <Button
+                disabled={user ? false : true}
+                title={user ? "" : "Sign in to see your profile"}
+                color={user ? "" : "bg-gray-1"}
+              >
+                My profile
+              </Button>
             </Link>
           </Grid>
         </Grid>
