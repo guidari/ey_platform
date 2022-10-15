@@ -9,7 +9,7 @@ export default function UserRank({ name, solvedChallenges, image }: IUserRank) {
     <div className="flex gap-3 mb-5">
       <div>
         <img
-          src={image ? image : "/images/ibm.png"}
+          src={image ? image : "/images/userGeneric.png"}
           alt="User"
           className="rounded-full w-12 h-12"
         />

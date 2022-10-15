@@ -1,10 +1,12 @@
 import type { AppProps } from "next/app"
 
-import { ReactQueryDevtools } from "react-query/devtools"
 import { QueryClient, QueryClientProvider } from "react-query"
+import { ReactQueryDevtools } from "react-query/devtools"
 
-import "../styles/globals.css"
 import { UserProvider } from "../context/userContext"
+import "../styles/globals.css"
+
+import VLibras from "vlibras-nextjs"
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,6 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
         <ReactQueryDevtools />
       </UserProvider>
+      <VLibras forceOnload />
     </QueryClientProvider>
   )
 }
