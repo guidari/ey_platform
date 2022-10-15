@@ -25,6 +25,8 @@ export default function Challenge({ data }: any) {
 
   let colorDisable
   let disabledSubmit
+  let disabledSolution = true
+  let colorDisableSolution = "bg-gray-1"
 
   async function getChallenge() {
     const docRef = doc(db, "challenges", data.id)
@@ -71,7 +73,22 @@ export default function Challenge({ data }: any) {
           </Button>
         )}
 
-        <Button icon={<LockClosedIcon className="h-5 w-5" />}>Solution</Button>
+        {userContext && (
+          <Button
+            icon={<LockClosedIcon className="h-5 w-5" />}
+            {...userContext?.submitedChallenges.map((item) => {
+              if (item === challengeId) {
+                disabledSolution = false
+                colorDisableSolution = "bg-yellow-1"
+              } else {
+              }
+            })}
+            color={colorDisableSolution}
+            disabled={disabledSolution}
+          >
+            Solution
+          </Button>
+        )}
       </div>
       {openModalSubmitChallenge && (
         <SubmitChallenge challenge={challenge} challengeId={data.id} />

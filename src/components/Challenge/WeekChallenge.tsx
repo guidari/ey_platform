@@ -27,6 +27,8 @@ export default function WeekChallenge() {
 
   let colorDisable
   let disabledSubmit
+  let disabledSolution = true
+  let colorDisableSolution = "bg-gray-1"
 
   async function getChallenge() {
     const docRef = doc(db, "challenges", "CYVNxvaeDkVJUJCwE4D1")
@@ -94,7 +96,22 @@ export default function WeekChallenge() {
             challengeId={challengeId}
           />
         )}
-        <Button icon={<LockClosedIcon className="h-5 w-5" />}>Solution</Button>
+        {userContext && (
+          <Button
+            icon={<LockClosedIcon className="h-5 w-5" />}
+            {...userContext?.submitedChallenges.map((item) => {
+              if (item === challengeId) {
+                disabledSolution = false
+                colorDisableSolution = "bg-yellow-1"
+              } else {
+              }
+            })}
+            color={colorDisableSolution}
+            disabled={disabledSolution}
+          >
+            Solution
+          </Button>
+        )}
       </div>
       {!challengeNotion ? (
         <Spinner />
