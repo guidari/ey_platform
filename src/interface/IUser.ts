@@ -8,6 +8,7 @@ export type IUser = {
   headline: string
   image: string
   eycoin: number
+  userLevel: number
   languages: []
   enrolledCourses: []
   submitedChallenges: []

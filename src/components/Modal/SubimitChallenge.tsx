@@ -1,12 +1,13 @@
 import { Box } from "@mui/material"
 import { arrayUnion, doc, updateDoc } from "firebase/firestore"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { db } from "../../config/firebase"
 import { UserContext } from "../../context/userContext"
 import Button from "../Button/Button"
 
 export default function SubmitChallenge({ challenge, challengeId }: any) {
   const userContext = useContext(UserContext)
+  const [open, setOpen] = useState(true)
 
   const progressChallenge = userContext?.progress.challenges
   const progressCompletedCourses = userContext?.progress.completedCourses
@@ -34,7 +35,7 @@ export default function SubmitChallenge({ challenge, challengeId }: any) {
     updateDoc(doc(db, `challenges/${challengeId}`), {
       submissions: submissionsChallenge + 1,
     })
-    alert("Challenge submit!!")
+    alert("Challenge submit!! You won more 10 EYCoins!")
   }
 
   function submiteChallenge() {
@@ -49,6 +50,7 @@ export default function SubmitChallenge({ challenge, challengeId }: any) {
         }
       })
     }
+    setOpen(false)
   }
   return (
     <Box
@@ -58,14 +60,18 @@ export default function SubmitChallenge({ challenge, challengeId }: any) {
         gap: 2,
       }}
     >
-      <input
-        type="link"
-        className="rounded-lg  bg-gray-1 px-4 py-3  mt-2 mb-2 text-sm w-80 focus:outline-none"
-        placeholder="Github link"
-      />
-      <Box>
-        <Button onClick={submiteChallenge}>Send</Button>
-      </Box>
+      {open && (
+        <>
+          <input
+            type="link"
+            className="rounded-lg  bg-gray-1 px-4 py-3  mt-2 mb-2 text-sm w-80 focus:outline-none"
+            placeholder="Github link"
+          />
+          <Box>
+            <Button onClick={submiteChallenge}>Send</Button>
+          </Box>
+        </>
+      )}
     </Box>
   )
 }

@@ -177,8 +177,10 @@ export default function Header() {
                               </Menu.Item>
 
                               <Menu.Item>
-                                <a className="block px-4 py-2 text-sm text-gray-700 cursor-pointer">
-                                  Level
+                                <a className="block px-4 py-2 text-sm bg-gray-300 text-gray-700 cursor-pointer">
+                                  <strong>
+                                    Level {userContext?.userLevel}
+                                  </strong>
                                 </a>
                               </Menu.Item>
                             </Menu.Items>

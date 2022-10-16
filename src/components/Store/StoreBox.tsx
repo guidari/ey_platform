@@ -36,7 +36,7 @@ export default function StoreBox({ image, price }: IStoreBoxPropx) {
 
   return (
     <div className="max-w-md">
-      <div className="rounded-md">
+      <div className="rounded-tl-md rounded-tr-md w-60 h-60 bg-gray-1 items-center">
         <div className="overflow-hidden">
           <div className="relative rounded-tl-md rounded-tr-md cursor-pointer hover:scale-110 ease-out duration-300 ">
             <img src={image} alt={image} />

@@ -36,9 +36,9 @@ export default function Page() {
         </div>
         <div className="grid grid-cols-5 m-auto maxxl:grid-cols-4 maxlg:grid-cols-3 maxmd:grid-cols-2 maxsm:grid-cols-1 gap-5 justify-between">
           <StoreBox image="/images/ey-tshirt.png" price={5} />
-          <StoreBox image="/images/ey-tshirt.png" price={10} />
-          <StoreBox image="/images/ey-tshirt.png" price={15} />
+          <StoreBox image="/images/hat.jpg" price={15} />
           <StoreBox image="/images/ey-tshirt.png" price={150} />
+          <StoreBox image="/images/cup.jpg" price={10} />
           <StoreBox image="/images/ey-tshirt.png" price={5} />
         </div>
 

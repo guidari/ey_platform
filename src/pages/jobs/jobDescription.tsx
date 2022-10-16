@@ -112,39 +112,43 @@ export default function JobDescription() {
         <div className="grid grid-cols-5 maxmd:grid-cols-1 gap-10">
           <div className="col-span-4">
             <h1 className="text-lg font-semibold">Job description</h1>
-            <p>O que esperamos de você?</p>
-            <p>
-              Estamos buscando pessoas que queiram se desenvolver e aprender
-              constantemente, compartilhando, colaborando, inovando e entregando
-              valor para todos os nossos clientes.
-            </p>
-            <br />
 
-            <strong>Responsabilidades da Oportunidade</strong>
-            <br />
+            {job?.completeDescription && <p>{job?.completeDescription}</p>}
 
-            <ul>
-              <li>Atuação em time ágil e multidisciplinar com engenharia;</li>
-              <li>Desenvolvimento de Front end;</li>
-              <li>
-                Construir soluções e suportar os processos de Garantias de
-                Imóveis;
-              </li>
-            </ul>
-            <br />
+            {!job?.completeDescription && (
+              <div>
+                <p>O que esperamos de você?</p>
+                <p>
+                  Estamos buscando pessoas que queiram se desenvolver e aprender
+                  constantemente, compartilhando, colaborando, inovando e
+                  entregando valor para todos os nossos clientes.
+                </p>
+                <br />
 
-            <strong>Requisitos</strong>
+                <strong>Responsabilidades da Oportunidade</strong>
+                <br />
 
-            <ul>
-              <li>HTML;</li>
-              <li>Micro Front-End;</li>
-              <li>Javascript;</li>
-              <li>TypeScript;</li>
-              <li>Angular;</li>
-              <li>CSS;</li>
-              <li>Github;</li>
-              <li>Conhecimento em arquitetura de micro front end.</li>
-            </ul>
+                <ul>
+                  <li>
+                    Atuação em time ágil e multidisciplinar com engenharia;
+                  </li>
+                  <li>Desenvolvimento de Front end;</li>
+                  <li>
+                    Construir soluções e suportar os processos de Garantias de
+                    Imóveis;
+                  </li>
+                </ul>
+                <br />
+
+                <strong>Required Skills</strong>
+
+                <ul>
+                  {job?.skills.map((item: string) => {
+                    return <li>{item}</li>
+                  })}
+                </ul>
+              </div>
+            )}
 
             <RelatedCourses skills={job?.skills} />
           </div>

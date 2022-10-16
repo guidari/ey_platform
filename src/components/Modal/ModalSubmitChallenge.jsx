@@ -39,7 +39,7 @@ export default function ModalSubmitChallenge({
     updateDoc(doc(db, `challenges/${challengeId}`), {
       submissions: submissionsChallenge + 1,
     })
-    alert("Challenge submit!!")
+    alert("Challenge submit!! You won more 10 EYCoins!")
   }
 
   function submiteChallenge() {
