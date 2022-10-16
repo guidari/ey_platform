@@ -4,7 +4,7 @@ export interface IJobBox {
   description: string
   location: string
   applications?: number
-  completeDescription: string
-  users: []
-  skills: []
+  completeDescription?: string
+  users?: []
+  skills?: []
 }
