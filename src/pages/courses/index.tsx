@@ -121,7 +121,7 @@ export default function Page() {
           {/* {courses.results.map((course) => {})} */}
         </div>
         <h1 className="text-xl font-semibold my-5 w-full max2xl:w-5/6 mx-auto">
-          Topics recommended for you
+          Recommended topics for you
         </h1>
         <div className="grid grid-cols-4 w-full max2xl:w-5/6 m-auto maxlg:grid-cols-2 gap-5 justify-between">
           <ButtonTopics title="Javascript" />

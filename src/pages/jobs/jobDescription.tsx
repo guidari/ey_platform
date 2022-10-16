@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore"
 import { useRouter } from "next/router"
 import Button from "../../components/Button/Button"
+import RelatedCourses from "../../components/Jobs/relatedCourses"
 import Layout from "../../components/Layout"
 import { db } from "../../config/firebase"
 import { UserContext } from "../../context/userContext"
@@ -144,6 +145,8 @@ export default function JobDescription() {
               <li>Github;</li>
               <li>Conhecimento em arquitetura de micro front end.</li>
             </ul>
+
+            <RelatedCourses skills={job?.skills} />
           </div>
 
           <div>
