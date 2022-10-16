@@ -4,12 +4,15 @@ import { useContext } from "react"
 
 import { Box, Grid, useMediaQuery } from "@mui/material"
 import { getAuth } from "firebase/auth"
+import useTranslation from "next-translate/useTranslation"
 import Link from "next/link"
 import Button from "../components/Button/Button"
 import Layout from "../components/Layout"
 import { UserContext } from "../context/userContext"
 
 export default function Page() {
+  const { t } = useTranslation()
+
   const userContext = useContext(UserContext)
   const matches = useMediaQuery("(min-width:1280px)")
 
@@ -22,7 +25,7 @@ export default function Page() {
       <div className="flex flex-col gap-5 max-w-screen-xl maxxl:inline m-auto pt-5">
         <Grid
           container
-          spacing={{ xs: 2, md: 3 }}
+          spacing={2}
           columns={{ xs: 6, md: 12 }}
           sx={{
             display: "flex",
@@ -44,15 +47,12 @@ export default function Page() {
               />
             </Box>
             <h1 className="text-yellow-1 font-bold text-3xl mt-3">
-              Improve your coding skills
+              {t("common:titleChallenge")}
             </h1>
-            <p className="text-lg my-5">
-              Technical interviews usually have coding challenges to select a
-              few candidates for an interview.
-            </p>
+            <p className="text-lg my-5">{t("common:descChallenge")}</p>
 
             <Link href="/challenges">
-              <Button>Try a free challenge</Button>
+              <Button>{t("common:btnChallenge")}</Button>
             </Link>
           </Grid>
 
@@ -70,15 +70,12 @@ export default function Page() {
             </Box>
 
             <h1 className="text-yellow-1 font-bold text-3xl mt-3">
-              Build new projects
+              {t("common:titleCourse")}
             </h1>
-            <p className="text-lg my-5">
-              Find a course that best suits your needs and dive in to the coding
-              improve your technical skills.
-            </p>
+            <p className="text-lg my-5">{t("common:descCourse")}</p>
 
             <Link href="/courses">
-              <Button>Find a course</Button>
+              <Button>{t("common:btnCourses")}</Button>
             </Link>
           </Grid>
 
@@ -96,15 +93,12 @@ export default function Page() {
             </Box>
 
             <h1 className="text-yellow-1 font-bold text-3xl mt-3">
-              Your carrer with EY
+              {t("common:titleJob")}
             </h1>
-            <p className="text-lg my-5">
-              Browse through the vast jobs opportunities that we have for you,
-              and apply to the one that best suits your carrer.
-            </p>
+            <p className="text-lg my-5">{t("common:descJob")}</p>
 
             <Link href="/jobs">
-              <Button>Find a job</Button>
+              <Button> {t("common:btnJob")}</Button>
             </Link>
           </Grid>
 
@@ -122,12 +116,9 @@ export default function Page() {
             </Box>
 
             <h1 className="text-yellow-1 font-bold text-3xl mt-3">
-              Boost your profile
+              {t("common:titleProfile")}
             </h1>
-            <p className="text-lg my-5">
-              Make sure that your profile describe the best of you. One of our
-              recruiters might be watching you.
-            </p>
+            <p className="text-lg my-5">{t("common:descProfile")}</p>
 
             <Link href="/profile">
               <Button
@@ -135,7 +126,7 @@ export default function Page() {
                 title={user ? "" : "Sign in to see your profile"}
                 color={user ? "" : "bg-gray-1"}
               >
-                My profile
+                {t("common:btnProfile")}
               </Button>
             </Link>
           </Grid>

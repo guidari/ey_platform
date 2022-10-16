@@ -1,0 +1,20 @@
+{
+  "home": "Ínico",
+  "jobs": "Vagas",
+  "courses": "Cursos",
+  "challenges": "Desafios",
+  "store": "Loja",
+  "news": "Notícias",
+  "titleChallenge": "Melhore suas habilidades",
+  "descChallenge": "Entrevistas tecnicas geralmente colocam desafios de códigos para selecionar apenas alguns candidatos",
+  "btnChallenge": "Fazer um desafio",
+  "titleCourse": "Crie novos projetos",
+  "descCourse": "Encontre novos cursos que possam impulsionar sua carreira e melhorar suas habilidades tecnicas",
+  "btnCourses": "Achar um curso",
+  "titleJob": "Sua carreira com a EY",
+  "descJob": "Navegue pelas oportunidades disponíveis dentro da EY e aplique para uma vaga que encaixe em seu perfil",
+  "btnJob": "Achar uma vaga",
+  "titleProfile": "Turbine seu perfil",
+  "descProfile": "Deixe seu perfil sempre atualizado, algum recrutador pode entrar em contato com você com alguma oportunidade",
+  "btnProfile": "Meu perfil"
+}

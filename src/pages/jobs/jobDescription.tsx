@@ -67,6 +67,7 @@ export default function JobDescription() {
     setOpenModal(true)
     updateDoc(doc(db, `jobs/${id}`), {
       applications: newNumber,
+      users: arrayUnion(userContext?.id),
     })
     updateDoc(doc(db, `users/${userContext?.id}`), {
       appliedJobs: arrayUnion(id),

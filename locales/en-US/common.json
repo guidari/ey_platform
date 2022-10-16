@@ -1,0 +1,20 @@
+{
+  "home": "Home",
+  "jobs": "Jobs",
+  "courses": "Courses",
+  "challenges": "Challenges",
+  "store": "Store",
+  "news": "News",
+  "titleChallenge": "Improve your coding skills",
+  "descChallenge": "Technical interviews usually have coding challenges to select a few candidates for an interview.",
+  "btnChallenge": "Try a free challenge",
+  "titleCourse": "Build new projects",
+  "descCourse": "Find a course that best suits your needs and dive in to the coding improve your technical skills.",
+  "btnCourses": "Find a course",
+  "titleJob": "Your carrer with EY",
+  "descJob": "Browse through the vast jobs opportunities that we have for you, and apply to the one that best suits your carrer.",
+  "btnJob": "Find a job",
+  "titleProfile": "Boost your profile",
+  "descProfile": "Make sure that your profile describe the best of you. One of our recruiters might be watching you.",
+  "btnProfile": "My profile"
+}

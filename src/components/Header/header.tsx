@@ -8,14 +8,18 @@ import { Fragment, useContext } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { UserContext } from "../../context/userContext"
 import Spinner from "../Spinner"
+import Language from "./Language"
 import { NavLink } from "./NavLink"
 import Notifications from "./Notifications"
+
+import useTranslation from "next-translate/useTranslation"
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ")
 }
 
 export default function Header() {
+  const { t } = useTranslation()
   const userContext = useContext(UserContext)
 
   const auth = getAuth()
@@ -64,7 +68,7 @@ export default function Header() {
               </div>
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 flex items-center">
-                  <a href="/courses">
+                  <a href="/">
                     <img
                       className="block lg:hidden h-8 w-auto"
                       src="/images/ey-white-logo.png"
@@ -72,7 +76,7 @@ export default function Header() {
                     />
                   </a>
                   <div className="cursor-pointer">
-                    <Link href="courses">
+                    <Link href="/">
                       <img
                         className="hidden lg:block h-8 w-auto"
                         src="/images/ey-white-logo.png"
@@ -83,12 +87,15 @@ export default function Header() {
                 </div>
                 <div className="hidden sm:block sm:ml-6">
                   <div className="flex space-x-4">
-                    <NavLink title="Home" href="/" />
-                    <NavLink title="Jobs" href="/jobs" />
-                    <NavLink title="Courses" href="/courses" />
-                    <NavLink title="Challenges" href="/challenges" />
-                    <NavLink title="Store" href="/store" />
-                    <NavLink title="Insights" href="/news" />
+                    <NavLink title={t("common:home")} href="/" />
+                    <NavLink title={t("common:jobs")} href="/jobs" />
+                    <NavLink title={t("common:courses")} href="/courses" />
+                    <NavLink
+                      title={t("common:challenges")}
+                      href="/challenges"
+                    />
+                    <NavLink title={t("common:store")} href="/store" />
+                    <NavLink title={t("common:news")} href="/news" />
                   </div>
                 </div>
               </div>
@@ -106,6 +113,7 @@ export default function Header() {
                   </Link>
                 ) : (
                   <>
+                    <Language />
                     <Notifications />
 
                     {/* Profile dropdown */}
@@ -183,12 +191,12 @@ export default function Header() {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 grid grid-cols-1">
-              <NavLink title="Home" href="/" />
-              <NavLink title="Jobs" href="/jobs" />
-              <NavLink title="Courses" href="/courses" />
-              <NavLink title="Challenges" href="/challenges" />
-              <NavLink title="Store" href="/store" />
-              <NavLink title="Insights" href="/news" />
+              <NavLink title={t("common:home")} href="/" />
+              <NavLink title={t("common:jobs")} href="/jobs" />
+              <NavLink title={t("common:courses")} href="/courses" />
+              <NavLink title={t("common:challenges")} href="/challenges" />
+              <NavLink title={t("common:store")} href="/store" />
+              <NavLink title={t("common:news")} href="/news" />
             </div>
           </Disclosure.Panel>
         </>
