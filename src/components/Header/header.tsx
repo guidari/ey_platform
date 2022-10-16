@@ -104,10 +104,7 @@ export default function Header() {
                   <Spinner />
                 ) : !user ? (
                   <Link href="/login">
-                    <a
-                      className="block px-4 py-2 text-sm text-gray-300 flex gap-2 items-center"
-                      // onClick={() => signIn("linkedin")}
-                    >
+                    <a className="px-4 py-2 text-sm text-gray-300 flex gap-2 items-center">
                       Sign in
                     </a>
                   </Link>
@@ -177,6 +174,12 @@ export default function Header() {
                                     Sign out
                                   </a>
                                 )}
+                              </Menu.Item>
+
+                              <Menu.Item>
+                                <a className="block px-4 py-2 text-sm text-gray-700 cursor-pointer">
+                                  Level
+                                </a>
                               </Menu.Item>
                             </Menu.Items>
                           </Transition>

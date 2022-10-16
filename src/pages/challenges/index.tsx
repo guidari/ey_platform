@@ -1,12 +1,18 @@
 import { Backdrop, Box, Fade, Modal, useMediaQuery } from "@mui/material"
+import { collection, getDocs, orderBy, query } from "firebase/firestore"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Challenge from "../../components/Challenge/Challenge"
 import ListChallenge from "../../components/Challenge/ListChallenge"
+import UserRank from "../../components/Challenge/UserRank"
 import Layout from "../../components/Layout"
+import { db } from "../../config/firebase"
+import { IUser } from "../../interface/IUser"
 
 export default function Page() {
   const matches = useMediaQuery("(min-width:1280px)")
+
+  const [users, setUsers] = useState<any[]>([])
 
   const [open, setOpen] = useState(false)
   const [challenge, setChallenge] = useState()
@@ -17,6 +23,22 @@ export default function Page() {
     setChallenge(e.row)
     setOpen(true)
   }
+
+  async function getAllUsers() {
+    const docRef = collection(db, "users")
+
+    const docSnap = await getDocs(docRef)
+    const q = query(docRef, orderBy("progress.challenges", "desc"))
+
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc) => {
+      setUsers((current: string[]) => [...current, ...[doc.data()]])
+    })
+  }
+
+  useEffect(() => {
+    getAllUsers()
+  }, [])
 
   return (
     <Layout>
@@ -36,6 +58,24 @@ export default function Page() {
                 alt="Week challenge image"
               />
             </Link>
+
+            <div className="flex-initial  maxxl:w-full p-5 bg-gray-1 rounded-md mt-5">
+              <>
+                <h1 className="text-xl font-semibold mb-5">Global Rank 🏆</h1>
+
+                {users.map((user: IUser) => {
+                  return (
+                    <UserRank
+                      image={user.image}
+                      key={user.id}
+                      name={user.name}
+                      solvedChallenges={user.progress.challenges}
+                    />
+                  )
+                })}
+              </>
+            </div>
+
             <Box
               sx={{
                 bgcolor: "var(--gray-100)",

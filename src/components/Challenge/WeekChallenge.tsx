@@ -28,7 +28,7 @@ export default function WeekChallenge() {
   let colorDisable
   let disabledSubmit
   let disabledSolution = true
-  let colorDisableSolution = "bg-gray-1"
+  let colorDisableSolution = "bg-gray-2"
 
   async function getChallenge() {
     const docRef = doc(db, "challenges", "CYVNxvaeDkVJUJCwE4D1")

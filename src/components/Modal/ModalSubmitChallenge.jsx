@@ -18,11 +18,13 @@ export default function ModalSubmitChallenge({
   const coin = userContext.eycoin
 
   const submissionsChallenge = challenge.submissions
+  const week = userContext.weekChallenge
 
   function updateDocuments() {
     updateDoc(doc(db, `users/${userContext?.id}`), {
       submitedChallenges: arrayUnion(challengeId),
       challenges: progressChallenge + 1,
+      weekChallenge: week + 1,
       completedCourses: progressCompletedCourses,
       coursesInProgress: progressEnrolledCourses,
       hours: progressHours,
