@@ -13,7 +13,7 @@ import { IChallenge } from "../../interface/IChallenge"
 import SubmitChallenge from "../Modal/SubimitChallenge"
 
 export default function Challenge({ data }: any) {
-  console.log("data", data)
+  // console.log("data", data)
   const userContext = useContext(UserContext)
 
   const [openModalSubmitChallenge, setOpenModalSubmitChallenge] =
