@@ -3,7 +3,7 @@ import { ICourses } from "../../interface/ICourses"
 import CourseBox from "../Courses/CourseBox"
 import Spinner from "../Spinner"
 
-export default function RelatedCourses({ skills }: any) {
+export default function JobCourses({ skills }: any) {
   const [courses, setCourses] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
 
