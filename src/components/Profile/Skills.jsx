@@ -46,7 +46,7 @@ export default function Skills({ userData, listenToDocumentChange }) {
       />
       <div
         id="skillSection"
-        className="grid grid-cols-4 maxsm:grid-cols-3 grid-flow-row gap-4"
+        className="grid grid-cols-3 maxsm:grid-cols-2 grid-flow-row gap-4"
       >
         {!userData ? (
           <Spinner />

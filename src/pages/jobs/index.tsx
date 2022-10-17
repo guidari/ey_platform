@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import { SearchBar } from "../../components/Courses/SearchBar"
 import JobBox from "../../components/Jobs/JobBox"
 import Layout from "../../components/Layout"
+import RecommendJobs from "../../components/Profile/RecommendJobs"
 import { db } from "../../config/firebase"
 import { UserContext } from "../../context/userContext"
 import { IJobBox } from "../../interface/IJobBox"
@@ -52,43 +53,24 @@ export default function Page() {
                 title={job.title}
                 description={job.description}
                 location={job.location}
+                skills={job.skills}
               />
             )
           })}
-
-          {/* <JobBox
-            id==
-            title="Senior Software Development Engineer"
-            description="AWS recently announced it will be leading an open-source fork of
-            Elasticsearch and Kibana, in order to ensure open source versions of
-            both packages remain available and well supported."
-            location="Vancouver, Canada"
-          />
-          <JobBox
-            id={2}
-            title="Senior Software Development Engineer"
-            description="AWS recently announced it will be leading an open-source fork of
-            Elasticsearch and Kibana, in order to ensure open source versions of
-            both packages remain available and well supported."
-            location="Vancouver, Canada"
-          />
-          <JobBox
-            id={3}
-            title="Senior Software Development Engineer"
-            description="AWS recently announced it will be leading an open-source fork of
-          Elasticsearch and Kibana, in order to ensure open source versions of
-          both packages remain available and well supported."
-            location="Vancouver, Canada"
-          />
-          <JobBox
-            id={4}
-            title="Senior Software Development Engineer"
-            description="AWS recently announced it will be leading an open-source fork of
-        Elasticsearch and Kibana, in order to ensure open source versions of
-        both packages remain available and well supported."
-            location="Vancouver, Canada"
-          /> */}
         </div>
+
+        {userContext ? (
+          <>
+            <h2 className="text-xl font-semibold mt-5">
+              Jobs based on your skills
+            </h2>
+            <div className="grid grid-cols-3 maxxl:grid-cols-2 maxmd:grid-cols-1">
+              <RecommendJobs />
+            </div>
+          </>
+        ) : (
+          ""
+        )}
       </div>
     </Layout>
   )

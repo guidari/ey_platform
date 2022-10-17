@@ -3,7 +3,13 @@ import { Box, Button } from "@mui/material"
 import Router from "next/router"
 import { IJobBox } from "../../interface/IJobBox"
 
-export default function JobBox({ id, title, description, location }: IJobBox) {
+export default function JobBox({
+  id,
+  title,
+  description,
+  location,
+  skills,
+}: IJobBox) {
   const jobInfo = (id: string) => {
     console.log("id", id)
 
@@ -22,6 +28,11 @@ export default function JobBox({ id, title, description, location }: IJobBox) {
       <div className="p-5">
         <h1 className="text-yellow-2 font-semibold mb-3">{title}</h1>
         <p>{description}</p>
+        <div className="mt-3">
+          {skills?.map((skill) => {
+            return <span>{skill}, </span>
+          })}
+        </div>
       </div>
 
       <hr />

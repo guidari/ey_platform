@@ -1,7 +1,6 @@
 import { XIcon } from "@heroicons/react/outline"
 
 export default function Skill({ skill, onClick }) {
-  console.log("skill component", skill)
   return (
     <button
       key={skill}
