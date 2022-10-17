@@ -1,16 +1,16 @@
-export function SearchBar({ title, eventFunction }: any) {
+export function SearchBar({ title, eventFunction, ...rest }: any) {
   return (
     <div className="mt-5 flex border-1 rounded-md w-[90%] maxmd:w-[100%] place-items-center h-10 bg-white">
       <input
         type="text"
-        id="course"
         className="text-black px-4 w-[90%] maxmd:w-[100%]  bg-white rounded-tr rounded-br focus:outline-none"
         placeholder={title}
-        onKeyPress={(event) => {
-          if (event.key === "Enter") {
-            eventFunction()
-          }
-        }}
+        // onKeyPress={(event) => {
+        //   if (event.key === "Enter") {
+        //     eventFunction()
+        //   }
+        // }}
+        {...rest}
       />
 
       <span className=" rounded-tl rounded-bl mr-2">

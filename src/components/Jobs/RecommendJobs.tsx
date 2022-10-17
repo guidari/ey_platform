@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import { db } from "../../config/firebase"
 import { UserContext } from "../../context/userContext"
 import { IJobBox } from "../../interface/IJobBox"
-import JobBox from "../Jobs/JobBox"
+import JobBox from "./JobBox"
 
 export default function RecommendJobs() {
   const userContext = useContext(UserContext)
