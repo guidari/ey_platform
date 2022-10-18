@@ -40,7 +40,7 @@ export default function DailyCoin() {
       return updateCoin()
     }
     if (dailyCoin![2] === dateNow[2]) {
-      return console.log("Wait until tomorrow to win a coin")
+      return console.log("Wait until tomorrow to win a EYCoin")
     }
 
     updateCoin()
@@ -89,7 +89,7 @@ export default function DailyCoin() {
             }}
           >
             <p style={{ fontSize: 16, fontWeight: "bold" }}>
-              Log in every day to win a coin!
+              Log in every day to win a EYCoin!
             </p>
             <span style={{ marginTop: 20, fontSize: 16, fontWeight: "bold" }}>
               💰+1
