@@ -77,7 +77,7 @@ export default function Page() {
           <StoreBox image="/images/ey-tshirt.png" price={5} />
         </div>
 
-        <h1 className="text-2xl font-semibold my-5">Code challenge boost</h1>
+        <h1 className="text-2xl font-semibold my-5">Buy a course</h1>
         {/* <div className="grid grid-cols-5 m-auto maxxl:grid-cols-4 maxlg:grid-cols-3 maxmd:grid-cols-2 maxsm:grid-cols-1 gap-5 justify-between">
           <StoreBox image="/images/boost.png" price={5} />
           <StoreBox image="/images/boost.png" price={5} />
